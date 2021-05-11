@@ -1,5 +1,6 @@
 import * as core from '@aws-cdk/core';
 import { PipelineStack } from 'aws-cdk-staging-pipeline';
+import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
 import { AppSyncStack } from './appsync-stack';
 import { StaticSite } from './static-site';
 
@@ -30,16 +31,18 @@ new PipelineStack(app, 'ec2-provisioner-pipeline', {
   repositoryName: 'aws-cdk-ec2-provisioner',
   buildCommand: 'cd frontend && yarn install && yarn build && cd ..',
   customStack: (scope, stageAccount) => {
-    new AppSyncStack(scope, `ec2-provisioner-stack-${stageAccount.stage}`, {
+    const stack = new CustomStack(scope, 'all');
+    const appsync = new AppSyncStack(stack, `ec2-provisioner-stack-${stageAccount.stage}`, {
       stackName: `ec2-provisioner-stack-${stageAccount.stage}`,
       stage: stageAccount.stage,
     });
 
-    const staticSite = new StaticSite(scope, `ec2-provisioner-ui-stack-${stageAccount.stage}`, {
+    const staticsite = new StaticSite(stack, `ec2-provisioner-ui-stack-${stageAccount.stage}`, {
       stackName: `ec2-provisioner-ui-stack-${stageAccount.stage}`,
       stage: stageAccount.stage,
     });
-    return staticSite;
+    stack.cfnOutputs = { ...appsync.cfnOutputs, ...staticsite.cfnOutputs };
+    return stack;
   },
   // which stage needs a manual approval. Here is only prod
   manualApprovals: (stageAccount) => stageAccount.stage === 'prod',
