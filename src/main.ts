@@ -34,6 +34,7 @@ new PipelineStack(app, 'ec2-provisioner-pipeline', {
     const stack = new CustomStack(scope, 'ec2-provisioner-all', {
       stackName: `ec2-provisioner-all-${stageAccount.stage}`,
     });
+
     const appsync = new AppSyncStack(stack, `ec2-provisioner-stack-${stageAccount.stage}`, {
       stackName: `ec2-provisioner-stack-${stageAccount.stage}`,
       stage: stageAccount.stage,
