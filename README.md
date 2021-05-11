@@ -1,4 +1,4 @@
-# aws-cdk-todolist-ui
+# aws-cdk-ec2-provisioner
 
 AWS Amplify frontend for the appsync backend [aws-cdk-todolist](https://github.com/mmuller88/aws-cdk-todolist)
 

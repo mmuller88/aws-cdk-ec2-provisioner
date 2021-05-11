@@ -27,7 +27,7 @@ new PipelineStack(app, 'ec2-provisioner-pipeline', {
     stage: 'prod',
   }],
   branch: 'main',
-  repositoryName: 'aws-cdk-todolist-ui',
+  repositoryName: 'aws-cdk-ec2-provisioner',
   buildCommand: 'cd frontend && yarn install && yarn build && cd ..',
   customStack: (scope, stageAccount) => {
     new AppSyncStack(scope, `ec2-provisioner-stack-${stageAccount.stage}`, {
@@ -49,6 +49,11 @@ new PipelineStack(app, 'ec2-provisioner-pipeline', {
     'STATUSCODE=$(curl --silent --output /dev/stderr --write-out "%{http_code}" $bucketWebsiteUrl)',
     'echo Statuscode = $STATUSCODE',
     'if test $STATUSCODE -ne 200; then exit 1; fi',
+    //
+    `echo "${stageAccount.stage} stage"`,
+    'STATUSCODE=$(curl --silent --output /dev/stderr --write-out "%{http_code}" $appsyncGraphQLEndpointOutput)',
+    'echo Statuscode = $STATUSCODE',
+    'if test $STATUSCODE -ne 401; then exit 1; fi',
   ],
   gitHub: {
     owner: 'mmuller88',
