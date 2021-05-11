@@ -35,12 +35,12 @@ new PipelineStack(app, 'ec2-provisioner-pipeline', {
       stackName: `ec2-pro-all-${stageAccount.stage}`,
     });
 
-    const appsync = new AppSyncStack(stack, `ec2-provisioner-stack-${stageAccount.stage}`, {
+    const appsync = new AppSyncStack(scope, `ec2-provisioner-stack-${stageAccount.stage}`, {
       stackName: `ec2-provisioner-stack-${stageAccount.stage}`,
       stage: stageAccount.stage,
     });
 
-    const staticsite = new StaticSite(stack, `ec2-provisioner-ui-stack-${stageAccount.stage}`, {
+    const staticsite = new StaticSite(scope, `ec2-provisioner-ui-stack-${stageAccount.stage}`, {
       stackName: `ec2-provisioner-ui-stack-${stageAccount.stage}`,
       stage: stageAccount.stage,
     });
