@@ -3,9 +3,9 @@ const { web, AwsCdkTypeScriptApp } = require('projen');
 const project = new AwsCdkTypeScriptApp({
   authorAddress: 'damadden88@googlemail.com',
   authorName: 'martin.mueller',
-  name: 'aws-cdk-todolist-ui',
+  name: 'aws-cdk-ec2-provisioner',
   defaultReleaseBranch: 'main',
-  cdkVersion: '1.93.0',
+  cdkVersion: '1.103.0',
   cdkVersionPinning: true,
   cdkDependencies: [
     '@aws-cdk/aws-iam',
@@ -15,6 +15,10 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-codepipeline-actions',
     '@aws-cdk/pipelines',
     '@aws-cdk/aws-lambda-nodejs',
+    '@aws-cdk/aws-appsync',
+    '@aws-cdk/pipelines',
+    '@aws-cdk/aws-dynamodb',
+    '@aws-cdk/aws-cognito',
   ],
   deps: [
     'aws-cdk-staging-pipeline',

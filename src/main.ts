@@ -1,11 +1,12 @@
 import * as core from '@aws-cdk/core';
 import { PipelineStack } from 'aws-cdk-staging-pipeline';
+import { AppSyncStack } from './appsync-stack';
 import { StaticSite } from './static-site';
 
 const app = new core.App();
 
-new PipelineStack(app, 'todolist-ui-pipeline', {
-  stackName: 'todolist-ui-pipeline',
+new PipelineStack(app, 'ec2-provisioner-pipeline', {
+  stackName: 'ec2-provisioner-pipeline',
   // Account and region where the pipeline will be build
   env: {
     account: '981237193288',
@@ -29,8 +30,13 @@ new PipelineStack(app, 'todolist-ui-pipeline', {
   repositoryName: 'aws-cdk-todolist-ui',
   buildCommand: 'cd frontend && yarn install && yarn build && cd ..',
   customStack: (scope, stageAccount) => {
-    const staticSite = new StaticSite(scope, `todolist-ui-stack-${stageAccount.stage}`, {
-      stackName: `todolist-ui-stack-${stageAccount.stage}`,
+    new AppSyncStack(scope, `ec2-provisioner-stack-${stageAccount.stage}`, {
+      stackName: `ec2-provisioner-stack-${stageAccount.stage}`,
+      stage: stageAccount.stage,
+    });
+
+    const staticSite = new StaticSite(scope, `ec2-provisioner-ui-stack-${stageAccount.stage}`, {
+      stackName: `ec2-provisioner-ui-stack-${stageAccount.stage}`,
       stage: stageAccount.stage,
     });
     return staticSite;

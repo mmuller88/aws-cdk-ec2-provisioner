@@ -1,11 +1,10 @@
-
 const fs = require('fs');
 const path = require('path');
 
-const REGION = process.env.REGION || 'eu-central-1'
+const REGION = process.env.REGION || 'eu-central-1';
 
 const AWS = require('aws-sdk');
-AWS.config.update({region:'eu-central-1'});
+AWS.config.update({ region: 'eu-central-1' });
 
 const appsyncGraphQLURLOutputKey = 'appsyncGraphQLEndpointOutput';
 const userPoolIdOutputKey = 'awsUserPoolId';
@@ -14,74 +13,79 @@ const identityPoolOutputKey = 'awsIdentityPoolId';
 const authenticationTypeOutputKey = 'awsAppsyncAuthenticationType';
 
 let config = {
-    stage: '',
-    aws_project_region: REGION,
-    aws_appsync_graphqlEndpoint: '',
-    aws_appsync_region: REGION,
-    aws_appsync_authenticationType: 'AWS_IAM',
-    aws_cognito_region: REGION,
-    aws_user_pools_id: '',
-    aws_user_pools_web_client_id: '',
-    aws_cognito_identity_pool_id: ''
+  stage: '',
+  aws_project_region: REGION,
+  aws_appsync_graphqlEndpoint: '',
+  aws_appsync_region: REGION,
+  aws_appsync_authenticationType: 'AWS_IAM',
+  aws_cognito_region: REGION,
+  aws_user_pools_id: '',
+  aws_user_pools_web_client_id: '',
+  aws_cognito_identity_pool_id: '',
 };
 
 main();
 
 async function main() {
-    var myArgs = process.argv.slice(2);
-    var stage = myArgs[0] || 'dev';
-    var STACK_NAME = `todolist-stack-${stage}`
+  var myArgs = process.argv.slice(2);
+  var stage = myArgs[0] || 'dev';
+  var STACK_NAME = `ec2-provisioner-stack-${stage}`;
 
-    if(stage === 'prod'){
-        process.env.AWS_SDK_LOAD_CONFIG=1;
-        var credentials = new AWS.SharedIniFileCredentials({profile: 'prod', filename: '~/.aws/credentials'});
-        AWS.config.credentials = credentials;
-    }
-    
-    const cloudformation = new AWS.CloudFormation();
+  if (stage === 'prod') {
+    process.env.AWS_SDK_LOAD_CONFIG = 1;
+    var credentials = new AWS.SharedIniFileCredentials({
+      profile: 'prod',
+      filename: '~/.aws/credentials',
+    });
+    AWS.config.credentials = credentials;
+  }
 
-    const exportFileName = `config/${stage}/config.js`;
-    console.log('Generating config.js')
+  const cloudformation = new AWS.CloudFormation();
 
-    var describeStackParams = {
-        StackName: STACK_NAME
-    };
-    const stackResponse = await cloudformation.describeStacks(describeStackParams).promise()
-    const stack = stackResponse.Stacks[0];
+  const exportFileName = `config/${stage}/config.js`;
+  console.log('Generating config.js');
 
-    const appsyncGraphQLEndpoint = stack.Outputs.find(output => {
-        return output.OutputKey === appsyncGraphQLURLOutputKey;
-    })
+  var describeStackParams = {
+    StackName: STACK_NAME,
+  };
+  const stackResponse = await cloudformation
+    .describeStacks(describeStackParams)
+    .promise();
+  const stack = stackResponse.Stacks[0];
 
-    const userPoolId = stack.Outputs.find(output => {
-        return output.OutputKey === userPoolIdOutputKey;
-    })
+  const appsyncGraphQLEndpoint = stack.Outputs.find((output) => {
+    return output.OutputKey === appsyncGraphQLURLOutputKey;
+  });
 
-    const userPoolWebClientId = stack.Outputs.find(output => {
-        return output.OutputKey === userPoolClientOutputKey;
-    })
+  const userPoolId = stack.Outputs.find((output) => {
+    return output.OutputKey === userPoolIdOutputKey;
+  });
 
-    const identityPoolId = stack.Outputs.find(output => {
-        return output.OutputKey === identityPoolOutputKey;
-    })
+  const userPoolWebClientId = stack.Outputs.find((output) => {
+    return output.OutputKey === userPoolClientOutputKey;
+  });
 
-    const authenticationType = stack.Outputs.find(output => {
-        return output.OutputKey === authenticationTypeOutputKey;
-    })
+  const identityPoolId = stack.Outputs.find((output) => {
+    return output.OutputKey === identityPoolOutputKey;
+  });
 
-    config.stage = stage;
-    config.aws_appsync_graphqlEndpoint = appsyncGraphQLEndpoint.OutputValue;
-    config.aws_appsync_authenticationType = authenticationType.OutputValue;
-    config.aws_user_pools_id = userPoolId.OutputValue;
-    config.aws_user_pools_web_client_id = userPoolWebClientId.OutputValue;
-    config.aws_cognito_identity_pool_id = identityPoolId.OutputValue;
+  const authenticationType = stack.Outputs.find((output) => {
+    return output.OutputKey === authenticationTypeOutputKey;
+  });
 
-    let awsExportsPath = path.join(__dirname, '..', 'src', exportFileName);
+  config.stage = stage;
+  config.aws_appsync_graphqlEndpoint = appsyncGraphQLEndpoint.OutputValue;
+  config.aws_appsync_authenticationType = authenticationType.OutputValue;
+  config.aws_user_pools_id = userPoolId.OutputValue;
+  config.aws_user_pools_web_client_id = userPoolWebClientId.OutputValue;
+  config.aws_cognito_identity_pool_id = identityPoolId.OutputValue;
 
-    let data = `window.ENV = ${JSON.stringify(config, null, 4)}`
-    
-    // export default awsmobile;`.replace(/^    export default awsmobile/gm, 'export default awsmobile');
+  let awsExportsPath = path.join(__dirname, '..', 'src', exportFileName);
 
-    fs.writeFileSync(awsExportsPath, data);
-    console.log(`Wrote exports to ${awsExportsPath}`);
+  let data = `window.ENV = ${JSON.stringify(config, null, 4)}`;
+
+  // export default awsmobile;`.replace(/^    export default awsmobile/gm, 'export default awsmobile');
+
+  fs.writeFileSync(awsExportsPath, data);
+  console.log(`Wrote exports to ${awsExportsPath}`);
 }
