@@ -133,28 +133,28 @@ export class AppSyncStack extends CustomStack {
     });
 
     // Outputs
-    const graphql = new core.CfnOutput(this, 'appsyncGraphQLEndpointOutput', {
+    const graphql = new core.CfnOutput(scope, 'appsyncGraphQLEndpointOutput', {
       description: 'GraphQL Endpoint',
       value: graphQlApi.graphqlUrl,
     });
     this.cfnOutputs.appsyncGraphQLEndpointOutput = graphql;
 
-    new core.CfnOutput(this, 'awsUserPoolId', {
+    new core.CfnOutput(scope, 'awsUserPoolId', {
       description: 'userPoolID value for amplify exports',
       value: userPool.userPoolId,
     });
 
-    new core.CfnOutput(this, 'awsUserPoolWebClientId', {
+    new core.CfnOutput(scope, 'awsUserPoolWebClientId', {
       description: 'userPoolClientID value for amplify exports',
       value: userPoolClient.userPoolClientId,
     });
 
-    new core.CfnOutput(this, 'awsIdentityPoolId', {
+    new core.CfnOutput(scope, 'awsIdentityPoolId', {
       description: 'identityPoolID value for amplify exports',
       value: identityPool.ref,
     });
 
-    new core.CfnOutput(this, 'awsAppsyncAuthenticationType', {
+    new core.CfnOutput(scope, 'awsAppsyncAuthenticationType', {
       value: appsync.AuthorizationType.IAM,
     });
   }

@@ -31,8 +31,8 @@ new PipelineStack(app, 'ec2-provisioner-pipeline', {
   repositoryName: 'aws-cdk-ec2-provisioner',
   buildCommand: 'cd frontend && yarn install && yarn build && cd ..',
   customStack: (scope, stageAccount) => {
-    const stack = new CustomStack(scope, 'ec2-provisioner-all', {
-      stackName: `ec2-provisioner-all-${stageAccount.stage}`,
+    const stack = new CustomStack(scope, `ec2-pro-all-${stageAccount.stage}`, {
+      stackName: `ec2-pro-all-${stageAccount.stage}`,
     });
 
     const appsync = new AppSyncStack(stack, `ec2-provisioner-stack-${stageAccount.stage}`, {
