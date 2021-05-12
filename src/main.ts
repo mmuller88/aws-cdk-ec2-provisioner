@@ -63,7 +63,7 @@ new PipelineStack(app, 'ec2-provisioner-pipeline', {
     'if test $STATUSCODE -ne 200; then exit 1; fi',
     //
     `echo "${stageAccount.stage} stage"`,
-    'STATUSCODE=$(curl --silent --output /dev/stderr --write-out "%{http_code}" $appsyncGraphQLEndpointOutput)',
+    'STATUSCODE=$(curl --silent --output /dev/stderr --write-out "%{http_code}" $appsyncEndpointOutput)',
     'echo Statuscode = $STATUSCODE',
     'if test $STATUSCODE -ne 401; then exit 1; fi',
   ],

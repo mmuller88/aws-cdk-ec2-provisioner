@@ -134,7 +134,7 @@ export class AppSyncStack extends CustomStack {
     // });
 
     // Outputs
-    const graphql = new core.CfnOutput(this, 'appsyncGraphQLEndpointOutput', {
+    const graphql = new core.CfnOutput(this, 'appsyncEndpointOutput', {
       description: 'GraphQL Endpoint',
       value: graphQlApi.appsyncAPI.graphqlUrl,
     });
