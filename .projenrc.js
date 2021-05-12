@@ -37,6 +37,10 @@ project.buildTask.prependExec(
 project.setScript('cdkDeploy', 'cdk deploy');
 project.setScript('cdkDestroy', 'cdk destroy');
 
+const common_exclude = ['appsync'];
+project.npmignore.exclude(...common_exclude);
+project.gitignore.exclude(...common_exclude);
+
 project.synth();
 
 const frontendProject = new web.ReactTypeScriptProject({
@@ -91,9 +95,5 @@ frontendProject.addTask('codegen', {
   description: 'Generates frontend GraphQL wrapper API code',
   exec: 'yarn run generate-statements && graphql-codegen --config codegen.yml',
 });
-
-const common_exclude = ['appsync'];
-frontendProject.npmignore.exclude(...common_exclude);
-frontendProject.gitignore.exclude(...common_exclude);
 
 frontendProject.synth();

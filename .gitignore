@@ -18,6 +18,7 @@
 /dist
 /lib
 /test-reports/
+appsync
 build/Release
 cdk.out/
 coverage
