@@ -1,8 +1,9 @@
 import * as core from '@aws-cdk/core';
 import { PipelineStack } from 'aws-cdk-staging-pipeline';
-import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
-import { AppSyncStack } from './appsync-stack';
-import { StaticSite } from './static-site';
+// import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
+// import { AppSyncStack } from './appsync-stack';
+import { Ec2ProStack } from './ec2-pro-stack';
+// import { StaticSite } from './static-site';
 
 const app = new core.App();
 
@@ -31,20 +32,25 @@ new PipelineStack(app, 'ec2-provisioner-pipeline', {
   repositoryName: 'aws-cdk-ec2-provisioner',
   buildCommand: 'cd frontend && yarn install && yarn build && cd ..',
   customStack: (scope, stageAccount) => {
-    const stack = new CustomStack(scope, `ec2-pro-all-${stageAccount.stage}`, {
+    // const stack = new CustomStack(scope, `ec2-pro-all-${stageAccount.stage}`, {
+    //   stackName: `ec2-pro-all-${stageAccount.stage}`,
+    // });
+
+    const stack = new Ec2ProStack(scope, `ec2-pro-all-${stageAccount.stage}`, {
       stackName: `ec2-pro-all-${stageAccount.stage}`,
-    });
-
-    const appsync = new AppSyncStack(scope, `ec2-provisioner-stack-${stageAccount.stage}`, {
-      stackName: `ec2-provisioner-stack-${stageAccount.stage}`,
       stage: stageAccount.stage,
     });
 
-    const staticsite = new StaticSite(scope, `ec2-provisioner-ui-stack-${stageAccount.stage}`, {
-      stackName: `ec2-provisioner-ui-stack-${stageAccount.stage}`,
-      stage: stageAccount.stage,
-    });
-    stack.cfnOutputs = { ...appsync.cfnOutputs, ...staticsite.cfnOutputs };
+    // const appsync = new AppSyncStack(scope, `ec2-provisioner-stack-${stageAccount.stage}`, {
+    //   stackName: `ec2-provisioner-stack-${stageAccount.stage}`,
+    //   stage: stageAccount.stage,
+    // });
+
+    // const staticsite = new StaticSite(scope, `ec2-provisioner-ui-stack-${stageAccount.stage}`, {
+    //   stackName: `ec2-provisioner-ui-stack-${stageAccount.stage}`,
+    //   stage: stageAccount.stage,
+    // });
+
     return stack;
   },
   // which stage needs a manual approval. Here is only prod
