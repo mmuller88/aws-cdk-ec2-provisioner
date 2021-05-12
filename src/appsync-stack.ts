@@ -1,9 +1,10 @@
 import * as appsync from '@aws-cdk/aws-appsync';
 import * as cognito from '@aws-cdk/aws-cognito';
-import * as db from '@aws-cdk/aws-dynamodb';
+// import * as db from '@aws-cdk/aws-dynamodb';
 import * as iam from '@aws-cdk/aws-iam';
 import * as core from '@aws-cdk/core';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
+import { AppSyncTransformer } from 'cdk-appsync-transformer';
 
 
 export interface AppSyncStackProps extends core.StackProps {
@@ -67,17 +68,17 @@ export class AppSyncStack extends CustomStack {
       },
     });
 
-    const todoTable = new db.Table(this, 'TodoTable', {
-      removalPolicy: core.RemovalPolicy.DESTROY,
-      partitionKey: {
-        name: 'id',
-        type: db.AttributeType.STRING,
-      },
-    });
+    // const todoTable = new db.Table(this, 'TodoTable', {
+    //   removalPolicy: core.RemovalPolicy.DESTROY,
+    //   partitionKey: {
+    //     name: 'id',
+    //     type: db.AttributeType.STRING,
+    //   },
+    // });
 
-    const graphQlApi = new appsync.GraphqlApi(this, 'GraphQlApi', {
-      name: 'TodoList',
-      schema: appsync.Schema.fromAsset('frontend/schema.graphql'),
+    const graphQlApi = new AppSyncTransformer(this, 'GraphQlApi', {
+      apiName: 'ec2-pro-api',
+      schemaPath: './frontend/schema.graphql',
       authorizationConfig: {
         defaultAuthorization: {
           authorizationType: appsync.AuthorizationType.USER_POOL,
@@ -103,39 +104,39 @@ export class AppSyncStack extends CustomStack {
         ],
         resources: [
           // Queries
-          `arn:aws:appsync:${this.region}:${this.account}:apis/${graphQlApi.apiId}/types/Query/fields/listPosts`,
-          `arn:aws:appsync:${this.region}:${this.account}:apis/${graphQlApi.apiId}/types/Query/fields/getPost`,
+          `arn:aws:appsync:${this.region}:${this.account}:apis/${graphQlApi.appsyncAPI.apiId}/types/Query/fields/listPosts`,
+          `arn:aws:appsync:${this.region}:${this.account}:apis/${graphQlApi.appsyncAPI.apiId}/types/Query/fields/getPost`,
         ],
       }),
     );
 
-    const todoDS = graphQlApi.addDynamoDbDataSource('todoDataSource', todoTable);
+    // const todoDS = graphQlApi.addDynamoDbDataSource('todoDataSource', todoTable);
 
-    todoDS.createResolver({
-      typeName: 'Query',
-      fieldName: 'todoList',
-      requestMappingTemplate: appsync.MappingTemplate.dynamoDbScanTable(),
-      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultList(),
-    });
+    // todoDS.createResolver({
+    //   typeName: 'Query',
+    //   fieldName: 'todoList',
+    //   requestMappingTemplate: appsync.MappingTemplate.dynamoDbScanTable(),
+    //   responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultList(),
+    // });
 
-    todoDS.createResolver({
-      typeName: 'Mutation',
-      fieldName: 'todoAdd',
-      requestMappingTemplate: appsync.MappingTemplate.dynamoDbPutItem(appsync.PrimaryKey.partition('id').auto(), appsync.Values.attribute('body').is('$ctx.args.body').attribute('username').is('$ctx.args.username')),
-      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
-    });
+    // todoDS.createResolver({
+    //   typeName: 'Mutation',
+    //   fieldName: 'todoAdd',
+    //   requestMappingTemplate: appsync.MappingTemplate.dynamoDbPutItem(appsync.PrimaryKey.partition('id').auto(), appsync.Values.attribute('body').is('$ctx.args.body').attribute('username').is('$ctx.args.username')),
+    //   responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    // });
 
-    todoDS.createResolver({
-      typeName: 'Mutation',
-      fieldName: 'todoRemove',
-      requestMappingTemplate: appsync.MappingTemplate.dynamoDbDeleteItem('id', 'id'),
-      responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
-    });
+    // todoDS.createResolver({
+    //   typeName: 'Mutation',
+    //   fieldName: 'todoRemove',
+    //   requestMappingTemplate: appsync.MappingTemplate.dynamoDbDeleteItem('id', 'id'),
+    //   responseMappingTemplate: appsync.MappingTemplate.dynamoDbResultItem(),
+    // });
 
     // Outputs
     const graphql = new core.CfnOutput(this, 'appsyncGraphQLEndpointOutput', {
       description: 'GraphQL Endpoint',
-      value: graphQlApi.graphqlUrl,
+      value: graphQlApi.appsyncAPI.graphqlUrl,
     });
     this.cfnOutputs.appsyncGraphQLEndpointOutput = graphql;
 

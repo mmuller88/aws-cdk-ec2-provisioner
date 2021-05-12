@@ -20,9 +20,7 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-dynamodb',
     '@aws-cdk/aws-cognito',
   ],
-  deps: [
-    'aws-cdk-staging-pipeline',
-  ],
+  deps: ['aws-cdk-staging-pipeline', 'cdk-appsync-transformer'],
   context: {
     '@aws-cdk/core:enableStackNameDuplicates': true,
     'aws-cdk:enableDiffNoFail': true,
@@ -32,7 +30,9 @@ const project = new AwsCdkTypeScriptApp({
   releaseWorkflow: false,
 });
 
-project.buildTask.prependExec('cd frontend && yarn install && yarn build && cd ..');
+project.buildTask.prependExec(
+  'cd frontend && yarn install && yarn build && cd ..',
+);
 
 project.setScript('cdkDeploy', 'cdk deploy');
 project.setScript('cdkDestroy', 'cdk destroy');

@@ -1,19 +1,21 @@
-type todoItem {
-  id: String!
-  body: String!
+type Post
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public, provider: iam }]) {
+  id: ID!
+  title: String!
+  content: String!
   username: String!
 }
 
+# https://jsonplaceholder.typicode.com/
+type Todo {
+  id: Int!
+  userId: Int!
+  title: String!
+  completed: Boolean!
+}
+
 type Query {
-  todoList: [todoItem]
-}
-
-type Mutation {
-  todoAdd(body: String!, username: String!): todoItem
-  todoRemove(id: String!): todoItem
-}
-
-schema {
-  query: Query
-  mutation: Mutation
+  listTodos: [Todo] @http(url: "https://jsonplaceholder.typicode.com/todos")
+  getTodo: Todo @http(url: "https://jsonplaceholder.typicode.com/todos/:id")
 }
