@@ -17,7 +17,7 @@ export class AppSyncStack extends CustomStack {
 
     const userPool = new cognito.UserPool(this, 'demo-user-pool', {
       passwordPolicy: {
-        minLength: 4,
+        minLength: 6,
         requireLowercase: false,
         requireUppercase: false,
         requireDigits: false,
