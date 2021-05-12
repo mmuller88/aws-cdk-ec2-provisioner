@@ -92,4 +92,8 @@ frontendProject.addTask('codegen', {
   exec: 'yarn run generate-statements && graphql-codegen --config codegen.yml',
 });
 
+const common_exclude = ['appsync'];
+frontendProject.npmignore.exclude(...common_exclude);
+frontendProject.gitignore.exclude(...common_exclude);
+
 frontendProject.synth();
