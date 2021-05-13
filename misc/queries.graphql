@@ -1,0 +1,68 @@
+mutation createEc2Config($startDate: AWSDateTime = "2021-05-13T08:54:00.000Z") {
+  createEc2Config(
+    input: { startDate: $startDate, stopDate: $startDate, username: "martin" }
+  ) {
+    id
+    owner
+    startDate
+    stopDate
+    updatedAt
+    username
+  }
+}
+
+mutation createHistoryEntry(
+  $startDate: AWSDateTime = "2021-05-13T08:54:00.000Z"
+) {
+  createHistoryEntry(
+    input: {
+      comment: "Tada 2"
+      ec2ConfigId: "c3ba9528-afcf-4d8a-880f-6694e814296c"
+      time: $startDate
+    }
+  ) {
+    comment
+    createdAt
+    ec2ConfigId
+    id
+    time
+    updatedAt
+  }
+}
+
+query listEc2Configs {
+  listEc2Configs {
+    items {
+      id
+      createdAt
+      startDate
+      owner
+      stopDate
+      updatedAt
+      username
+      history {
+        items {
+          comment
+          createdAt
+          ec2ConfigId
+          id
+          time
+          updatedAt
+        }
+      }
+    }
+  }
+}
+
+query listHistoryEntrys {
+  listHistoryEntrys {
+    items {
+      comment
+      createdAt
+      ec2ConfigId
+      id
+      updatedAt
+      time
+    }
+  }
+}
