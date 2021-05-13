@@ -5,10 +5,12 @@ type Ec2Config
   startDate: AWSDateTime!
   stopDate: AWSDateTime!
   username: String!
-  history: [HistoryEntry] @connection
+  history: [HistoryEntry] @connection(keyName: "byEc2Config", fields: ["id"])
 }
 
-type HistoryEntry @model @key(fields: ["id", "ec2ConfigId"]) {
+type HistoryEntry
+  @model
+  @key(name: "byEc2Config", fields: ["ec2ConfigId", "comment"]) {
   id: ID!
   ec2ConfigId: ID!
   comment: String!
