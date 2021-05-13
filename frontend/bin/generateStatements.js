@@ -7,7 +7,7 @@ generateStatements();
 async function generateStatements() {
   const outputPath = path.join(__dirname, '..', './src/graphql/');
 
-  const schemaPath = path.join(__dirname, '..', 'schema.graphql');
+  const schemaPath = path.join(__dirname, '..', '../appsync/schema.graphql');
   const language = 'typescript';
 
   try {

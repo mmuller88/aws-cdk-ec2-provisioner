@@ -57,6 +57,7 @@ const frontendProject = new web.ReactTypeScriptProject({
     'react-router',
     'react-router-dom',
     '@types/react-router-dom',
+    'react-datetime-picker',
   ],
   devDeps: [
     '@graphql-codegen/cli',
@@ -80,6 +81,11 @@ const frontendProject = new web.ReactTypeScriptProject({
 frontendProject.addTask('dev', {
   description: 'Runs the application locally',
   exec: 'react-scripts start',
+});
+
+frontendProject.addTask('debug', {
+  description: 'Runs the application locally',
+  exec: 'react-scripts debug',
 });
 
 frontendProject.addTask('generate-exports', {

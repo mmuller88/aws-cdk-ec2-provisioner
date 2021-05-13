@@ -33,6 +33,36 @@ export type Scalars = {
   Double: any;
 };
 
+export type Ec2Config = {
+  __typename?: "Ec2Config";
+  id: Scalars["ID"];
+  startDate: Scalars["AWSDateTime"];
+  stopDate: Scalars["AWSDateTime"];
+  username: Scalars["String"];
+  history?: Maybe<ModelHistoryEntryConnection>;
+  createdAt: Scalars["AWSDateTime"];
+  updatedAt: Scalars["AWSDateTime"];
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type Ec2ConfigHistoryArgs = {
+  comment?: Maybe<ModelStringKeyConditionInput>;
+  filter?: Maybe<ModelHistoryEntryFilterInput>;
+  sortDirection?: Maybe<ModelSortDirection>;
+  limit?: Maybe<Scalars["Int"]>;
+  nextToken?: Maybe<Scalars["String"]>;
+};
+
+export type HistoryEntry = {
+  __typename?: "HistoryEntry";
+  id: Scalars["ID"];
+  ec2ConfigId: Scalars["ID"];
+  comment: Scalars["String"];
+  time: Scalars["AWSDateTime"];
+  createdAt: Scalars["AWSDateTime"];
+  updatedAt: Scalars["AWSDateTime"];
+};
+
 export type Post = {
   __typename?: "Post";
   id: Scalars["ID"];
@@ -55,9 +85,33 @@ export type Todo = {
 export type Query = {
   __typename?: "Query";
   listTodos?: Maybe<Array<Maybe<Todo>>>;
+  getHistoryEntry?: Maybe<HistoryEntry>;
+  listHistoryEntrys?: Maybe<ModelHistoryEntryConnection>;
+  getEc2Config?: Maybe<Ec2Config>;
+  listEc2Configs?: Maybe<ModelEc2ConfigConnection>;
   getPost?: Maybe<Post>;
   listPosts?: Maybe<ModelPostConnection>;
   getTodo?: Maybe<Todo>;
+};
+
+export type QueryGetHistoryEntryArgs = {
+  id: Scalars["ID"];
+};
+
+export type QueryListHistoryEntrysArgs = {
+  filter?: Maybe<ModelHistoryEntryFilterInput>;
+  limit?: Maybe<Scalars["Int"]>;
+  nextToken?: Maybe<Scalars["String"]>;
+};
+
+export type QueryGetEc2ConfigArgs = {
+  id: Scalars["ID"];
+};
+
+export type QueryListEc2ConfigsArgs = {
+  filter?: Maybe<ModelEc2ConfigFilterInput>;
+  limit?: Maybe<Scalars["Int"]>;
+  nextToken?: Maybe<Scalars["String"]>;
 };
 
 export type QueryGetPostArgs = {
@@ -79,9 +133,9 @@ export enum ModelSortDirection {
   Desc = "DESC"
 }
 
-export type ModelPostConnection = {
-  __typename?: "ModelPostConnection";
-  items?: Maybe<Array<Maybe<Post>>>;
+export type ModelEc2ConfigConnection = {
+  __typename?: "ModelEc2ConfigConnection";
+  items?: Maybe<Array<Maybe<Ec2Config>>>;
   nextToken?: Maybe<Scalars["String"]>;
 };
 
@@ -136,6 +190,160 @@ export type ModelBooleanFilterInput = {
   eq?: Maybe<Scalars["Boolean"]>;
 };
 
+export type ModelEc2ConfigFilterInput = {
+  id?: Maybe<ModelIdFilterInput>;
+  startDate?: Maybe<ModelStringFilterInput>;
+  stopDate?: Maybe<ModelStringFilterInput>;
+  username?: Maybe<ModelStringFilterInput>;
+  and?: Maybe<Array<Maybe<ModelEc2ConfigFilterInput>>>;
+  or?: Maybe<Array<Maybe<ModelEc2ConfigFilterInput>>>;
+  not?: Maybe<ModelEc2ConfigFilterInput>;
+};
+
+export type CreateEc2ConfigInput = {
+  id?: Maybe<Scalars["ID"]>;
+  startDate: Scalars["AWSDateTime"];
+  stopDate: Scalars["AWSDateTime"];
+  username: Scalars["String"];
+};
+
+export type UpdateEc2ConfigInput = {
+  id: Scalars["ID"];
+  startDate?: Maybe<Scalars["AWSDateTime"]>;
+  stopDate?: Maybe<Scalars["AWSDateTime"]>;
+  username?: Maybe<Scalars["String"]>;
+};
+
+export type DeleteEc2ConfigInput = {
+  id?: Maybe<Scalars["ID"]>;
+};
+
+export type Mutation = {
+  __typename?: "Mutation";
+  createHistoryEntry?: Maybe<HistoryEntry>;
+  updateHistoryEntry?: Maybe<HistoryEntry>;
+  deleteHistoryEntry?: Maybe<HistoryEntry>;
+  createEc2Config?: Maybe<Ec2Config>;
+  updateEc2Config?: Maybe<Ec2Config>;
+  deleteEc2Config?: Maybe<Ec2Config>;
+  createPost?: Maybe<Post>;
+  updatePost?: Maybe<Post>;
+  deletePost?: Maybe<Post>;
+};
+
+export type MutationCreateHistoryEntryArgs = {
+  input: CreateHistoryEntryInput;
+};
+
+export type MutationUpdateHistoryEntryArgs = {
+  input: UpdateHistoryEntryInput;
+};
+
+export type MutationDeleteHistoryEntryArgs = {
+  input: DeleteHistoryEntryInput;
+};
+
+export type MutationCreateEc2ConfigArgs = {
+  input: CreateEc2ConfigInput;
+};
+
+export type MutationUpdateEc2ConfigArgs = {
+  input: UpdateEc2ConfigInput;
+};
+
+export type MutationDeleteEc2ConfigArgs = {
+  input: DeleteEc2ConfigInput;
+};
+
+export type MutationCreatePostArgs = {
+  input: CreatePostInput;
+};
+
+export type MutationUpdatePostArgs = {
+  input: UpdatePostInput;
+};
+
+export type MutationDeletePostArgs = {
+  input: DeletePostInput;
+};
+
+export type Subscription = {
+  __typename?: "Subscription";
+  onCreateHistoryEntry?: Maybe<HistoryEntry>;
+  onUpdateHistoryEntry?: Maybe<HistoryEntry>;
+  onDeleteHistoryEntry?: Maybe<HistoryEntry>;
+  onCreateEc2Config?: Maybe<Ec2Config>;
+  onUpdateEc2Config?: Maybe<Ec2Config>;
+  onDeleteEc2Config?: Maybe<Ec2Config>;
+  onCreatePost?: Maybe<Post>;
+  onUpdatePost?: Maybe<Post>;
+  onDeletePost?: Maybe<Post>;
+};
+
+export type SubscriptionOnCreateEc2ConfigArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnUpdateEc2ConfigArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnDeleteEc2ConfigArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnCreatePostArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnUpdatePostArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnDeletePostArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type ModelHistoryEntryConnection = {
+  __typename?: "ModelHistoryEntryConnection";
+  items?: Maybe<Array<Maybe<HistoryEntry>>>;
+  nextToken?: Maybe<Scalars["String"]>;
+};
+
+export type ModelHistoryEntryFilterInput = {
+  id?: Maybe<ModelIdFilterInput>;
+  ec2ConfigId?: Maybe<ModelIdFilterInput>;
+  comment?: Maybe<ModelStringFilterInput>;
+  time?: Maybe<ModelStringFilterInput>;
+  and?: Maybe<Array<Maybe<ModelHistoryEntryFilterInput>>>;
+  or?: Maybe<Array<Maybe<ModelHistoryEntryFilterInput>>>;
+  not?: Maybe<ModelHistoryEntryFilterInput>;
+};
+
+export type CreateHistoryEntryInput = {
+  id?: Maybe<Scalars["ID"]>;
+  ec2ConfigId: Scalars["ID"];
+  comment: Scalars["String"];
+  time: Scalars["AWSDateTime"];
+};
+
+export type UpdateHistoryEntryInput = {
+  id: Scalars["ID"];
+  ec2ConfigId?: Maybe<Scalars["ID"]>;
+  comment?: Maybe<Scalars["String"]>;
+  time?: Maybe<Scalars["AWSDateTime"]>;
+};
+
+export type DeleteHistoryEntryInput = {
+  id?: Maybe<Scalars["ID"]>;
+};
+
+export type ModelPostConnection = {
+  __typename?: "ModelPostConnection";
+  items?: Maybe<Array<Maybe<Post>>>;
+  nextToken?: Maybe<Scalars["String"]>;
+};
+
 export type ModelPostFilterInput = {
   id?: Maybe<ModelIdFilterInput>;
   title?: Maybe<ModelStringFilterInput>;
@@ -164,46 +372,183 @@ export type DeletePostInput = {
   id?: Maybe<Scalars["ID"]>;
 };
 
-export type Mutation = {
-  __typename?: "Mutation";
-  createPost?: Maybe<Post>;
-  updatePost?: Maybe<Post>;
-  deletePost?: Maybe<Post>;
-};
-
-export type MutationCreatePostArgs = {
-  input: CreatePostInput;
-};
-
-export type MutationUpdatePostArgs = {
-  input: UpdatePostInput;
-};
-
-export type MutationDeletePostArgs = {
-  input: DeletePostInput;
-};
-
-export type Subscription = {
-  __typename?: "Subscription";
-  onCreatePost?: Maybe<Post>;
-  onUpdatePost?: Maybe<Post>;
-  onDeletePost?: Maybe<Post>;
-};
-
-export type SubscriptionOnCreatePostArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnUpdatePostArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnDeletePostArgs = {
-  owner?: Maybe<Scalars["String"]>;
+export type ModelStringKeyConditionInput = {
+  eq?: Maybe<Scalars["String"]>;
+  le?: Maybe<Scalars["String"]>;
+  lt?: Maybe<Scalars["String"]>;
+  ge?: Maybe<Scalars["String"]>;
+  gt?: Maybe<Scalars["String"]>;
+  between?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  beginsWith?: Maybe<Scalars["String"]>;
 };
 
 export type QueryGetTodoParamsInput = {
   id: Scalars["String"];
+};
+
+export type CreateHistoryEntryMutationVariables = Exact<{
+  input: CreateHistoryEntryInput;
+}>;
+
+export type CreateHistoryEntryMutation = { __typename?: "Mutation" } & {
+  createHistoryEntry?: Maybe<
+    { __typename?: "HistoryEntry" } & Pick<
+      HistoryEntry,
+      "id" | "ec2ConfigId" | "comment" | "time" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type UpdateHistoryEntryMutationVariables = Exact<{
+  input: UpdateHistoryEntryInput;
+}>;
+
+export type UpdateHistoryEntryMutation = { __typename?: "Mutation" } & {
+  updateHistoryEntry?: Maybe<
+    { __typename?: "HistoryEntry" } & Pick<
+      HistoryEntry,
+      "id" | "ec2ConfigId" | "comment" | "time" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type DeleteHistoryEntryMutationVariables = Exact<{
+  input: DeleteHistoryEntryInput;
+}>;
+
+export type DeleteHistoryEntryMutation = { __typename?: "Mutation" } & {
+  deleteHistoryEntry?: Maybe<
+    { __typename?: "HistoryEntry" } & Pick<
+      HistoryEntry,
+      "id" | "ec2ConfigId" | "comment" | "time" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type CreateEc2ConfigMutationVariables = Exact<{
+  input: CreateEc2ConfigInput;
+}>;
+
+export type CreateEc2ConfigMutation = { __typename?: "Mutation" } & {
+  createEc2Config?: Maybe<
+    { __typename?: "Ec2Config" } & Pick<
+      Ec2Config,
+      | "id"
+      | "startDate"
+      | "stopDate"
+      | "username"
+      | "createdAt"
+      | "updatedAt"
+      | "owner"
+    > & {
+        history?: Maybe<
+          { __typename?: "ModelHistoryEntryConnection" } & Pick<
+            ModelHistoryEntryConnection,
+            "nextToken"
+          > & {
+              items?: Maybe<
+                Array<
+                  Maybe<
+                    { __typename?: "HistoryEntry" } & Pick<
+                      HistoryEntry,
+                      | "id"
+                      | "ec2ConfigId"
+                      | "comment"
+                      | "time"
+                      | "createdAt"
+                      | "updatedAt"
+                    >
+                  >
+                >
+              >;
+            }
+        >;
+      }
+  >;
+};
+
+export type UpdateEc2ConfigMutationVariables = Exact<{
+  input: UpdateEc2ConfigInput;
+}>;
+
+export type UpdateEc2ConfigMutation = { __typename?: "Mutation" } & {
+  updateEc2Config?: Maybe<
+    { __typename?: "Ec2Config" } & Pick<
+      Ec2Config,
+      | "id"
+      | "startDate"
+      | "stopDate"
+      | "username"
+      | "createdAt"
+      | "updatedAt"
+      | "owner"
+    > & {
+        history?: Maybe<
+          { __typename?: "ModelHistoryEntryConnection" } & Pick<
+            ModelHistoryEntryConnection,
+            "nextToken"
+          > & {
+              items?: Maybe<
+                Array<
+                  Maybe<
+                    { __typename?: "HistoryEntry" } & Pick<
+                      HistoryEntry,
+                      | "id"
+                      | "ec2ConfigId"
+                      | "comment"
+                      | "time"
+                      | "createdAt"
+                      | "updatedAt"
+                    >
+                  >
+                >
+              >;
+            }
+        >;
+      }
+  >;
+};
+
+export type DeleteEc2ConfigMutationVariables = Exact<{
+  input: DeleteEc2ConfigInput;
+}>;
+
+export type DeleteEc2ConfigMutation = { __typename?: "Mutation" } & {
+  deleteEc2Config?: Maybe<
+    { __typename?: "Ec2Config" } & Pick<
+      Ec2Config,
+      | "id"
+      | "startDate"
+      | "stopDate"
+      | "username"
+      | "createdAt"
+      | "updatedAt"
+      | "owner"
+    > & {
+        history?: Maybe<
+          { __typename?: "ModelHistoryEntryConnection" } & Pick<
+            ModelHistoryEntryConnection,
+            "nextToken"
+          > & {
+              items?: Maybe<
+                Array<
+                  Maybe<
+                    { __typename?: "HistoryEntry" } & Pick<
+                      HistoryEntry,
+                      | "id"
+                      | "ec2ConfigId"
+                      | "comment"
+                      | "time"
+                      | "createdAt"
+                      | "updatedAt"
+                    >
+                  >
+                >
+              >;
+            }
+        >;
+      }
+  >;
 };
 
 export type CreatePostMutationVariables = Exact<{
@@ -278,6 +623,147 @@ export type ListTodosQuery = { __typename?: "Query" } & {
   >;
 };
 
+export type GetHistoryEntryQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type GetHistoryEntryQuery = { __typename?: "Query" } & {
+  getHistoryEntry?: Maybe<
+    { __typename?: "HistoryEntry" } & Pick<
+      HistoryEntry,
+      "id" | "ec2ConfigId" | "comment" | "time" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type ListHistoryEntrysQueryVariables = Exact<{
+  filter?: Maybe<ModelHistoryEntryFilterInput>;
+  limit?: Maybe<Scalars["Int"]>;
+  nextToken?: Maybe<Scalars["String"]>;
+}>;
+
+export type ListHistoryEntrysQuery = { __typename?: "Query" } & {
+  listHistoryEntrys?: Maybe<
+    { __typename?: "ModelHistoryEntryConnection" } & Pick<
+      ModelHistoryEntryConnection,
+      "nextToken"
+    > & {
+        items?: Maybe<
+          Array<
+            Maybe<
+              { __typename?: "HistoryEntry" } & Pick<
+                HistoryEntry,
+                | "id"
+                | "ec2ConfigId"
+                | "comment"
+                | "time"
+                | "createdAt"
+                | "updatedAt"
+              >
+            >
+          >
+        >;
+      }
+  >;
+};
+
+export type GetEc2ConfigQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type GetEc2ConfigQuery = { __typename?: "Query" } & {
+  getEc2Config?: Maybe<
+    { __typename?: "Ec2Config" } & Pick<
+      Ec2Config,
+      | "id"
+      | "startDate"
+      | "stopDate"
+      | "username"
+      | "createdAt"
+      | "updatedAt"
+      | "owner"
+    > & {
+        history?: Maybe<
+          { __typename?: "ModelHistoryEntryConnection" } & Pick<
+            ModelHistoryEntryConnection,
+            "nextToken"
+          > & {
+              items?: Maybe<
+                Array<
+                  Maybe<
+                    { __typename?: "HistoryEntry" } & Pick<
+                      HistoryEntry,
+                      | "id"
+                      | "ec2ConfigId"
+                      | "comment"
+                      | "time"
+                      | "createdAt"
+                      | "updatedAt"
+                    >
+                  >
+                >
+              >;
+            }
+        >;
+      }
+  >;
+};
+
+export type ListEc2ConfigsQueryVariables = Exact<{
+  filter?: Maybe<ModelEc2ConfigFilterInput>;
+  limit?: Maybe<Scalars["Int"]>;
+  nextToken?: Maybe<Scalars["String"]>;
+}>;
+
+export type ListEc2ConfigsQuery = { __typename?: "Query" } & {
+  listEc2Configs?: Maybe<
+    { __typename?: "ModelEc2ConfigConnection" } & Pick<
+      ModelEc2ConfigConnection,
+      "nextToken"
+    > & {
+        items?: Maybe<
+          Array<
+            Maybe<
+              { __typename?: "Ec2Config" } & Pick<
+                Ec2Config,
+                | "id"
+                | "startDate"
+                | "stopDate"
+                | "username"
+                | "createdAt"
+                | "updatedAt"
+                | "owner"
+              > & {
+                  history?: Maybe<
+                    { __typename?: "ModelHistoryEntryConnection" } & Pick<
+                      ModelHistoryEntryConnection,
+                      "nextToken"
+                    > & {
+                        items?: Maybe<
+                          Array<
+                            Maybe<
+                              { __typename?: "HistoryEntry" } & Pick<
+                                HistoryEntry,
+                                | "id"
+                                | "ec2ConfigId"
+                                | "comment"
+                                | "time"
+                                | "createdAt"
+                                | "updatedAt"
+                              >
+                            >
+                          >
+                        >;
+                      }
+                  >;
+                }
+            >
+          >
+        >;
+      }
+  >;
+};
+
 export type GetPostQueryVariables = Exact<{
   id: Scalars["ID"];
 }>;
@@ -342,6 +828,177 @@ export type GetTodoQuery = { __typename?: "Query" } & {
   >;
 };
 
+export type OnCreateHistoryEntrySubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type OnCreateHistoryEntrySubscription = {
+  __typename?: "Subscription";
+} & {
+  onCreateHistoryEntry?: Maybe<
+    { __typename?: "HistoryEntry" } & Pick<
+      HistoryEntry,
+      "id" | "ec2ConfigId" | "comment" | "time" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type OnUpdateHistoryEntrySubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type OnUpdateHistoryEntrySubscription = {
+  __typename?: "Subscription";
+} & {
+  onUpdateHistoryEntry?: Maybe<
+    { __typename?: "HistoryEntry" } & Pick<
+      HistoryEntry,
+      "id" | "ec2ConfigId" | "comment" | "time" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type OnDeleteHistoryEntrySubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type OnDeleteHistoryEntrySubscription = {
+  __typename?: "Subscription";
+} & {
+  onDeleteHistoryEntry?: Maybe<
+    { __typename?: "HistoryEntry" } & Pick<
+      HistoryEntry,
+      "id" | "ec2ConfigId" | "comment" | "time" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type OnCreateEc2ConfigSubscriptionVariables = Exact<{
+  owner?: Maybe<Scalars["String"]>;
+}>;
+
+export type OnCreateEc2ConfigSubscription = { __typename?: "Subscription" } & {
+  onCreateEc2Config?: Maybe<
+    { __typename?: "Ec2Config" } & Pick<
+      Ec2Config,
+      | "id"
+      | "startDate"
+      | "stopDate"
+      | "username"
+      | "createdAt"
+      | "updatedAt"
+      | "owner"
+    > & {
+        history?: Maybe<
+          { __typename?: "ModelHistoryEntryConnection" } & Pick<
+            ModelHistoryEntryConnection,
+            "nextToken"
+          > & {
+              items?: Maybe<
+                Array<
+                  Maybe<
+                    { __typename?: "HistoryEntry" } & Pick<
+                      HistoryEntry,
+                      | "id"
+                      | "ec2ConfigId"
+                      | "comment"
+                      | "time"
+                      | "createdAt"
+                      | "updatedAt"
+                    >
+                  >
+                >
+              >;
+            }
+        >;
+      }
+  >;
+};
+
+export type OnUpdateEc2ConfigSubscriptionVariables = Exact<{
+  owner?: Maybe<Scalars["String"]>;
+}>;
+
+export type OnUpdateEc2ConfigSubscription = { __typename?: "Subscription" } & {
+  onUpdateEc2Config?: Maybe<
+    { __typename?: "Ec2Config" } & Pick<
+      Ec2Config,
+      | "id"
+      | "startDate"
+      | "stopDate"
+      | "username"
+      | "createdAt"
+      | "updatedAt"
+      | "owner"
+    > & {
+        history?: Maybe<
+          { __typename?: "ModelHistoryEntryConnection" } & Pick<
+            ModelHistoryEntryConnection,
+            "nextToken"
+          > & {
+              items?: Maybe<
+                Array<
+                  Maybe<
+                    { __typename?: "HistoryEntry" } & Pick<
+                      HistoryEntry,
+                      | "id"
+                      | "ec2ConfigId"
+                      | "comment"
+                      | "time"
+                      | "createdAt"
+                      | "updatedAt"
+                    >
+                  >
+                >
+              >;
+            }
+        >;
+      }
+  >;
+};
+
+export type OnDeleteEc2ConfigSubscriptionVariables = Exact<{
+  owner?: Maybe<Scalars["String"]>;
+}>;
+
+export type OnDeleteEc2ConfigSubscription = { __typename?: "Subscription" } & {
+  onDeleteEc2Config?: Maybe<
+    { __typename?: "Ec2Config" } & Pick<
+      Ec2Config,
+      | "id"
+      | "startDate"
+      | "stopDate"
+      | "username"
+      | "createdAt"
+      | "updatedAt"
+      | "owner"
+    > & {
+        history?: Maybe<
+          { __typename?: "ModelHistoryEntryConnection" } & Pick<
+            ModelHistoryEntryConnection,
+            "nextToken"
+          > & {
+              items?: Maybe<
+                Array<
+                  Maybe<
+                    { __typename?: "HistoryEntry" } & Pick<
+                      HistoryEntry,
+                      | "id"
+                      | "ec2ConfigId"
+                      | "comment"
+                      | "time"
+                      | "createdAt"
+                      | "updatedAt"
+                    >
+                  >
+                >
+              >;
+            }
+        >;
+      }
+  >;
+};
+
 export type OnCreatePostSubscriptionVariables = Exact<{
   owner?: Maybe<Scalars["String"]>;
 }>;
@@ -399,6 +1056,258 @@ export type OnDeletePostSubscription = { __typename?: "Subscription" } & {
   >;
 };
 
+export const CreateHistoryEntryDocument = `
+    mutation CreateHistoryEntry($input: CreateHistoryEntryInput!) {
+  createHistoryEntry(input: $input) {
+    id
+    ec2ConfigId
+    comment
+    time
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const useCreateHistoryEntryMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    CreateHistoryEntryMutation,
+    TError,
+    CreateHistoryEntryMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    CreateHistoryEntryMutation,
+    TError,
+    CreateHistoryEntryMutationVariables,
+    TContext
+  >(
+    (variables?: CreateHistoryEntryMutationVariables) =>
+      amplifyFetcher<
+        CreateHistoryEntryMutation,
+        CreateHistoryEntryMutationVariables
+      >(CreateHistoryEntryDocument, variables)(),
+    options
+  );
+export const UpdateHistoryEntryDocument = `
+    mutation UpdateHistoryEntry($input: UpdateHistoryEntryInput!) {
+  updateHistoryEntry(input: $input) {
+    id
+    ec2ConfigId
+    comment
+    time
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const useUpdateHistoryEntryMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    UpdateHistoryEntryMutation,
+    TError,
+    UpdateHistoryEntryMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateHistoryEntryMutation,
+    TError,
+    UpdateHistoryEntryMutationVariables,
+    TContext
+  >(
+    (variables?: UpdateHistoryEntryMutationVariables) =>
+      amplifyFetcher<
+        UpdateHistoryEntryMutation,
+        UpdateHistoryEntryMutationVariables
+      >(UpdateHistoryEntryDocument, variables)(),
+    options
+  );
+export const DeleteHistoryEntryDocument = `
+    mutation DeleteHistoryEntry($input: DeleteHistoryEntryInput!) {
+  deleteHistoryEntry(input: $input) {
+    id
+    ec2ConfigId
+    comment
+    time
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const useDeleteHistoryEntryMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    DeleteHistoryEntryMutation,
+    TError,
+    DeleteHistoryEntryMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteHistoryEntryMutation,
+    TError,
+    DeleteHistoryEntryMutationVariables,
+    TContext
+  >(
+    (variables?: DeleteHistoryEntryMutationVariables) =>
+      amplifyFetcher<
+        DeleteHistoryEntryMutation,
+        DeleteHistoryEntryMutationVariables
+      >(DeleteHistoryEntryDocument, variables)(),
+    options
+  );
+export const CreateEc2ConfigDocument = `
+    mutation CreateEc2Config($input: CreateEc2ConfigInput!) {
+  createEc2Config(input: $input) {
+    id
+    startDate
+    stopDate
+    username
+    history {
+      items {
+        id
+        ec2ConfigId
+        comment
+        time
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+    `;
+export const useCreateEc2ConfigMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    CreateEc2ConfigMutation,
+    TError,
+    CreateEc2ConfigMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    CreateEc2ConfigMutation,
+    TError,
+    CreateEc2ConfigMutationVariables,
+    TContext
+  >(
+    (variables?: CreateEc2ConfigMutationVariables) =>
+      amplifyFetcher<CreateEc2ConfigMutation, CreateEc2ConfigMutationVariables>(
+        CreateEc2ConfigDocument,
+        variables
+      )(),
+    options
+  );
+export const UpdateEc2ConfigDocument = `
+    mutation UpdateEc2Config($input: UpdateEc2ConfigInput!) {
+  updateEc2Config(input: $input) {
+    id
+    startDate
+    stopDate
+    username
+    history {
+      items {
+        id
+        ec2ConfigId
+        comment
+        time
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+    `;
+export const useUpdateEc2ConfigMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    UpdateEc2ConfigMutation,
+    TError,
+    UpdateEc2ConfigMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateEc2ConfigMutation,
+    TError,
+    UpdateEc2ConfigMutationVariables,
+    TContext
+  >(
+    (variables?: UpdateEc2ConfigMutationVariables) =>
+      amplifyFetcher<UpdateEc2ConfigMutation, UpdateEc2ConfigMutationVariables>(
+        UpdateEc2ConfigDocument,
+        variables
+      )(),
+    options
+  );
+export const DeleteEc2ConfigDocument = `
+    mutation DeleteEc2Config($input: DeleteEc2ConfigInput!) {
+  deleteEc2Config(input: $input) {
+    id
+    startDate
+    stopDate
+    username
+    history {
+      items {
+        id
+        ec2ConfigId
+        comment
+        time
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+    `;
+export const useDeleteEc2ConfigMutation = <
+  TError = unknown,
+  TContext = unknown
+>(
+  options?: UseMutationOptions<
+    DeleteEc2ConfigMutation,
+    TError,
+    DeleteEc2ConfigMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteEc2ConfigMutation,
+    TError,
+    DeleteEc2ConfigMutationVariables,
+    TContext
+  >(
+    (variables?: DeleteEc2ConfigMutationVariables) =>
+      amplifyFetcher<DeleteEc2ConfigMutation, DeleteEc2ConfigMutationVariables>(
+        DeleteEc2ConfigDocument,
+        variables
+      )(),
+    options
+  );
 export const CreatePostDocument = `
     mutation CreatePost($input: CreatePostInput!) {
   createPost(input: $input) {
@@ -523,6 +1432,144 @@ export const useListTodosQuery = <TData = ListTodosQuery, TError = unknown>(
     ),
     options
   );
+export const GetHistoryEntryDocument = `
+    query GetHistoryEntry($id: ID!) {
+  getHistoryEntry(id: $id) {
+    id
+    ec2ConfigId
+    comment
+    time
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const useGetHistoryEntryQuery = <
+  TData = GetHistoryEntryQuery,
+  TError = unknown
+>(
+  variables: GetHistoryEntryQueryVariables,
+  options?: UseQueryOptions<GetHistoryEntryQuery, TError, TData>
+) =>
+  useQuery<GetHistoryEntryQuery, TError, TData>(
+    ["GetHistoryEntry", variables],
+    amplifyFetcher<GetHistoryEntryQuery, GetHistoryEntryQueryVariables>(
+      GetHistoryEntryDocument,
+      variables
+    ),
+    options
+  );
+export const ListHistoryEntrysDocument = `
+    query ListHistoryEntrys($filter: ModelHistoryEntryFilterInput, $limit: Int, $nextToken: String) {
+  listHistoryEntrys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      ec2ConfigId
+      comment
+      time
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+    `;
+export const useListHistoryEntrysQuery = <
+  TData = ListHistoryEntrysQuery,
+  TError = unknown
+>(
+  variables?: ListHistoryEntrysQueryVariables,
+  options?: UseQueryOptions<ListHistoryEntrysQuery, TError, TData>
+) =>
+  useQuery<ListHistoryEntrysQuery, TError, TData>(
+    ["ListHistoryEntrys", variables],
+    amplifyFetcher<ListHistoryEntrysQuery, ListHistoryEntrysQueryVariables>(
+      ListHistoryEntrysDocument,
+      variables
+    ),
+    options
+  );
+export const GetEc2ConfigDocument = `
+    query GetEc2Config($id: ID!) {
+  getEc2Config(id: $id) {
+    id
+    startDate
+    stopDate
+    username
+    history {
+      items {
+        id
+        ec2ConfigId
+        comment
+        time
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+    `;
+export const useGetEc2ConfigQuery = <
+  TData = GetEc2ConfigQuery,
+  TError = unknown
+>(
+  variables: GetEc2ConfigQueryVariables,
+  options?: UseQueryOptions<GetEc2ConfigQuery, TError, TData>
+) =>
+  useQuery<GetEc2ConfigQuery, TError, TData>(
+    ["GetEc2Config", variables],
+    amplifyFetcher<GetEc2ConfigQuery, GetEc2ConfigQueryVariables>(
+      GetEc2ConfigDocument,
+      variables
+    ),
+    options
+  );
+export const ListEc2ConfigsDocument = `
+    query ListEc2Configs($filter: ModelEc2ConfigFilterInput, $limit: Int, $nextToken: String) {
+  listEc2Configs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      startDate
+      stopDate
+      username
+      history {
+        items {
+          id
+          ec2ConfigId
+          comment
+          time
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+    `;
+export const useListEc2ConfigsQuery = <
+  TData = ListEc2ConfigsQuery,
+  TError = unknown
+>(
+  variables?: ListEc2ConfigsQueryVariables,
+  options?: UseQueryOptions<ListEc2ConfigsQuery, TError, TData>
+) =>
+  useQuery<ListEc2ConfigsQuery, TError, TData>(
+    ["ListEc2Configs", variables],
+    amplifyFetcher<ListEc2ConfigsQuery, ListEc2ConfigsQueryVariables>(
+      ListEc2ConfigsDocument,
+      variables
+    ),
+    options
+  );
 export const GetPostDocument = `
     query GetPost($id: ID!) {
   getPost(id: $id) {
@@ -598,6 +1645,114 @@ export const useGetTodoQuery = <TData = GetTodoQuery, TError = unknown>(
     ),
     options
   );
+export const OnCreateHistoryEntryDocument = `
+    subscription OnCreateHistoryEntry {
+  onCreateHistoryEntry {
+    id
+    ec2ConfigId
+    comment
+    time
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const OnUpdateHistoryEntryDocument = `
+    subscription OnUpdateHistoryEntry {
+  onUpdateHistoryEntry {
+    id
+    ec2ConfigId
+    comment
+    time
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const OnDeleteHistoryEntryDocument = `
+    subscription OnDeleteHistoryEntry {
+  onDeleteHistoryEntry {
+    id
+    ec2ConfigId
+    comment
+    time
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const OnCreateEc2ConfigDocument = `
+    subscription OnCreateEc2Config($owner: String) {
+  onCreateEc2Config(owner: $owner) {
+    id
+    startDate
+    stopDate
+    username
+    history {
+      items {
+        id
+        ec2ConfigId
+        comment
+        time
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+    `;
+export const OnUpdateEc2ConfigDocument = `
+    subscription OnUpdateEc2Config($owner: String) {
+  onUpdateEc2Config(owner: $owner) {
+    id
+    startDate
+    stopDate
+    username
+    history {
+      items {
+        id
+        ec2ConfigId
+        comment
+        time
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+    `;
+export const OnDeleteEc2ConfigDocument = `
+    subscription OnDeleteEc2Config($owner: String) {
+  onDeleteEc2Config(owner: $owner) {
+    id
+    startDate
+    stopDate
+    username
+    history {
+      items {
+        id
+        ec2ConfigId
+        comment
+        time
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+    `;
 export const OnCreatePostDocument = `
     subscription OnCreatePost($owner: String) {
   onCreatePost(owner: $owner) {

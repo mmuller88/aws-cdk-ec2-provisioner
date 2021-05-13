@@ -137,6 +137,15 @@
         }
       ]
     },
+    "debug": {
+      "name": "debug",
+      "description": "Runs the application locally",
+      "steps": [
+        {
+          "exec": "react-scripts debug"
+        }
+      ]
+    },
     "generate-exports": {
       "name": "generate-exports",
       "description": "Generates aws-exports.js",

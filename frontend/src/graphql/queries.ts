@@ -12,6 +12,92 @@ export const listTodos = /* GraphQL */ `
     }
   }
 `;
+export const getHistoryEntry = /* GraphQL */ `
+  query GetHistoryEntry($id: ID!) {
+    getHistoryEntry(id: $id) {
+      id
+      ec2ConfigId
+      comment
+      time
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listHistoryEntrys = /* GraphQL */ `
+  query ListHistoryEntrys(
+    $filter: ModelHistoryEntryFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listHistoryEntrys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        ec2ConfigId
+        comment
+        time
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getEc2Config = /* GraphQL */ `
+  query GetEc2Config($id: ID!) {
+    getEc2Config(id: $id) {
+      id
+      startDate
+      stopDate
+      username
+      history {
+        items {
+          id
+          ec2ConfigId
+          comment
+          time
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listEc2Configs = /* GraphQL */ `
+  query ListEc2Configs(
+    $filter: ModelEc2ConfigFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEc2Configs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        startDate
+        stopDate
+        username
+        history {
+          items {
+            id
+            ec2ConfigId
+            comment
+            time
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
 export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {

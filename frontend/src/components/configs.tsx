@@ -2,41 +2,54 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { Auth } from '@aws-amplify/auth';
 
-import { useListPostsQuery } from '../lib/api';
-import { CreatePostInput, CreatePostDocument, Post } from '../lib/api';
+import { useListEc2ConfigsQuery } from '../lib/api';
+import { CreateEc2ConfigInput, CreateEc2ConfigDocument, Ec2Config } from '../lib/api';
 import { API } from '../lib/fetcher';
 
-const initialState = { title: '', content: '' };
+import DateTimePicker from 'react-datetime-picker';
+
+const initialState = { startDate: '', stopDate: ''};
 
 export function Configs() {
-  const [post, setPost] = useState(initialState);
-  const { title, content } = post;
+  const [config, setConfig] = useState(initialState);
+  const { startDate, stopDate} = config;
 
-  const { data, isLoading, refetch } = useListPostsQuery(null, {
+  const { data, isLoading, refetch } = useListEc2ConfigsQuery(null, {
     refetchOnWindowFocus: false
   });
 
   // useCreatePostMutation isn't working correctly right now
-  const [createPost] = useMutation(async (input: CreatePostInput) => {
-    const result = await API.getInstance().query(CreatePostDocument, { input });
-    return result.data?.createPost as Post;
+  const [createEc2Config] = useMutation(async (input: CreateEc2ConfigInput) => {
+    const result = await API.getInstance().query(CreateEc2ConfigDocument, { input });
+    return result.data?.createEc2Config as Ec2Config;
   });
 
-  const onChange = (e) => {
-    setPost(() => ({ ...post, [e.target.name]: e.target.value }))
+  // const onChange = (e) => {
+  //   setConfig(() => ({ ...config, [e.target.name]: e.target.value }))
+  // }
+
+  const onChangeStartDate = (date: Date) => {
+    console.log(date);
+    setConfig(() => ({ ...config, startDate: date.toISOString() }))
   }
 
-  const createNewPost = async () => {
-    if (!title || !content) return
+  const onChangeStopDate = (date: Date) => {
+    console.log(date);
+    setConfig(() => ({ ...config, stopDate: date.toISOString() }))
+  }
+
+  const createNewEc2Config = async () => {
+    if (!startDate || !stopDate) return
 
     const userData = await Auth.currentAuthenticatedUser();
 
     const input = {
-      ...post,
+      ...config,
+      // startDate: startDate2.toISOString(),
       username: userData.username
     };
 
-    const createResult = await createPost(input, { onSuccess: (data) => { console.log(data) } });
+    const createResult = await createEc2Config(input, { onSuccess: (data) => { console.log(data) } });
     if (createResult) {
       refetch();
     }
@@ -47,33 +60,39 @@ export function Configs() {
   return (
     <div>
       <div>
-        <h2>Posts:</h2>
+        <h2>Ec2 Configs:</h2>
         {
-          data?.listPosts?.items
-            ? data?.listPosts?.items?.map(post => {
+          data?.listEc2Configs?.items
+            ? data?.listEc2Configs?.items?.map(config => {
               return (
                 <div>
-                  <h4>Title: {post.title}</h4>
-                  <h5>Owner: {post.owner}</h5>
-                  <h5>Content: {post.content}</h5>
+                  <h4>Start Date: {new Date(config.startDate).toLocaleString()}</h4>
+                  <h4>Stop Date: {new Date(config.stopDate).toLocaleString()}</h4>
+                  <h4>Owner: {config.owner}</h4>
                 </div>
               )
             })
-            : <h4>No posts found</h4>
+            : <h4>No ec2 configs found</h4>
         }
       </div>
       <br />
       <br />
       <div>
-        <h3>Create Post:</h3>
+        <h3>Create Ec2 Config:</h3>
         <div>
-          <input onChange={onChange} name="title" placeholder="Title" />
+          <DateTimePicker
+            onChange={onChangeStartDate}
+            value={new Date()}
+          />
         </div>
         <div>
-          <textarea onChange={onChange} name="content" placeholder="Content" />
+          <DateTimePicker
+            onChange={onChangeStopDate}
+            value={new Date()}
+          />
         </div>
-        <div>
-          <button onClick={createNewPost}>Create Post</button>
+        <div> 
+          <button onClick={createNewEc2Config}>Create Ec2 Config</button>
         </div>
       </div>
     </div>

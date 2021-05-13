@@ -2,6 +2,114 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createHistoryEntry = /* GraphQL */ `
+  mutation CreateHistoryEntry($input: CreateHistoryEntryInput!) {
+    createHistoryEntry(input: $input) {
+      id
+      ec2ConfigId
+      comment
+      time
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateHistoryEntry = /* GraphQL */ `
+  mutation UpdateHistoryEntry($input: UpdateHistoryEntryInput!) {
+    updateHistoryEntry(input: $input) {
+      id
+      ec2ConfigId
+      comment
+      time
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteHistoryEntry = /* GraphQL */ `
+  mutation DeleteHistoryEntry($input: DeleteHistoryEntryInput!) {
+    deleteHistoryEntry(input: $input) {
+      id
+      ec2ConfigId
+      comment
+      time
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createEc2Config = /* GraphQL */ `
+  mutation CreateEc2Config($input: CreateEc2ConfigInput!) {
+    createEc2Config(input: $input) {
+      id
+      startDate
+      stopDate
+      username
+      history {
+        items {
+          id
+          ec2ConfigId
+          comment
+          time
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateEc2Config = /* GraphQL */ `
+  mutation UpdateEc2Config($input: UpdateEc2ConfigInput!) {
+    updateEc2Config(input: $input) {
+      id
+      startDate
+      stopDate
+      username
+      history {
+        items {
+          id
+          ec2ConfigId
+          comment
+          time
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteEc2Config = /* GraphQL */ `
+  mutation DeleteEc2Config($input: DeleteEc2ConfigInput!) {
+    deleteEc2Config(input: $input) {
+      id
+      startDate
+      stopDate
+      username
+      history {
+        items {
+          id
+          ec2ConfigId
+          comment
+          time
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
 export const createPost = /* GraphQL */ `
   mutation CreatePost($input: CreatePostInput!) {
     createPost(input: $input) {
