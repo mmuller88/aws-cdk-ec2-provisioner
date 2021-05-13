@@ -167,7 +167,7 @@
       "description": "Generates frontend GraphQL wrapper API code",
       "steps": [
         {
-          "exec": "yarn run generate-statements && graphql-codegen --config codegen.yml"
+          "exec": "yarn run copy-schema && yarn run generate-statements && graphql-codegen --config codegen.yml && rm schema.graphql"
         }
       ]
     }

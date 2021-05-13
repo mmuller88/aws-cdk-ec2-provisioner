@@ -97,7 +97,7 @@ frontendProject.addTask('generate-statements', {
 
 frontendProject.addTask('codegen', {
   description: 'Generates frontend GraphQL wrapper API code',
-  exec: 'yarn run generate-statements && graphql-codegen --config codegen.yml',
+  exec: 'yarn run copy-schema && yarn run generate-statements && graphql-codegen --config codegen.yml && rm schema.graphql',
 });
 
 frontendProject.synth();
