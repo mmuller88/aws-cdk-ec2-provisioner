@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { Auth } from '@aws-amplify/auth';
 
-import { useListEc2ConfigsQuery } from '../lib/api';
+import { DeleteEc2ConfigDocument, DeleteEc2ConfigInput, useListEc2ConfigsQuery } from '../lib/api';
 import { CreateEc2ConfigInput, CreateEc2ConfigDocument, Ec2Config } from '../lib/api';
 import { API } from '../lib/fetcher';
 
-import DateTimePicker from 'react-datetime-picker';
+import ReactDatetime from 'react-datetime';
+import "react-datetime/css/react-datetime.css";
+
+import { Moment } from "moment";
+import * as moment from "moment";
 
 const initialState = { startDate: '', stopDate: ''};
 
@@ -24,22 +28,16 @@ export function Configs() {
     return result.data?.createEc2Config as Ec2Config;
   });
 
-  // const onChange = (e) => {
-  //   setConfig(() => ({ ...config, [e.target.name]: e.target.value }))
-  // }
-
-  const onChangeStartDate = (date: Date) => {
-    console.log(date);
-    setConfig(() => ({ ...config, startDate: date.toISOString() }))
-  }
-
-  const onChangeStopDate = (date: Date) => {
-    console.log(date);
-    setConfig(() => ({ ...config, stopDate: date.toISOString() }))
-  }
+  const [deleteEc2Config] = useMutation(async (input: DeleteEc2ConfigInput) => {
+    const result = await API.getInstance().query(DeleteEc2ConfigDocument, { input });
+    console.log(result);
+    return result.data?.deleteEc2Config as Ec2Config;
+  });
 
   const createNewEc2Config = async () => {
     if (!startDate || !stopDate) return
+
+    console.log(config);
 
     const userData = await Auth.currentAuthenticatedUser();
 
@@ -69,6 +67,12 @@ export function Configs() {
                   <h4>Start Date: {new Date(config.startDate).toLocaleString()}</h4>
                   <h4>Stop Date: {new Date(config.stopDate).toLocaleString()}</h4>
                   <h4>Owner: {config.owner}</h4>
+                  <button onClick={async () => {
+                    const deleteResult = await deleteEc2Config({id: config.id});
+                    if (deleteResult) {
+                      refetch();
+                    }
+                  }}>Delete</button>
                 </div>
               )
             })
@@ -80,15 +84,15 @@ export function Configs() {
       <div>
         <h3>Create Ec2 Config:</h3>
         <div>
-          <DateTimePicker
-            onChange={onChangeStartDate}
-            value={new Date()}
+          <ReactDatetime
+            onChange={ (date: string | Moment) => setConfig(() => ({ ...config, startDate: (date as Moment).toISOString() }))}
+            value={new Date(new Date().setHours(new Date().getHours() + 1))}
           />
         </div>
         <div>
-          <DateTimePicker
-            onChange={onChangeStopDate}
-            value={new Date()}
+          <ReactDatetime
+            onChange={ (date: string | Moment) => setConfig(() => ({ ...config, stopDate: (date as Moment).toISOString() }))}
+            value={new Date(new Date().setHours(new Date().getHours() + 1))}
           />
         </div>
         <div> 

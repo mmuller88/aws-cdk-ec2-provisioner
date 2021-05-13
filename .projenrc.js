@@ -57,7 +57,7 @@ const frontendProject = new web.ReactTypeScriptProject({
     'react-router',
     'react-router-dom',
     '@types/react-router-dom',
-    'react-datetime-picker',
+    'react-datetime',
   ],
   devDeps: [
     '@graphql-codegen/cli',
