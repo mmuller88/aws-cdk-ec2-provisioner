@@ -2,9 +2,9 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createPost = /* GraphQL */ `
-  mutation CreatePost($input: CreatePostInput!) {
-    createPost(input: $input) {
+export const onCreatePost = /* GraphQL */ `
+  subscription OnCreatePost($owner: String) {
+    onCreatePost(owner: $owner) {
       id
       title
       content
@@ -15,9 +15,9 @@ export const createPost = /* GraphQL */ `
     }
   }
 `;
-export const updatePost = /* GraphQL */ `
-  mutation UpdatePost($input: UpdatePostInput!) {
-    updatePost(input: $input) {
+export const onUpdatePost = /* GraphQL */ `
+  subscription OnUpdatePost($owner: String) {
+    onUpdatePost(owner: $owner) {
       id
       title
       content
@@ -28,9 +28,9 @@ export const updatePost = /* GraphQL */ `
     }
   }
 `;
-export const deletePost = /* GraphQL */ `
-  mutation DeletePost($input: DeletePostInput!) {
-    deletePost(input: $input) {
+export const onDeletePost = /* GraphQL */ `
+  subscription OnDeletePost($owner: String) {
+    onDeletePost(owner: $owner) {
       id
       title
       content

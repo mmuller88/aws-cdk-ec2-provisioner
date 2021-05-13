@@ -85,7 +85,7 @@ export class AppSyncStack extends CustomStack {
 
     const graphQlApi = new AppSyncTransformer(this, 'GraphQlApi', {
       apiName: 'ec2-pro-api',
-      schemaPath: './frontend/schema.graphql',
+      schemaPath: './schema.graphql',
       authorizationConfig: {
         defaultAuthorization: {
           authorizationType: appsync.AuthorizationType.USER_POOL,

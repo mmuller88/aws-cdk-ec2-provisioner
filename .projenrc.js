@@ -87,6 +87,10 @@ frontendProject.addTask('generate-exports', {
   exec: 'node bin/generateExports.js dev && node bin/generateExports.js prod',
 });
 
+frontendProject.addTask('copy-schema', {
+  exec: 'cp ../appsync/schema.graphql ./schema.graphql',
+});
+
 frontendProject.addTask('generate-statements', {
   exec: 'node bin/generateStatements.js',
 });

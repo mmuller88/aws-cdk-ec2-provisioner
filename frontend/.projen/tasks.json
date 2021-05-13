@@ -146,6 +146,14 @@
         }
       ]
     },
+    "copy-schema": {
+      "name": "copy-schema",
+      "steps": [
+        {
+          "exec": "cp ../appsync/schema.graphql ./schema.graphql"
+        }
+      ]
+    },
     "generate-statements": {
       "name": "generate-statements",
       "steps": [
