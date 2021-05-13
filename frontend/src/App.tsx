@@ -27,7 +27,7 @@ function App() {
   return (
     <div className="App">
       <nav className="Navbar">
-        <h1 className="navbar-logo">AppSync Transformer Demo</h1>
+        <h1 className="navbar-logo">Todolist Demo</h1>
         <ul className="nav-menu">
           <li> <a href="/posts">Posts</a></li>
           <li> <a href="/todos">Todos</a></li>

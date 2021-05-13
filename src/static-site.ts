@@ -14,7 +14,7 @@ export class StaticSite extends CustomStack {
 
     const siteBucket = new s3.Bucket(this, 'SiteBucket', {
       websiteIndexDocument: 'index.html',
-      websiteErrorDocument: 'error.html',
+      websiteErrorDocument: 'index.html',
       publicReadAccess: true,
       cors: [
         {
