@@ -99,6 +99,14 @@
       "type": "runtime"
     },
     {
+      "name": "glamor",
+      "type": "runtime"
+    },
+    {
+      "name": "mobx-react",
+      "type": "runtime"
+    },
+    {
       "name": "react",
       "type": "runtime"
     },
@@ -108,6 +116,10 @@
     },
     {
       "name": "react-dom",
+      "type": "runtime"
+    },
+    {
+      "name": "react-icons",
       "type": "runtime"
     },
     {

@@ -38,6 +38,924 @@ export const deleteHistoryEntry = /* GraphQL */ `
     }
   }
 `;
+export const createUser = /* GraphQL */ `
+  mutation CreateUser($input: CreateUserInput!) {
+    createUser(input: $input) {
+      id
+      username
+      conversations {
+        items {
+          id
+          user {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          convoLinkUserId
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          author {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          authorId
+          content
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser($input: UpdateUserInput!) {
+    updateUser(input: $input) {
+      id
+      username
+      conversations {
+        items {
+          id
+          user {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          convoLinkUserId
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          author {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          authorId
+          content
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser($input: DeleteUserInput!) {
+    deleteUser(input: $input) {
+      id
+      username
+      conversations {
+        items {
+          id
+          user {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          convoLinkUserId
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          author {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          authorId
+          content
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createConvo = /* GraphQL */ `
+  mutation CreateConvo($input: CreateConversationInput!) {
+    createConvo(input: $input) {
+      id
+      messages {
+        items {
+          id
+          author {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          authorId
+          content
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      associated {
+        items {
+          id
+          user {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          convoLinkUserId
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      name
+      members
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createMessage = /* GraphQL */ `
+  mutation CreateMessage($input: CreateMessageInput!) {
+    createMessage(input: $input) {
+      id
+      author {
+        id
+        username
+        conversations {
+          items {
+            id
+            user {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            convoLinkUserId
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        messages {
+          items {
+            id
+            author {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            authorId
+            content
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      authorId
+      content
+      conversation {
+        id
+        messages {
+          items {
+            id
+            author {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            authorId
+            content
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        associated {
+          items {
+            id
+            user {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            convoLinkUserId
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        name
+        members
+        createdAt
+        updatedAt
+      }
+      messageConversationId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateMessage = /* GraphQL */ `
+  mutation UpdateMessage($input: UpdateMessageInput!) {
+    updateMessage(input: $input) {
+      id
+      author {
+        id
+        username
+        conversations {
+          items {
+            id
+            user {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            convoLinkUserId
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        messages {
+          items {
+            id
+            author {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            authorId
+            content
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      authorId
+      content
+      conversation {
+        id
+        messages {
+          items {
+            id
+            author {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            authorId
+            content
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        associated {
+          items {
+            id
+            user {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            convoLinkUserId
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        name
+        members
+        createdAt
+        updatedAt
+      }
+      messageConversationId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteMessage = /* GraphQL */ `
+  mutation DeleteMessage($input: DeleteMessageInput!) {
+    deleteMessage(input: $input) {
+      id
+      author {
+        id
+        username
+        conversations {
+          items {
+            id
+            user {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            convoLinkUserId
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        messages {
+          items {
+            id
+            author {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            authorId
+            content
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      authorId
+      content
+      conversation {
+        id
+        messages {
+          items {
+            id
+            author {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            authorId
+            content
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        associated {
+          items {
+            id
+            user {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            convoLinkUserId
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        name
+        members
+        createdAt
+        updatedAt
+      }
+      messageConversationId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createConvoLink = /* GraphQL */ `
+  mutation CreateConvoLink($input: CreateConvoLinkInput!) {
+    createConvoLink(input: $input) {
+      id
+      user {
+        id
+        username
+        conversations {
+          items {
+            id
+            user {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            convoLinkUserId
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        messages {
+          items {
+            id
+            author {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            authorId
+            content
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      convoLinkUserId
+      conversation {
+        id
+        messages {
+          items {
+            id
+            author {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            authorId
+            content
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        associated {
+          items {
+            id
+            user {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            convoLinkUserId
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        name
+        members
+        createdAt
+        updatedAt
+      }
+      convoLinkConversationId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateConvoLink = /* GraphQL */ `
+  mutation UpdateConvoLink($input: UpdateConvoLinkInput!) {
+    updateConvoLink(input: $input) {
+      id
+      user {
+        id
+        username
+        conversations {
+          items {
+            id
+            user {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            convoLinkUserId
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        messages {
+          items {
+            id
+            author {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            authorId
+            content
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      convoLinkUserId
+      conversation {
+        id
+        messages {
+          items {
+            id
+            author {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            authorId
+            content
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        associated {
+          items {
+            id
+            user {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            convoLinkUserId
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        name
+        members
+        createdAt
+        updatedAt
+      }
+      convoLinkConversationId
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createEc2Config = /* GraphQL */ `
   mutation CreateEc2Config($input: CreateEc2ConfigInput!) {
     createEc2Config(input: $input) {

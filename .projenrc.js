@@ -37,6 +37,11 @@ project.buildTask.prependExec(
 project.setScript('cdkDeploy', 'cdk deploy');
 project.setScript('cdkDestroy', 'cdk destroy');
 
+project.addTask('updateSchema', {
+  description: 'pdates all places when changing the schema.graphql',
+  exec: 'yarn synth && cd frontend && yarn codegen && cd ..',
+});
+
 const common_exclude = ['appsync'];
 project.npmignore.exclude(...common_exclude);
 project.gitignore.exclude(...common_exclude);
@@ -58,6 +63,9 @@ const frontendProject = new web.ReactTypeScriptProject({
     'react-router-dom',
     '@types/react-router-dom',
     'react-datetime',
+    'glamor',
+    'mobx-react',
+    'react-icons',
   ],
   devDeps: [
     '@graphql-codegen/cli',

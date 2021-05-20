@@ -17,6 +17,7 @@
     "deploy": "npx projen deploy",
     "destroy": "npx projen destroy",
     "diff": "npx projen diff",
+    "updateSchema": "npx projen updateSchema",
     "projen": "npx projen",
     "start": "npx projen start",
     "cdkDeploy": "cdk deploy",
