@@ -4,20 +4,24 @@ import { observer } from 'mobx-react'
 // import { graphql, compose } from 'react-apollo'
 import { FaComments, FaChevronRight } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import { Auth } from '@aws-amplify/auth';
 
 // import UserStore from '../mobx/UserStore'
 import { primary, lightBg } from '../theme'
-import { getUserAndConversations } from '../graphql'
+// import { getUserAndConversations } from '../graphql/queries'
+import { listUsers, getConvo } from '../graphql/queries'
 
 const ConversationsObserver = observer(
   class Conversations extends React.Component {
     render() {
-      const { username } = UserStore
+      // const { username } = UserStore
       let { conversations } = this.props
+
+      const userData = await Auth.currentAuthenticatedUser();
 
       conversations = conversations.map((c) => {
         const convo = c.conversation.name.split('&')
-        const name = convo.find(i => i !== username)
+        const name = convo.find(i => i !== userData.username)
         return { ...c, name }
       })
       return (
