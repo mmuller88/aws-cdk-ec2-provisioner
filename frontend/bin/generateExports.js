@@ -4,7 +4,7 @@ const path = require('path');
 const REGION = process.env.REGION || 'eu-central-1';
 
 const AWS = require('aws-sdk');
-AWS.config.update({ region: 'eu-central-1' });
+AWS.config.update({ region: REGION });
 
 const appsyncGraphQLURLOutputKey = 'appsyncGraphQLEndpointOutput';
 const userPoolIdOutputKey = 'awsUserPoolId';
@@ -32,12 +32,13 @@ async function main() {
   var STACK_NAME = `ec2-provisioner-stack-${stage}`;
 
   if (stage === 'prod') {
-    process.env.AWS_SDK_LOAD_CONFIG = 1;
-    var credentials = new AWS.SharedIniFileCredentials({
-      profile: 'prod',
-      filename: '~/.aws/credentials',
-    });
-    AWS.config.credentials = credentials;
+    AWS.config.update({ region: 'us-east-1' });
+    // process.env.AWS_SDK_LOAD_CONFIG = 1;
+    // var credentials = new AWS.SharedIniFileCredentials({
+    //   profile: 'prod',
+    //   filename: '~/.aws/credentials',
+    // });
+    // AWS.config.credentials = credentials;
   }
 
   const cloudformation = new AWS.CloudFormation();

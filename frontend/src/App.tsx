@@ -31,6 +31,7 @@ function App() {
       <nav className="Navbar">
         <h1 className="navbar-logo">Hacklab Demo</h1>
         <ul className="nav-menu">
+          <li> <a href="/configs">Conversations</a></li>
           <li> <a href="/configs">Configs</a></li>
           <li> <a href="/posts">Posts</a></li>
           <li> <a href="/todos">Todos</a></li>
@@ -40,6 +41,7 @@ function App() {
         <Router>
           <Switch>
             <Route exact path="/" render={(props: any) => <Conversations {...props}  />} />
+            <Route path="/conversations" render={(props: any) => <Conversations {...props}  />} />
             <Route path="/configs" render={(props: any) => <Configs {...props}  />} />
             <Route path="/posts" render={(props: any) => <Posts {...props}  />} />
             <Route path="/todos" render={(props: any) => <Todos {...props}  />} />
