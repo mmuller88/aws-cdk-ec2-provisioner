@@ -335,6 +335,199 @@ export const listConversations = /* GraphQL */ `
     }
   }
 `;
+export const getMessage = /* GraphQL */ `
+  query GetMessage($id: ID!) {
+    getMessage(id: $id) {
+      id
+      author {
+        id
+        username
+        conversations {
+          items {
+            id
+            user {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            convoLinkUserId
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        messages {
+          items {
+            id
+            author {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            authorId
+            content
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      authorId
+      content
+      conversation {
+        id
+        messages {
+          items {
+            id
+            author {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            authorId
+            content
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        associated {
+          items {
+            id
+            user {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            convoLinkUserId
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        name
+        members
+        createdAt
+        updatedAt
+      }
+      messageConversationId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listMessages = /* GraphQL */ `
+  query ListMessages(
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        author {
+          id
+          username
+          conversations {
+            items {
+              id
+              convoLinkUserId
+              convoLinkConversationId
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          messages {
+            items {
+              id
+              authorId
+              content
+              messageConversationId
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        authorId
+        content
+        conversation {
+          id
+          messages {
+            items {
+              id
+              authorId
+              content
+              messageConversationId
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          associated {
+            items {
+              id
+              convoLinkUserId
+              convoLinkConversationId
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          name
+          members
+          createdAt
+          updatedAt
+        }
+        messageConversationId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getEc2Config = /* GraphQL */ `
   query GetEc2Config($id: ID!) {
     getEc2Config(id: $id) {

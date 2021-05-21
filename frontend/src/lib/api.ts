@@ -91,6 +91,8 @@ export type Query = {
   listUsers?: Maybe<ModelUserConnection>;
   getConversation?: Maybe<Conversation>;
   listConversations?: Maybe<ModelConversationConnection>;
+  getMessage?: Maybe<Message>;
+  listMessages?: Maybe<ModelMessageConnection>;
   getEc2Config?: Maybe<Ec2Config>;
   listEc2Configs?: Maybe<ModelEc2ConfigConnection>;
   getPost?: Maybe<Post>;
@@ -128,6 +130,16 @@ export type QueryListConversationsArgs = {
   nextToken?: Maybe<Scalars["String"]>;
 };
 
+export type QueryGetMessageArgs = {
+  id: Scalars["ID"];
+};
+
+export type QueryListMessagesArgs = {
+  filter?: Maybe<ModelMessageFilterInput>;
+  limit?: Maybe<Scalars["Int"]>;
+  nextToken?: Maybe<Scalars["String"]>;
+};
+
 export type QueryGetEc2ConfigArgs = {
   id: Scalars["ID"];
 };
@@ -158,8 +170,8 @@ export type User = {
   username: Scalars["String"];
   conversations?: Maybe<ModelConvoLinkConnection>;
   messages?: Maybe<ModelMessageConnection>;
-  createdAt?: Maybe<Scalars["String"]>;
-  updatedAt?: Maybe<Scalars["String"]>;
+  createdAt: Scalars["AWSDateTime"];
+  updatedAt: Scalars["AWSDateTime"];
 };
 
 export type UserConversationsArgs = {
@@ -183,8 +195,8 @@ export type Conversation = {
   associated?: Maybe<ModelConvoLinkConnection>;
   name: Scalars["String"];
   members: Array<Scalars["String"]>;
-  createdAt?: Maybe<Scalars["String"]>;
-  updatedAt?: Maybe<Scalars["String"]>;
+  createdAt: Scalars["AWSDateTime"];
+  updatedAt: Scalars["AWSDateTime"];
 };
 
 export type ConversationMessagesArgs = {
@@ -209,8 +221,8 @@ export type Message = {
   content: Scalars["String"];
   conversation: Conversation;
   messageConversationId: Scalars["ID"];
-  createdAt?: Maybe<Scalars["String"]>;
-  updatedAt?: Maybe<Scalars["String"]>;
+  createdAt: Scalars["AWSDateTime"];
+  updatedAt: Scalars["AWSDateTime"];
 };
 
 export type ConvoLink = {
@@ -220,8 +232,8 @@ export type ConvoLink = {
   convoLinkUserId?: Maybe<Scalars["ID"]>;
   conversation: Conversation;
   convoLinkConversationId: Scalars["ID"];
-  createdAt?: Maybe<Scalars["String"]>;
-  updatedAt?: Maybe<Scalars["String"]>;
+  createdAt: Scalars["AWSDateTime"];
+  updatedAt: Scalars["AWSDateTime"];
 };
 
 export type Subscription = {
@@ -570,15 +582,15 @@ export type ModelUserFilterInput = {
 export type CreateUserInput = {
   id?: Maybe<Scalars["ID"]>;
   username: Scalars["String"];
-  createdAt?: Maybe<Scalars["String"]>;
-  updatedAt?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["AWSDateTime"]>;
+  updatedAt?: Maybe<Scalars["AWSDateTime"]>;
 };
 
 export type UpdateUserInput = {
   id: Scalars["ID"];
   username?: Maybe<Scalars["String"]>;
-  createdAt?: Maybe<Scalars["String"]>;
-  updatedAt?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["AWSDateTime"]>;
+  updatedAt?: Maybe<Scalars["AWSDateTime"]>;
 };
 
 export type DeleteUserInput = {
@@ -606,20 +618,38 @@ export type CreateConversationInput = {
   id?: Maybe<Scalars["ID"]>;
   name: Scalars["String"];
   members: Array<Scalars["String"]>;
-  createdAt?: Maybe<Scalars["String"]>;
-  updatedAt?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["AWSDateTime"]>;
+  updatedAt?: Maybe<Scalars["AWSDateTime"]>;
 };
 
 export type UpdateConversationInput = {
   id: Scalars["ID"];
   name?: Maybe<Scalars["String"]>;
   members?: Maybe<Array<Scalars["String"]>>;
-  createdAt?: Maybe<Scalars["String"]>;
-  updatedAt?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["AWSDateTime"]>;
+  updatedAt?: Maybe<Scalars["AWSDateTime"]>;
 };
 
 export type DeleteConversationInput = {
   id?: Maybe<Scalars["ID"]>;
+};
+
+export type ModelMessageConnection = {
+  __typename?: "ModelMessageConnection";
+  items?: Maybe<Array<Maybe<Message>>>;
+  nextToken?: Maybe<Scalars["String"]>;
+};
+
+export type ModelMessageFilterInput = {
+  id?: Maybe<ModelIdFilterInput>;
+  authorId?: Maybe<ModelStringFilterInput>;
+  content?: Maybe<ModelStringFilterInput>;
+  messageConversationId?: Maybe<ModelIdFilterInput>;
+  createdAt?: Maybe<ModelStringFilterInput>;
+  updatedAt?: Maybe<ModelStringFilterInput>;
+  and?: Maybe<Array<Maybe<ModelMessageFilterInput>>>;
+  or?: Maybe<Array<Maybe<ModelMessageFilterInput>>>;
+  not?: Maybe<ModelMessageFilterInput>;
 };
 
 export type CreateMessageInput = {
@@ -627,8 +657,8 @@ export type CreateMessageInput = {
   authorId?: Maybe<Scalars["String"]>;
   content: Scalars["String"];
   messageConversationId: Scalars["ID"];
-  createdAt?: Maybe<Scalars["String"]>;
-  updatedAt?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["AWSDateTime"]>;
+  updatedAt?: Maybe<Scalars["AWSDateTime"]>;
 };
 
 export type UpdateMessageInput = {
@@ -636,8 +666,8 @@ export type UpdateMessageInput = {
   authorId?: Maybe<Scalars["String"]>;
   content?: Maybe<Scalars["String"]>;
   messageConversationId?: Maybe<Scalars["ID"]>;
-  createdAt?: Maybe<Scalars["String"]>;
-  updatedAt?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["AWSDateTime"]>;
+  updatedAt?: Maybe<Scalars["AWSDateTime"]>;
 };
 
 export type DeleteMessageInput = {
@@ -648,16 +678,16 @@ export type CreateConvoLinkInput = {
   id?: Maybe<Scalars["ID"]>;
   convoLinkUserId?: Maybe<Scalars["ID"]>;
   convoLinkConversationId: Scalars["ID"];
-  createdAt?: Maybe<Scalars["String"]>;
-  updatedAt?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["AWSDateTime"]>;
+  updatedAt?: Maybe<Scalars["AWSDateTime"]>;
 };
 
 export type UpdateConvoLinkInput = {
   id: Scalars["ID"];
   convoLinkUserId?: Maybe<Scalars["ID"]>;
   convoLinkConversationId?: Maybe<Scalars["ID"]>;
-  createdAt?: Maybe<Scalars["String"]>;
-  updatedAt?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars["AWSDateTime"]>;
+  updatedAt?: Maybe<Scalars["AWSDateTime"]>;
 };
 
 export type ModelStringKeyConditionInput = {
@@ -685,24 +715,6 @@ export type ModelConvoLinkFilterInput = {
   and?: Maybe<Array<Maybe<ModelConvoLinkFilterInput>>>;
   or?: Maybe<Array<Maybe<ModelConvoLinkFilterInput>>>;
   not?: Maybe<ModelConvoLinkFilterInput>;
-};
-
-export type ModelMessageConnection = {
-  __typename?: "ModelMessageConnection";
-  items?: Maybe<Array<Maybe<Message>>>;
-  nextToken?: Maybe<Scalars["String"]>;
-};
-
-export type ModelMessageFilterInput = {
-  id?: Maybe<ModelIdFilterInput>;
-  authorId?: Maybe<ModelStringFilterInput>;
-  content?: Maybe<ModelStringFilterInput>;
-  messageConversationId?: Maybe<ModelIdFilterInput>;
-  createdAt?: Maybe<ModelStringFilterInput>;
-  updatedAt?: Maybe<ModelStringFilterInput>;
-  and?: Maybe<Array<Maybe<ModelMessageFilterInput>>>;
-  or?: Maybe<Array<Maybe<ModelMessageFilterInput>>>;
-  not?: Maybe<ModelMessageFilterInput>;
 };
 
 export type QueryGetTodoParamsInput = {
@@ -3089,6 +3101,317 @@ export type ListConversationsQuery = { __typename?: "Query" } & {
                         >;
                       }
                   >;
+                }
+            >
+          >
+        >;
+      }
+  >;
+};
+
+export type GetMessageQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type GetMessageQuery = { __typename?: "Query" } & {
+  getMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      | "id"
+      | "authorId"
+      | "content"
+      | "messageConversationId"
+      | "createdAt"
+      | "updatedAt"
+    > & {
+        author?: Maybe<
+          { __typename?: "User" } & Pick<
+            User,
+            "id" | "username" | "createdAt" | "updatedAt"
+          > & {
+              conversations?: Maybe<
+                { __typename?: "ModelConvoLinkConnection" } & Pick<
+                  ModelConvoLinkConnection,
+                  "nextToken"
+                > & {
+                    items?: Maybe<
+                      Array<
+                        Maybe<
+                          { __typename?: "ConvoLink" } & Pick<
+                            ConvoLink,
+                            | "id"
+                            | "convoLinkUserId"
+                            | "convoLinkConversationId"
+                            | "createdAt"
+                            | "updatedAt"
+                          > & {
+                              user: { __typename?: "User" } & Pick<
+                                User,
+                                "id" | "username" | "createdAt" | "updatedAt"
+                              >;
+                              conversation: {
+                                __typename?: "Conversation";
+                              } & Pick<
+                                Conversation,
+                                | "id"
+                                | "name"
+                                | "members"
+                                | "createdAt"
+                                | "updatedAt"
+                              >;
+                            }
+                        >
+                      >
+                    >;
+                  }
+              >;
+              messages?: Maybe<
+                { __typename?: "ModelMessageConnection" } & Pick<
+                  ModelMessageConnection,
+                  "nextToken"
+                > & {
+                    items?: Maybe<
+                      Array<
+                        Maybe<
+                          { __typename?: "Message" } & Pick<
+                            Message,
+                            | "id"
+                            | "authorId"
+                            | "content"
+                            | "messageConversationId"
+                            | "createdAt"
+                            | "updatedAt"
+                          > & {
+                              author?: Maybe<
+                                { __typename?: "User" } & Pick<
+                                  User,
+                                  "id" | "username" | "createdAt" | "updatedAt"
+                                >
+                              >;
+                              conversation: {
+                                __typename?: "Conversation";
+                              } & Pick<
+                                Conversation,
+                                | "id"
+                                | "name"
+                                | "members"
+                                | "createdAt"
+                                | "updatedAt"
+                              >;
+                            }
+                        >
+                      >
+                    >;
+                  }
+              >;
+            }
+        >;
+        conversation: { __typename?: "Conversation" } & Pick<
+          Conversation,
+          "id" | "name" | "members" | "createdAt" | "updatedAt"
+        > & {
+            messages?: Maybe<
+              { __typename?: "ModelMessageConnection" } & Pick<
+                ModelMessageConnection,
+                "nextToken"
+              > & {
+                  items?: Maybe<
+                    Array<
+                      Maybe<
+                        { __typename?: "Message" } & Pick<
+                          Message,
+                          | "id"
+                          | "authorId"
+                          | "content"
+                          | "messageConversationId"
+                          | "createdAt"
+                          | "updatedAt"
+                        > & {
+                            author?: Maybe<
+                              { __typename?: "User" } & Pick<
+                                User,
+                                "id" | "username" | "createdAt" | "updatedAt"
+                              >
+                            >;
+                            conversation: {
+                              __typename?: "Conversation";
+                            } & Pick<
+                              Conversation,
+                              | "id"
+                              | "name"
+                              | "members"
+                              | "createdAt"
+                              | "updatedAt"
+                            >;
+                          }
+                      >
+                    >
+                  >;
+                }
+            >;
+            associated?: Maybe<
+              { __typename?: "ModelConvoLinkConnection" } & Pick<
+                ModelConvoLinkConnection,
+                "nextToken"
+              > & {
+                  items?: Maybe<
+                    Array<
+                      Maybe<
+                        { __typename?: "ConvoLink" } & Pick<
+                          ConvoLink,
+                          | "id"
+                          | "convoLinkUserId"
+                          | "convoLinkConversationId"
+                          | "createdAt"
+                          | "updatedAt"
+                        > & {
+                            user: { __typename?: "User" } & Pick<
+                              User,
+                              "id" | "username" | "createdAt" | "updatedAt"
+                            >;
+                            conversation: {
+                              __typename?: "Conversation";
+                            } & Pick<
+                              Conversation,
+                              | "id"
+                              | "name"
+                              | "members"
+                              | "createdAt"
+                              | "updatedAt"
+                            >;
+                          }
+                      >
+                    >
+                  >;
+                }
+            >;
+          };
+      }
+  >;
+};
+
+export type ListMessagesQueryVariables = Exact<{
+  filter?: Maybe<ModelMessageFilterInput>;
+  limit?: Maybe<Scalars["Int"]>;
+  nextToken?: Maybe<Scalars["String"]>;
+}>;
+
+export type ListMessagesQuery = { __typename?: "Query" } & {
+  listMessages?: Maybe<
+    { __typename?: "ModelMessageConnection" } & Pick<
+      ModelMessageConnection,
+      "nextToken"
+    > & {
+        items?: Maybe<
+          Array<
+            Maybe<
+              { __typename?: "Message" } & Pick<
+                Message,
+                | "id"
+                | "authorId"
+                | "content"
+                | "messageConversationId"
+                | "createdAt"
+                | "updatedAt"
+              > & {
+                  author?: Maybe<
+                    { __typename?: "User" } & Pick<
+                      User,
+                      "id" | "username" | "createdAt" | "updatedAt"
+                    > & {
+                        conversations?: Maybe<
+                          { __typename?: "ModelConvoLinkConnection" } & Pick<
+                            ModelConvoLinkConnection,
+                            "nextToken"
+                          > & {
+                              items?: Maybe<
+                                Array<
+                                  Maybe<
+                                    { __typename?: "ConvoLink" } & Pick<
+                                      ConvoLink,
+                                      | "id"
+                                      | "convoLinkUserId"
+                                      | "convoLinkConversationId"
+                                      | "createdAt"
+                                      | "updatedAt"
+                                    >
+                                  >
+                                >
+                              >;
+                            }
+                        >;
+                        messages?: Maybe<
+                          { __typename?: "ModelMessageConnection" } & Pick<
+                            ModelMessageConnection,
+                            "nextToken"
+                          > & {
+                              items?: Maybe<
+                                Array<
+                                  Maybe<
+                                    { __typename?: "Message" } & Pick<
+                                      Message,
+                                      | "id"
+                                      | "authorId"
+                                      | "content"
+                                      | "messageConversationId"
+                                      | "createdAt"
+                                      | "updatedAt"
+                                    >
+                                  >
+                                >
+                              >;
+                            }
+                        >;
+                      }
+                  >;
+                  conversation: { __typename?: "Conversation" } & Pick<
+                    Conversation,
+                    "id" | "name" | "members" | "createdAt" | "updatedAt"
+                  > & {
+                      messages?: Maybe<
+                        { __typename?: "ModelMessageConnection" } & Pick<
+                          ModelMessageConnection,
+                          "nextToken"
+                        > & {
+                            items?: Maybe<
+                              Array<
+                                Maybe<
+                                  { __typename?: "Message" } & Pick<
+                                    Message,
+                                    | "id"
+                                    | "authorId"
+                                    | "content"
+                                    | "messageConversationId"
+                                    | "createdAt"
+                                    | "updatedAt"
+                                  >
+                                >
+                              >
+                            >;
+                          }
+                      >;
+                      associated?: Maybe<
+                        { __typename?: "ModelConvoLinkConnection" } & Pick<
+                          ModelConvoLinkConnection,
+                          "nextToken"
+                        > & {
+                            items?: Maybe<
+                              Array<
+                                Maybe<
+                                  { __typename?: "ConvoLink" } & Pick<
+                                    ConvoLink,
+                                    | "id"
+                                    | "convoLinkUserId"
+                                    | "convoLinkConversationId"
+                                    | "createdAt"
+                                    | "updatedAt"
+                                  >
+                                >
+                              >
+                            >;
+                          }
+                      >;
+                    };
                 }
             >
           >
@@ -6684,6 +7007,222 @@ export const useListConversationsQuery = <
     ["ListConversations", variables],
     amplifyFetcher<ListConversationsQuery, ListConversationsQueryVariables>(
       ListConversationsDocument,
+      variables
+    ),
+    options
+  );
+export const GetMessageDocument = `
+    query GetMessage($id: ID!) {
+  getMessage(id: $id) {
+    id
+    author {
+      id
+      username
+      conversations {
+        items {
+          id
+          user {
+            id
+            username
+            createdAt
+            updatedAt
+          }
+          convoLinkUserId
+          conversation {
+            id
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          author {
+            id
+            username
+            createdAt
+            updatedAt
+          }
+          authorId
+          content
+          conversation {
+            id
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    authorId
+    content
+    conversation {
+      id
+      messages {
+        items {
+          id
+          author {
+            id
+            username
+            createdAt
+            updatedAt
+          }
+          authorId
+          content
+          conversation {
+            id
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      associated {
+        items {
+          id
+          user {
+            id
+            username
+            createdAt
+            updatedAt
+          }
+          convoLinkUserId
+          conversation {
+            id
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      name
+      members
+      createdAt
+      updatedAt
+    }
+    messageConversationId
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const useGetMessageQuery = <TData = GetMessageQuery, TError = unknown>(
+  variables: GetMessageQueryVariables,
+  options?: UseQueryOptions<GetMessageQuery, TError, TData>
+) =>
+  useQuery<GetMessageQuery, TError, TData>(
+    ["GetMessage", variables],
+    amplifyFetcher<GetMessageQuery, GetMessageQueryVariables>(
+      GetMessageDocument,
+      variables
+    ),
+    options
+  );
+export const ListMessagesDocument = `
+    query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
+  listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      author {
+        id
+        username
+        conversations {
+          items {
+            id
+            convoLinkUserId
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        messages {
+          items {
+            id
+            authorId
+            content
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      authorId
+      content
+      conversation {
+        id
+        messages {
+          items {
+            id
+            authorId
+            content
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        associated {
+          items {
+            id
+            convoLinkUserId
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        name
+        members
+        createdAt
+        updatedAt
+      }
+      messageConversationId
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+    `;
+export const useListMessagesQuery = <
+  TData = ListMessagesQuery,
+  TError = unknown
+>(
+  variables?: ListMessagesQueryVariables,
+  options?: UseQueryOptions<ListMessagesQuery, TError, TData>
+) =>
+  useQuery<ListMessagesQuery, TError, TData>(
+    ["ListMessages", variables],
+    amplifyFetcher<ListMessagesQuery, ListMessagesQueryVariables>(
+      ListMessagesDocument,
       variables
     ),
     options

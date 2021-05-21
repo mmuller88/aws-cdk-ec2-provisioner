@@ -38,7 +38,7 @@ project.setScript('cdkDeploy', 'cdk deploy');
 project.setScript('cdkDestroy', 'cdk destroy');
 
 project.addTask('updateSchema', {
-  description: 'pdates all places when changing the schema.graphql',
+  description: 'Udates all places when changing the schema.graphql',
   exec: 'yarn synth && cd frontend && yarn codegen && cd ..',
 });
 
