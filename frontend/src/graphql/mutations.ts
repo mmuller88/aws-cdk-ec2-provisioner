@@ -281,9 +281,173 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
-export const createConvo = /* GraphQL */ `
-  mutation CreateConvo($input: CreateConversationInput!) {
-    createConvo(input: $input) {
+export const createConversation = /* GraphQL */ `
+  mutation CreateConversation($input: CreateConversationInput!) {
+    createConversation(input: $input) {
+      id
+      messages {
+        items {
+          id
+          author {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          authorId
+          content
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      associated {
+        items {
+          id
+          user {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          convoLinkUserId
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      name
+      members
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateConversation = /* GraphQL */ `
+  mutation UpdateConversation($input: UpdateConversationInput!) {
+    updateConversation(input: $input) {
+      id
+      messages {
+        items {
+          id
+          author {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          authorId
+          content
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      associated {
+        items {
+          id
+          user {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          convoLinkUserId
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      name
+      members
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteConversation = /* GraphQL */ `
+  mutation DeleteConversation($input: DeleteConversationInput!) {
+    deleteConversation(input: $input) {
       id
       messages {
         items {

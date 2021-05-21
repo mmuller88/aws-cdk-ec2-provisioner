@@ -518,6 +518,252 @@ export const onDeleteUser = /* GraphQL */ `
     }
   }
 `;
+export const onCreateConversation = /* GraphQL */ `
+  subscription OnCreateConversation($members: String!) {
+    onCreateConversation(members: $members) {
+      id
+      messages {
+        items {
+          id
+          author {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          authorId
+          content
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      associated {
+        items {
+          id
+          user {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          convoLinkUserId
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      name
+      members
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateConversation = /* GraphQL */ `
+  subscription OnUpdateConversation($members: String!) {
+    onUpdateConversation(members: $members) {
+      id
+      messages {
+        items {
+          id
+          author {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          authorId
+          content
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      associated {
+        items {
+          id
+          user {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          convoLinkUserId
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      name
+      members
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteConversation = /* GraphQL */ `
+  subscription OnDeleteConversation($members: String!) {
+    onDeleteConversation(members: $members) {
+      id
+      messages {
+        items {
+          id
+          author {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          authorId
+          content
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      associated {
+        items {
+          id
+          user {
+            id
+            username
+            conversations {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          convoLinkUserId
+          conversation {
+            id
+            messages {
+              nextToken
+            }
+            associated {
+              nextToken
+            }
+            name
+            members
+            createdAt
+            updatedAt
+          }
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      name
+      members
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateEc2Config = /* GraphQL */ `
   subscription OnCreateEc2Config($owner: String) {
     onCreateEc2Config(owner: $owner) {

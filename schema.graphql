@@ -51,11 +51,12 @@ type User
 }
 
 type Conversation
-  @model(
-    mutations: { create: "createConvo" }
-    queries: { get: "getConvo" }
-    subscriptions: null
-  )
+  @model
+  # (
+  #   mutations: { create: "createConvo" }
+  #   queries: { get: "getConvo" }
+  #   subscriptions: null
+  # )
   @auth(rules: [{ allow: owner, ownerField: "members" }]) {
   id: ID!
   messages: [Message] @connection(name: "ConvoMsgs", sortField: "createdAt")

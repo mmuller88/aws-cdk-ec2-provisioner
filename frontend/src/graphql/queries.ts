@@ -188,9 +188,9 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
-export const getConvo = /* GraphQL */ `
-  query GetConvo($id: ID!) {
-    getConvo(id: $id) {
+export const getConversation = /* GraphQL */ `
+  query GetConversation($id: ID!) {
+    getConversation(id: $id) {
       id
       messages {
         items {
@@ -267,6 +267,71 @@ export const getConvo = /* GraphQL */ `
       members
       createdAt
       updatedAt
+    }
+  }
+`;
+export const listConversations = /* GraphQL */ `
+  query ListConversations(
+    $filter: ModelConversationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listConversations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        messages {
+          items {
+            id
+            author {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            authorId
+            content
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            messageConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        associated {
+          items {
+            id
+            user {
+              id
+              username
+              createdAt
+              updatedAt
+            }
+            convoLinkUserId
+            conversation {
+              id
+              name
+              members
+              createdAt
+              updatedAt
+            }
+            convoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        name
+        members
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
   }
 `;

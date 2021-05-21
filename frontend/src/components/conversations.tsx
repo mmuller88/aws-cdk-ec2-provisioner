@@ -6,30 +6,36 @@ import { FaComments, FaChevronRight } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { Auth } from '@aws-amplify/auth';
 
+import { useListConversationsQuery } from '../lib/api';
+
+
 // import UserStore from '../mobx/UserStore'
 import { primary, lightBg } from '../theme'
 // import { getUserAndConversations } from '../graphql/queries'
 import { listUsers, getConvo } from '../graphql/queries'
 
-const ConversationsObserver = observer(
-  class Conversations extends React.Component {
-    render() {
+export function Conversations() {
       // const { username } = UserStore
-      let { conversations } = this.props
 
-      const userData = await Auth.currentAuthenticatedUser();
+      // const userData = await Auth.currentAuthenticatedUser();
 
-      conversations = conversations.map((c) => {
-        const convo = c.conversation.name.split('&')
-        const name = convo.find(i => i !== userData.username)
-        return { ...c, name }
-      })
+      const { data, isLoading, refetch } = useListConversationsQuery(null, {
+        refetchOnWindowFocus: false
+      });
+
+      // data = data.getConvo.map((c) => {
+      //   const convo = c.conversation.name.split('&')
+      //   const name = convo.find(i => i !== userData.username)
+      //   return { ...c, name }
+      // })
       return (
         <div {...css(styles.container)}>
-          <p {...css(styles.title)}>Conversations</p>
+          <p {...css(styles.title)}>Conversations:</p>
           {
-            conversations.map((item, i) => (
-              <Link to={`conversation/${item.conversation.id}/${item.name}`} {...css(styles.link)} key={i}>
+            data?.listConversations?.items
+            ? data?.listConversations?.items?.map((item, i) => {
+              return (
+              <Link to={`conversation/${item.id}/${item.name}`} {...css(styles.link)} key={i}>
                 <div {...css(styles.conversation)}>
                   <FaComments />
                   <p {...css(styles.conversationTitle)}>{item.name}</p>
@@ -38,31 +44,30 @@ const ConversationsObserver = observer(
                   </div>
                 </div>
               </Link>
-            ))
+              )
+            }) : <h4>No conversations found</h4>
           }
         </div>
       )
     }
-  }
-)
 
-const ConversationsWithData = compose(
-  graphql(getUserAndConversations, {
-    options: () => {
-      return {
-        variables: {
-          id:  UserStore.username
-        },
-        fetchPolicy: 'cache-and-network'
-      }
-    },
-    props: props => {
-      return {
-        conversations: props.data.getUser ? props.data.getUser.conversations.items : []
-      }
-    }
-  })
-)(ConversationsObserver)
+// const ConversationsWithData = compose(
+//   graphql(getUserAndConversations, {
+//     options: () => {
+//       return {
+//         variables: {
+//           id:  UserStore.username
+//         },
+//         fetchPolicy: 'cache-and-network'
+//       }
+//     },
+//     props: props => {
+//       return {
+//         conversations: props.data.getUser ? props.data.getUser.conversations.items : []
+//       }
+//     }
+//   })
+// )(ConversationsObserver)
 
 const styles = {
   link: {
@@ -95,4 +100,4 @@ const styles = {
   }
 }
 
-export default observer(ConversationsWithData)
+// export default observer(ConversationsWithData)
