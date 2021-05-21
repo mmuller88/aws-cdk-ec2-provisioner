@@ -14,7 +14,7 @@ import { uuid } from 'uuidv4'
 
 import UserStore from '../mobx/UserStore'
 // import { getConvo, createMessage as CreateMessage, onCreateMessage as OnCreateMessage } from '../graphql'
-import { Message, useGetConversationQuery, useListConversationsQuery} from '../lib/api';
+import { Message, useGetConversationQuery, useListConversationsQuery, useListMessagesQuery} from '../lib/api';
 
 import { Auth } from '@aws-amplify/auth';
 
@@ -50,7 +50,12 @@ export function Conversation( { match }: RouteComponentProps<ConversationProps>)
     const { username } = UserStore
     // let { messages } = this.props
   // const messages = conversation.messages.items.sort((a, b) => a.createdAt - b.createdAt)
-  const messages = conversation?.messages.items;
+  // const messages = conversation?.messages.items;
+  const messages = useListMessagesQuery(null, {
+    refetchOnWindowFocus: false,
+  });
+
+  console.log(`message: ${JSON.stringify(messages)}`)
 
     return (
       <div>
@@ -59,13 +64,13 @@ export function Conversation( { match }: RouteComponentProps<ConversationProps>)
         </div>
         <div {...css(styles.messagesContainer)}>
           {
-            messages?.map((m, i) => {
-              return (
-                <div key={i} {...css([styles.message, checkSenderForMessageStyle(username, m)])}>
-                  <p {...css([styles.messageText, checkSenderForTextStyle(username, m)])}>{m.content}</p>
-                </div>
-              )
-            })
+            // messages?.map((m, i) => {
+            //   return (
+            //     <div key={i} {...css([styles.message, checkSenderForMessageStyle(username, m)])}>
+            //       <p {...css([styles.messageText, checkSenderForTextStyle(username, m)])}>{m.content}</p>
+            //     </div>
+            //   )
+            // })
           }
           {/* <div ref={val => this.div = val} {...css(styles.scroller)} /> */}
         </div>

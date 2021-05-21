@@ -67,12 +67,12 @@ type Conversation
   updatedAt: AWSDateTime!
 }
 
-type Message
-  @model(
-    subscriptions: null
-    # queries: null
-  )
-  @auth(rules: [{ allow: owner, ownerField: "authorId" }]) {
+type Message @model {
+  # (
+  # subscriptions: null
+  # queries: null
+  # )
+  # @auth(rules: [{ allow: owner, ownerField: "authorId" }])
   id: ID!
   author: User @connection(name: "UserMessages", keyField: "authorId")
   authorId: String
@@ -101,6 +101,6 @@ type ConvoLink
 type Subscription {
   onCreateConvoLink(convoLinkUserId: ID!): ConvoLink
     @aws_subscribe(mutations: ["createConvoLink"])
-  onCreateMessage(messageConversationId: ID!): Message
-    @aws_subscribe(mutations: ["createMessage"])
+  # onCreateMessage(messageConversationId: ID!): Message
+  #   @aws_subscribe(mutations: ["createMessage"])
 }

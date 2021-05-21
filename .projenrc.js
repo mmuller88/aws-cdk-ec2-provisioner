@@ -42,6 +42,8 @@ project.addTask('updateSchema', {
   exec: 'yarn synth && cd frontend && yarn codegen && cd ..',
 });
 
+project.setScript('dev', 'cd frontend && yarn dev');
+
 const common_exclude = ['appsync'];
 project.npmignore.exclude(...common_exclude);
 project.gitignore.exclude(...common_exclude);

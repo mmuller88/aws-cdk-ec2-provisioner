@@ -21,7 +21,8 @@
     "projen": "npx projen",
     "start": "npx projen start",
     "cdkDeploy": "cdk deploy",
-    "cdkDestroy": "cdk destroy"
+    "cdkDestroy": "cdk destroy",
+    "dev": "cd frontend && yarn dev"
   },
   "author": {
     "name": "martin.mueller",

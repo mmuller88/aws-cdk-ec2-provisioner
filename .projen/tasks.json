@@ -216,7 +216,7 @@
     },
     "updateSchema": {
       "name": "updateSchema",
-      "description": "pdates all places when changing the schema.graphql",
+      "description": "Udates all places when changing the schema.graphql",
       "steps": [
         {
           "exec": "yarn synth && cd frontend && yarn codegen && cd .."
