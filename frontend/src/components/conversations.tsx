@@ -1,7 +1,7 @@
 import React from 'react'
 import { css } from 'glamor'
 import { observer } from 'mobx-react'
-// import { graphql, compose } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import { FaComments, FaChevronRight } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { Auth } from '@aws-amplify/auth';
@@ -9,19 +9,22 @@ import { Auth } from '@aws-amplify/auth';
 import { useListConversationsQuery } from '../lib/api';
 
 
-// import UserStore from '../mobx/UserStore'
+import UserStore from '../mobx/UserStore'
 import { primary, lightBg } from '../theme'
 // import { getUserAndConversations } from '../graphql/queries'
 import { listUsers, getConvo } from '../graphql/queries'
+// import { compose } from './conversation'
 
 export function Conversations() {
-      // const { username } = UserStore
+      const { username } = UserStore
 
       // const userData = await Auth.currentAuthenticatedUser();
 
       const { data, isLoading, refetch } = useListConversationsQuery(null, {
         refetchOnWindowFocus: false
       });
+
+      console.log(data);
 
       // data = data.getConvo.map((c) => {
       //   const convo = c.conversation.name.split('&')

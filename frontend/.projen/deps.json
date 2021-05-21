@@ -103,6 +103,10 @@
       "type": "runtime"
     },
     {
+      "name": "mobx",
+      "type": "runtime"
+    },
+    {
       "name": "mobx-react",
       "type": "runtime"
     },

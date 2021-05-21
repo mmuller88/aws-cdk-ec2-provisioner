@@ -65,6 +65,7 @@ const frontendProject = new web.ReactTypeScriptProject({
     'react-datetime',
     'glamor',
     'mobx-react',
+    'mobx',
     'react-icons',
     'react-apollo',
     'uuidv4',

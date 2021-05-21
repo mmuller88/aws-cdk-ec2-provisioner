@@ -36,3 +36,15 @@ query listConversations {
     }
   }
 }
+
+query getConversation {
+  getConversation(id: "373be81f-4a8c-4b72-8682-6498c54429fb") {
+    createdAt
+    messages {
+      items {
+        content
+        authorId
+      }
+    }
+  }
+}

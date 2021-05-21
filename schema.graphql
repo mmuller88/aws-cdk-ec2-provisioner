@@ -46,8 +46,8 @@ type User
   username: String!
   conversations: [ConvoLink] @connection(name: "UserLinks")
   messages: [Message] @connection(name: "UserMessages")
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 }
 
 type Conversation
@@ -63,12 +63,13 @@ type Conversation
   associated: [ConvoLink] @connection(name: "AssociatedLinks")
   name: String!
   members: [String!]!
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 }
 
 type Message
-  @model(subscriptions: null, queries: null)
+  @model
+  # (subscriptions: null, queries: null)
   @auth(rules: [{ allow: owner, ownerField: "authorId" }]) {
   id: ID!
   author: User @connection(name: "UserMessages", keyField: "authorId")
@@ -76,8 +77,8 @@ type Message
   content: String!
   conversation: Conversation! @connection(name: "ConvoMsgs")
   messageConversationId: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 }
 
 type ConvoLink
@@ -91,8 +92,8 @@ type ConvoLink
   convoLinkUserId: ID
   conversation: Conversation! @connection(name: "AssociatedLinks")
   convoLinkConversationId: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 }
 
 type Subscription {
