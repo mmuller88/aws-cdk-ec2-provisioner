@@ -9,15 +9,19 @@ import { AppSyncTransformer } from 'cdk-appsync-transformer';
 
 export interface AppSyncStackProps extends cdk.StackProps {
   readonly stage: string;
+  readonly userPoolId?: string;
 }
 
 export class AppSyncStack extends CustomStack {
   constructor(scope: cdk.Construct, id: string, props: AppSyncStackProps) {
     super(scope, id, props);
 
+    let userPool;
     // import existing userpool
-    // const userPool = cognito.UserPool.fromUserPoolArn();
-    const userPool = new cognito.UserPool(this, 'demo-user-pool', {
+    if (props.userPoolId) {
+      userPool = cognito.UserPool.fromUserPoolArn(this, 'user-pool', `arn::${props.userPoolId}`);
+    }
+    userPool = new cognito.UserPool(this, 'user-pool', {
       removalPolicy: cdk.RemovalPolicy.RETAIN,
       passwordPolicy: {
         minLength: 6,

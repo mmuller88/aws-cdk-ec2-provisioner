@@ -6,6 +6,7 @@ import { StaticSite } from './static-site';
 
 export interface Ec2ProStackProps extends core.StackProps {
   readonly stage: string;
+  readonly userPoolId?: string;
 }
 
 export class Ec2ProStack extends CustomStack {
@@ -15,6 +16,7 @@ export class Ec2ProStack extends CustomStack {
     const appsync = new AppSyncStack(scope, `ec2-provisioner-stack-${props.stage}`, {
       stackName: `ec2-provisioner-stack-${props.stage}`,
       stage: props.stage,
+      userPoolId: props.userPoolId,
     });
 
     const staticsite = new StaticSite(scope, `ec2-provisioner-ui-stack-${props.stage}`, {
