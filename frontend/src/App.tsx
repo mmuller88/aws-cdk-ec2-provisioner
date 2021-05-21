@@ -5,6 +5,8 @@ import './App.css';
 import { AuthState, onAuthUIStateChange, } from '@aws-amplify/ui-components';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 
+import UserStore from './mobx/UserStore'
+
 import { API } from './lib/fetcher';
 
 import Amplify from 'aws-amplify';
@@ -26,6 +28,8 @@ function App() {
       API.updateIsSignedIn(nextAuthState === AuthState.SignedIn);
     });
   }, []);
+
+  UserStore.init()
 
   return (
     <div className="App">

@@ -5,7 +5,8 @@ import {
   RouteComponentProps
 } from "react-router-dom";
 
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react';
+import { useMutation } from 'react-query';
 
 import { graphql } from 'react-apollo'
 import { observer } from 'mobx-react'
@@ -13,10 +14,11 @@ import { css } from 'glamor'
 import { uuid } from 'uuidv4'
 
 import UserStore from '../mobx/UserStore'
-// import { getConvo, createMessage as CreateMessage, onCreateMessage as OnCreateMessage } from '../graphql'
-import { Message, useGetConversationQuery, useListConversationsQuery, useListMessagesQuery} from '../lib/api';
+import { CreateMessageDocument, CreateMessageInput, Message, useCreateMessageMutation, useGetConversationQuery, useListConversationsQuery, useListMessagesQuery} from '../lib/api';
+import { API } from '../lib/fetcher';
 
 import { Auth } from '@aws-amplify/auth';
+import { debug } from "console";
 
 // react-apollo compose has no type export
 // https://dev.to/piglovesyou/react-apollo-codegen-typescript-how-you-can-compose-multiple-queries-mutations-to-a-component-2jic
@@ -27,94 +29,115 @@ interface ConversationProps {
   conversationName: string;
 }
 
+const initialState = { content: '' }
+
 export function Conversation( { match }: RouteComponentProps<ConversationProps>) {
-  const state = {
-    message: ''
-  }
+
+  const [message, setMessage] = useState(initialState);
+
+  const { content } = message;
 
   const { conversationId } = match.params;
   const { conversationName } = match.params
 
   console.log(`conversationId: ${conversationId}, conversationName: ${conversationName}`);
 
-  const conversation = useGetConversationQuery({ id: conversationId }, {
-    refetchOnWindowFocus: false,
-  }).data?.getConversation;
-
-  // const { data, isLoading, refetch } = useListConversationsQuery(null, {
-  //   refetchOnWindowFocus: false
-  // });
-
-  // console.log(`conversation: ${conversation}`)
-  console.log(`data: ${JSON.stringify(conversation)}`)
-    const { username } = UserStore
-    // let { messages } = this.props
-  // const messages = conversation.messages.items.sort((a, b) => a.createdAt - b.createdAt)
-  // const messages = conversation?.messages.items;
-  const messages = useListMessagesQuery(null, {
+  const { data, isLoading, refetch } = useGetConversationQuery({ id: conversationId }, {
     refetchOnWindowFocus: false,
   });
+  
+  const messages = data?.getConversation?.messages?.items;
 
-  console.log(`message: ${JSON.stringify(messages)}`)
-
-    return (
-      <div>
-        <div {...css(styles.conversationNameContainer)}>
-          <p {...css(styles.conversationName)}>{conversationName}</p>
-        </div>
-        <div {...css(styles.messagesContainer)}>
-          {
-            // messages?.map((m, i) => {
-            //   return (
-            //     <div key={i} {...css([styles.message, checkSenderForMessageStyle(username, m)])}>
-            //       <p {...css([styles.messageText, checkSenderForTextStyle(username, m)])}>{m.content}</p>
-            //     </div>
-            //   )
-            // })
-          }
-          {/* <div ref={val => this.div = val} {...css(styles.scroller)} /> */}
-        </div>
-        <div {...css(styles.inputContainer)}>
-          <input
-            {...css(styles.input)}
-            placeholder='Message'
-            name='message'
-            // onChange={this.onChange}
-            // onKeyPress={this.createMessage}
-            // value={this.state.message}
-          />
-        </div>
-      </div>
-    )
+  // const el = useRef<null | HTMLDivElement>(null); 
 
   // componentDidMount() {
-  //   this.scrollToBottom()
+  
   //   this.props.subscribeToNewMessages()
   // }
-  // scrollToBottom = () => {
-  //   this.div.scrollIntoView({ behavior: "smooth" });
+  // const scrollToBottom = () => {
+  //   el.current.scrollIntoView({ behavior: "smooth" });
   // }
-  // onChange = e => {
-  //   this.setState({ [e.target.name]: e.target.value })
-  // }
-  // createMessage = async (e) => {
-  //   if (e.key !== 'Enter') {
-  //     return
-  //   }
-  //   if (this.state.message === '') return
-  //   const userData = await Auth.currentAuthenticatedUser();
-  //   const { username } = userData.username // UserStore
-  //   const  { conversationId } = this.props.match.params
-  //   const message = {
-  //     id: uuid(),
-  //     createdAt: Date.now(),
-  //     messageConversationId: conversationId,
-  //     content: this.state.message,
-  //     authorId: username
-  //   }
-  //   this.props.createMessage(message)
-  //   this.setState({ message: '' })
-  // }
+  // scrollToBottom();
+
+  const el = useRef(null);
+
+  useEffect(() => {
+      if (el.current === null) { }
+      else
+          el!.current!.scrollIntoView({ behavior: 'smooth' });
+
+  }, [])
+
+  const onChange = e => {
+    setMessage({ ...message, [e.target.name]: e.target.value })
+  }
+
+  const [useCreateMessageMutation] = useMutation(async (input: CreateMessageInput) => {
+    const result = await API.getInstance().query(CreateMessageDocument, { input });
+    return result.data?.createMessage as Message;
+  });
+
+  const createMessage = async (e) => {
+    if (e.key !== 'Enter') {
+      return
+    }
+    if (content === '') return
+    // console.log('u'+username);
+
+    const { username } = UserStore;
+
+    const message = {
+      id: uuid(),
+      createdAt: new Date().toISOString(),
+      messageConversationId: conversationId,
+      content: content,
+      authorId: username
+    }
+
+    const input = {
+      ...message,
+    };
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const createResult = await useCreateMessageMutation(input, { onSuccess: (data) => { console.log(data) } });
+    if (createResult) {
+      refetch();
+    }
+    setMessage({ content: '' })
+  }
+  const { username } = UserStore;
+
+  return (
+    <div>
+      <div {...css(styles.conversationNameContainer)}>
+        <p {...css(styles.conversationName)}>{conversationName}</p>
+      </div>
+      <div {...css(styles.messagesContainer)}>
+        {
+          messages?.map((m, i) => {
+            return (
+              <div key={i} {...css([styles.message, checkSenderForMessageStyle(username, m)])}>
+                <p {...css([styles.messageText, checkSenderForTextStyle(username, m)])}>{m.content}</p>
+              </div>
+            )
+          })
+        }
+        {/* <div ref={val => this.div = val} {...css(styles.scroller)} /> */}
+      </div>
+      <div {...css(styles.inputContainer)}>
+        <input
+          {...css(styles.input)}
+          placeholder='Message'
+          name='content'
+          onChange={onChange}
+          onKeyPress={createMessage}
+          // value={content}
+        />
+      </div>
+    </div>
+  )
+
+  
 }
 
 function checkSenderForMessageStyle(username: string, message: Message) {
