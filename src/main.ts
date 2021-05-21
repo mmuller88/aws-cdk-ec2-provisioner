@@ -23,8 +23,8 @@ new PipelineStack(app, 'ec2-provisioner-pipeline', {
     stage: 'dev',
   }, {
     account: {
-      id: '991829251144',
-      region: 'eu-central-1',
+      id: '981237193288',
+      region: 'us-east-1',
     },
     stage: 'prod',
   }],
@@ -39,7 +39,7 @@ new PipelineStack(app, 'ec2-provisioner-pipeline', {
     const stack = new Ec2ProStack(scope, `ec2-pro-all-${stageAccount.stage}`, {
       stackName: `ec2-pro-all-${stageAccount.stage}`,
       stage: stageAccount.stage,
-      userPoolId: stageAccount.stage == 'dev' ? 'SSeYXA58i' : 'EZGfgkrak',
+      userPoolId: stageAccount.stage == 'dev' ? 'SSeYXA58i' : undefined,
     });
 
     // const appsync = new AppSyncStack(scope, `ec2-provisioner-stack-${stageAccount.stage}`, {

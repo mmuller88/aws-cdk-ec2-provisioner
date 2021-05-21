@@ -20,34 +20,35 @@ export class AppSyncStack extends CustomStack {
     // import existing userpool
     if (props.userPoolId) {
       userPool = cognito.UserPool.fromUserPoolArn(this, 'user-pool', `arn:aws:cognito-idp:${this.region}:${this.account}:userpool/${this.region}_${props.userPoolId}`);
+    } else {
+      userPool = new cognito.UserPool(this, 'user-pool', {
+        removalPolicy: cdk.RemovalPolicy.RETAIN,
+        passwordPolicy: {
+          minLength: 6,
+          requireLowercase: false,
+          requireUppercase: false,
+          requireDigits: false,
+          requireSymbols: false,
+        },
+        selfSignUpEnabled: true,
+        autoVerify: {
+          email: true,
+        },
+        standardAttributes: {
+          email: {
+            mutable: true,
+            required: true,
+          },
+          phoneNumber: {
+            mutable: true,
+            required: true,
+          },
+        },
+        signInAliases: {
+          username: true,
+        },
+      });
     }
-    userPool = new cognito.UserPool(this, 'user-pool', {
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-      passwordPolicy: {
-        minLength: 6,
-        requireLowercase: false,
-        requireUppercase: false,
-        requireDigits: false,
-        requireSymbols: false,
-      },
-      selfSignUpEnabled: true,
-      autoVerify: {
-        email: true,
-      },
-      standardAttributes: {
-        email: {
-          mutable: true,
-          required: true,
-        },
-        phoneNumber: {
-          mutable: true,
-          required: true,
-        },
-      },
-      signInAliases: {
-        username: true,
-      },
-    });
 
     const userPoolClient = new cognito.UserPoolClient(this, 'demo-user-pool-client', {
       userPool,
