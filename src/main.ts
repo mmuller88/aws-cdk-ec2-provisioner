@@ -39,7 +39,7 @@ new PipelineStack(app, 'ec2-provisioner-pipeline', {
     const stack = new Ec2ProStack(scope, `ec2-pro-all-${stageAccount.stage}`, {
       stackName: `ec2-pro-all-${stageAccount.stage}`,
       stage: stageAccount.stage,
-      userPoolId: stageAccount.stage == 'dev' ? 'SSeYXA58i' : undefined,
+      userPoolId: stageAccount.stage == 'dev' ? 'SSeYXA58i' : 'ooNdbca3A',
     });
 
     // const appsync = new AppSyncStack(scope, `ec2-provisioner-stack-${stageAccount.stage}`, {
