@@ -19,7 +19,7 @@ export class AppSyncStack extends CustomStack {
     let userPool;
     // import existing userpool
     if (props.userPoolId) {
-      userPool = cognito.UserPool.fromUserPoolArn(this, 'user-pool', `arn::${props.userPoolId}`);
+      userPool = cognito.UserPool.fromUserPoolArn(this, 'user-pool', `arn:aws:cognito-idp:${this.region}:${this.account}:userpool/${this.region}_${props.userPoolId}`);
     }
     userPool = new cognito.UserPool(this, 'user-pool', {
       removalPolicy: cdk.RemovalPolicy.RETAIN,
