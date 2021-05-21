@@ -1,0 +1,38 @@
+mutation createConversation {
+  createConversation(input: { members: ["martin", "michael"], name: "conv2" }) {
+    members
+    id
+  }
+}
+
+mutation createMessage {
+  createMessage(
+    input: {
+      content: "Das ist Inhalt"
+      messageConversationId: "373be81f-4a8c-4b72-8682-6498c54429fb"
+    }
+  ) {
+    content
+  }
+}
+
+query listConversations {
+  listConversations {
+    items {
+      name
+      members
+      id
+      createdAt
+      updatedAt
+      messages {
+        items {
+          content
+          id
+          createdAt
+          updatedAt
+          authorId
+        }
+      }
+    }
+  }
+}

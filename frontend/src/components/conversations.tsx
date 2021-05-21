@@ -45,7 +45,7 @@ export function Conversations() {
                 </div>
               </Link>
               )
-            }) : <h4>No conversations found</h4>
+            }) : <h4>Loading conversations ...</h4>
           }
         </div>
       )

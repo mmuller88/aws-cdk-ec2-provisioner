@@ -66,6 +66,8 @@ const frontendProject = new web.ReactTypeScriptProject({
     'glamor',
     'mobx-react',
     'react-icons',
+    'react-apollo',
+    'uuidv4',
   ],
   devDeps: [
     '@graphql-codegen/cli',
