@@ -7,11 +7,12 @@ import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 
 import { API } from './lib/fetcher';
 
+import Amplify from 'aws-amplify';
+
 import { Posts } from './components/posts';
 import { Todos } from './components/todos';
 import { Configs } from './components/configs';
-
-import Amplify from 'aws-amplify';
+import { Conversations } from './components/conversations';
 
 declare const window: any;
 
@@ -38,7 +39,7 @@ function App() {
       <div>
         <Router>
           <Switch>
-            <Route exact path="/" render={(props: any) => <Configs {...props}  />} />
+            <Route exact path="/" render={(props: any) => <Conversations {...props}  />} />
             <Route path="/configs" render={(props: any) => <Configs {...props}  />} />
             <Route path="/posts" render={(props: any) => <Posts {...props}  />} />
             <Route path="/todos" render={(props: any) => <Todos {...props}  />} />

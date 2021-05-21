@@ -33,6 +33,10 @@ yarn codegen
 yarn dev
 ```
 
+# Misc
+
+yes | yarn cdkDestroy '_' && yarn cdkDeploy '_' --require-approval never
+
 # Thanks to:
 
 - kcwinner for this very inspiring TS React Amplify project https://github.com/kcwinner/cdk-appsync-react-demo

@@ -1,21 +1,24 @@
 import * as appsync from '@aws-cdk/aws-appsync';
 import * as cognito from '@aws-cdk/aws-cognito';
-// import * as db from '@aws-cdk/aws-dynamodb';
 import * as iam from '@aws-cdk/aws-iam';
-import * as core from '@aws-cdk/core';
+import * as cdk from '@aws-cdk/core';
+// import * as db from '@aws-cdk/aws-dynamodb';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
 import { AppSyncTransformer } from 'cdk-appsync-transformer';
 
 
-export interface AppSyncStackProps extends core.StackProps {
+export interface AppSyncStackProps extends cdk.StackProps {
   readonly stage: string;
 }
 
 export class AppSyncStack extends CustomStack {
-  constructor(scope: core.Construct, id: string, props: AppSyncStackProps) {
+  constructor(scope: cdk.Construct, id: string, props: AppSyncStackProps) {
     super(scope, id, props);
 
+    // import existing userpool
+    // const userPool = cognito.UserPool.fromUserPoolArn();
     const userPool = new cognito.UserPool(this, 'demo-user-pool', {
+      removalPolicy: cdk.RemovalPolicy.RETAIN,
       passwordPolicy: {
         minLength: 6,
         requireLowercase: false,
@@ -76,7 +79,7 @@ export class AppSyncStack extends CustomStack {
     });
 
     // const todoTable = new db.Table(this, 'TodoTable', {
-    //   removalPolicy: core.RemovalPolicy.DESTROY,
+    //   removalPolicy: cdk.RemovalPolicy.DESTROY,
     //   partitionKey: {
     //     name: 'id',
     //     type: db.AttributeType.STRING,
@@ -141,28 +144,28 @@ export class AppSyncStack extends CustomStack {
     // });
 
     // Outputs
-    const graphql = new core.CfnOutput(this, 'appsyncEndpointOutput', {
+    const graphql = new cdk.CfnOutput(this, 'appsyncEndpointOutput', {
       description: 'GraphQL Endpoint',
       value: graphQlApi.appsyncAPI.graphqlUrl,
     });
     this.cfnOutputs.appsyncEndpointOutput = graphql;
 
-    new core.CfnOutput(this, 'awsUserPoolId', {
+    new cdk.CfnOutput(this, 'awsUserPoolId', {
       description: 'userPoolID value for amplify exports',
       value: userPool.userPoolId,
     });
 
-    new core.CfnOutput(this, 'awsUserPoolWebClientId', {
+    new cdk.CfnOutput(this, 'awsUserPoolWebClientId', {
       description: 'userPoolClientID value for amplify exports',
       value: userPoolClient.userPoolClientId,
     });
 
-    new core.CfnOutput(this, 'awsIdentityPoolId', {
+    new cdk.CfnOutput(this, 'awsIdentityPoolId', {
       description: 'identityPoolID value for amplify exports',
       value: identityPool.ref,
     });
 
-    new core.CfnOutput(this, 'awsAppsyncAuthenticationType', {
+    new cdk.CfnOutput(this, 'awsAppsyncAuthenticationType', {
       value: appsync.AuthorizationType.IAM,
     });
   }
