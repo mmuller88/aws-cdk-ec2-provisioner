@@ -82,7 +82,7 @@ export function Chat() {
     const { username } = UserStore;
 
     const message: CreateMessageInput = {
-      id: uuid(),
+      // id: uuid(),
       createdAt: new Date().toISOString(),
       content: content,
       authorId: username
@@ -111,7 +111,7 @@ export function Chat() {
           messages?.map((m, i) => {
             return (
               <div key={i} {...css([styles.message, checkSenderForMessageStyle(username, m)])}>
-                <p {...css([styles.messageText, checkSenderForTextStyle(username, m)])}>{m.content}</p>
+                <p {...css([styles.messageText, checkSenderForTextStyle(username, m)])}>{`${m.authorId}: ${m.content}`}</p>
               </div>
             )
           })

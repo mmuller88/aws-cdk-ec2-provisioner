@@ -38,39 +38,6 @@ export const onDeleteHistoryEntry = /* GraphQL */ `
     }
   }
 `;
-export const onCreateMessage = /* GraphQL */ `
-  subscription OnCreateMessage {
-    onCreateMessage {
-      id
-      authorId
-      content
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateMessage = /* GraphQL */ `
-  subscription OnUpdateMessage {
-    onUpdateMessage {
-      id
-      authorId
-      content
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteMessage = /* GraphQL */ `
-  subscription OnDeleteMessage {
-    onDeleteMessage {
-      id
-      authorId
-      content
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateEc2Config = /* GraphQL */ `
   subscription OnCreateEc2Config($owner: String) {
     onCreateEc2Config(owner: $owner) {
@@ -176,6 +143,42 @@ export const onDeletePost = /* GraphQL */ `
       title
       content
       username
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onCreateMessage = /* GraphQL */ `
+  subscription OnCreateMessage($owner: String) {
+    onCreateMessage(owner: $owner) {
+      id
+      authorId
+      content
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateMessage = /* GraphQL */ `
+  subscription OnUpdateMessage($owner: String) {
+    onUpdateMessage(owner: $owner) {
+      id
+      authorId
+      content
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteMessage = /* GraphQL */ `
+  subscription OnDeleteMessage($owner: String) {
+    onDeleteMessage(owner: $owner) {
+      id
+      authorId
+      content
       createdAt
       updatedAt
       owner

@@ -67,21 +67,31 @@ type Query {
 #   updatedAt: AWSDateTime!
 # }
 
-type Message @model {
-  # (
-  # subscriptions: null
-  # queries: null
-  # )
-  # @auth(rules: [{ allow: owner, ownerField: "authorId" }])
+type Message
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public, provider: iam }]) {
   id: ID!
-  # author: User @connection(name: "UserMessages", keyField: "authorId")
-  authorId: String
+  authorId: String!
   content: String!
-  # conversation: Conversation! @connection(name: "ConvoMsgs")
-  # messageConversationId: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
+
+# type Message @model {
+#   # (
+#   # subscriptions: null
+#   # queries: null
+#   # )
+#   @auth(rules: [{ allow: owner, ownerField: "authorId" }])
+#   id: ID!
+#   # author: User @connection(name: "UserMessages", keyField: "authorId")
+#   authorId: String
+#   content: String!
+#   # conversation: Conversation! @connection(name: "ConvoMsgs")
+#   # messageConversationId: ID!
+#   createdAt: AWSDateTime!
+#   updatedAt: AWSDateTime!
+# }
 
 # type ConvoLink
 #   @model(
