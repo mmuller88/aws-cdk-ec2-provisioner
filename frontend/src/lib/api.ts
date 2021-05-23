@@ -147,7 +147,6 @@ export type Message = {
   content: Scalars["String"];
   createdAt: Scalars["AWSDateTime"];
   updatedAt: Scalars["AWSDateTime"];
-  owner?: Maybe<Scalars["String"]>;
 };
 
 export enum ModelSortDirection {
@@ -341,18 +340,6 @@ export type SubscriptionOnUpdatePostArgs = {
 };
 
 export type SubscriptionOnDeletePostArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnCreateMessageArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnUpdateMessageArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnDeleteMessageArgs = {
   owner?: Maybe<Scalars["String"]>;
 };
 
@@ -705,7 +692,7 @@ export type CreateMessageMutation = { __typename?: "Mutation" } & {
   createMessage?: Maybe<
     { __typename?: "Message" } & Pick<
       Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
     >
   >;
 };
@@ -718,7 +705,7 @@ export type UpdateMessageMutation = { __typename?: "Mutation" } & {
   updateMessage?: Maybe<
     { __typename?: "Message" } & Pick<
       Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
     >
   >;
 };
@@ -731,7 +718,7 @@ export type DeleteMessageMutation = { __typename?: "Mutation" } & {
   deleteMessage?: Maybe<
     { __typename?: "Message" } & Pick<
       Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
     >
   >;
 };
@@ -951,7 +938,7 @@ export type GetMessageQuery = { __typename?: "Query" } & {
   getMessage?: Maybe<
     { __typename?: "Message" } & Pick<
       Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
     >
   >;
 };
@@ -973,12 +960,7 @@ export type ListMessagesQuery = { __typename?: "Query" } & {
             Maybe<
               { __typename?: "Message" } & Pick<
                 Message,
-                | "id"
-                | "authorId"
-                | "content"
-                | "createdAt"
-                | "updatedAt"
-                | "owner"
+                "id" | "authorId" | "content" | "createdAt" | "updatedAt"
               >
             >
           >
@@ -1229,40 +1211,40 @@ export type OnDeletePostSubscription = { __typename?: "Subscription" } & {
 };
 
 export type OnCreateMessageSubscriptionVariables = Exact<{
-  owner?: Maybe<Scalars["String"]>;
+  [key: string]: never;
 }>;
 
 export type OnCreateMessageSubscription = { __typename?: "Subscription" } & {
   onCreateMessage?: Maybe<
     { __typename?: "Message" } & Pick<
       Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
     >
   >;
 };
 
 export type OnUpdateMessageSubscriptionVariables = Exact<{
-  owner?: Maybe<Scalars["String"]>;
+  [key: string]: never;
 }>;
 
 export type OnUpdateMessageSubscription = { __typename?: "Subscription" } & {
   onUpdateMessage?: Maybe<
     { __typename?: "Message" } & Pick<
       Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
     >
   >;
 };
 
 export type OnDeleteMessageSubscriptionVariables = Exact<{
-  owner?: Maybe<Scalars["String"]>;
+  [key: string]: never;
 }>;
 
 export type OnDeleteMessageSubscription = { __typename?: "Subscription" } & {
   onDeleteMessage?: Maybe<
     { __typename?: "Message" } & Pick<
       Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
     >
   >;
 };
@@ -1629,7 +1611,6 @@ export const CreateMessageDocument = `
     content
     createdAt
     updatedAt
-    owner
   }
 }
     `;
@@ -1662,7 +1643,6 @@ export const UpdateMessageDocument = `
     content
     createdAt
     updatedAt
-    owner
   }
 }
     `;
@@ -1695,7 +1675,6 @@ export const DeleteMessageDocument = `
     content
     createdAt
     updatedAt
-    owner
   }
 }
     `;
@@ -1941,7 +1920,6 @@ export const GetMessageDocument = `
     content
     createdAt
     updatedAt
-    owner
   }
 }
     `;
@@ -1966,7 +1944,6 @@ export const ListMessagesDocument = `
       content
       createdAt
       updatedAt
-      owner
     }
     nextToken
   }
@@ -2157,38 +2134,35 @@ export const OnDeletePostDocument = `
 }
     `;
 export const OnCreateMessageDocument = `
-    subscription OnCreateMessage($owner: String) {
-  onCreateMessage(owner: $owner) {
+    subscription OnCreateMessage {
+  onCreateMessage {
     id
     authorId
     content
     createdAt
     updatedAt
-    owner
   }
 }
     `;
 export const OnUpdateMessageDocument = `
-    subscription OnUpdateMessage($owner: String) {
-  onUpdateMessage(owner: $owner) {
+    subscription OnUpdateMessage {
+  onUpdateMessage {
     id
     authorId
     content
     createdAt
     updatedAt
-    owner
   }
 }
     `;
 export const OnDeleteMessageDocument = `
-    subscription OnDeleteMessage($owner: String) {
-  onDeleteMessage(owner: $owner) {
+    subscription OnDeleteMessage {
+  onDeleteMessage {
     id
     authorId
     content
     createdAt
     updatedAt
-    owner
   }
 }
     `;

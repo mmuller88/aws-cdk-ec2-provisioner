@@ -1,20 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
 import { AuthState, onAuthUIStateChange, } from '@aws-amplify/ui-components';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 
-import UserStore from './mobx/UserStore'
 
 import { API } from './lib/fetcher';
 
-import Amplify from 'aws-amplify';
+import Amplify, { Auth } from 'aws-amplify';
 
 import { Posts } from './components/posts';
 import { Todos } from './components/todos';
 import { Configs } from './components/configs';
-import { Conversations } from './components/conversations';
 import { Chat } from './components/chat';
 
 declare const window: any;
@@ -23,13 +21,14 @@ Amplify.configure(window.ENV);
 
 function App() {
 
+  const [username, setUsername] = useState('nope');
+
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData: any) => {
+      setUsername(authData.username);
       API.updateIsSignedIn(nextAuthState === AuthState.SignedIn);
     });
   }, []);
-
-  UserStore.init()
 
   return (
     <div className="App">
@@ -41,7 +40,10 @@ function App() {
           <li> <a href="/posts">Posts</a></li>
           <li> <a href="/todos">Todos</a></li>
         </ul>
-        <AmplifySignOut button-text="Logout"></AmplifySignOut>
+        <div>
+          <span>signed in: {username}</span>
+          <AmplifySignOut button-text="Logout"></AmplifySignOut>
+        </div>
       </nav>
       <div>
         <Router>

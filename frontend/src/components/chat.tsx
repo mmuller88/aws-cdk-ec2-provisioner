@@ -82,7 +82,7 @@ export function Chat() {
     const { username } = UserStore;
 
     const message: CreateMessageInput = {
-      // id: uuid(),
+      id: uuid(),
       createdAt: new Date().toISOString(),
       content: content,
       authorId: username
@@ -93,7 +93,7 @@ export function Chat() {
     };
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const createResult = await useCreateMessageMutation(input, { onSuccess: (data) => { console.log(data) } });
+    const createResult = await useCreateMessageMutation({...input}, { onSuccess: (data) => { console.log(data) } });
     if (createResult) {
       refetch();
     }
@@ -111,7 +111,7 @@ export function Chat() {
           messages?.map((m, i) => {
             return (
               <div key={i} {...css([styles.message, checkSenderForMessageStyle(username, m)])}>
-                <p {...css([styles.messageText, checkSenderForTextStyle(username, m)])}>{`${m.authorId}: ${m.content}`}</p>
+                <p {...css([styles.messageText, checkSenderForTextStyle(username, m)])}>{`${m.authorId === username ? 'me' : m.authorId}: ${m.content}`}</p>
               </div>
             )
           })

@@ -69,7 +69,7 @@ type Query {
 
 type Message
   @model
-  @auth(rules: [{ allow: owner }, { allow: public, provider: iam }]) {
+  @auth(rules: [{ allow: public, provider: iam }]) {
   id: ID!
   authorId: String!
   content: String!

@@ -157,7 +157,6 @@ export const createMessage = /* GraphQL */ `
       content
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -169,7 +168,6 @@ export const updateMessage = /* GraphQL */ `
       content
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -181,7 +179,6 @@ export const deleteMessage = /* GraphQL */ `
       content
       createdAt
       updatedAt
-      owner
     }
   }
 `;
