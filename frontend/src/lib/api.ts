@@ -87,12 +87,12 @@ export type Query = {
   listTodos?: Maybe<Array<Maybe<Todo>>>;
   getHistoryEntry?: Maybe<HistoryEntry>;
   listHistoryEntrys?: Maybe<ModelHistoryEntryConnection>;
+  getMessage?: Maybe<Message>;
+  listMessages?: Maybe<ModelMessageConnection>;
   getEc2Config?: Maybe<Ec2Config>;
   listEc2Configs?: Maybe<ModelEc2ConfigConnection>;
   getPost?: Maybe<Post>;
   listPosts?: Maybe<ModelPostConnection>;
-  getMessage?: Maybe<Message>;
-  listMessages?: Maybe<ModelMessageConnection>;
   getTodo?: Maybe<Todo>;
 };
 
@@ -102,6 +102,16 @@ export type QueryGetHistoryEntryArgs = {
 
 export type QueryListHistoryEntrysArgs = {
   filter?: Maybe<ModelHistoryEntryFilterInput>;
+  limit?: Maybe<Scalars["Int"]>;
+  nextToken?: Maybe<Scalars["String"]>;
+};
+
+export type QueryGetMessageArgs = {
+  id: Scalars["ID"];
+};
+
+export type QueryListMessagesArgs = {
+  filter?: Maybe<ModelMessageFilterInput>;
   limit?: Maybe<Scalars["Int"]>;
   nextToken?: Maybe<Scalars["String"]>;
 };
@@ -122,16 +132,6 @@ export type QueryGetPostArgs = {
 
 export type QueryListPostsArgs = {
   filter?: Maybe<ModelPostFilterInput>;
-  limit?: Maybe<Scalars["Int"]>;
-  nextToken?: Maybe<Scalars["String"]>;
-};
-
-export type QueryGetMessageArgs = {
-  id: Scalars["ID"];
-};
-
-export type QueryListMessagesArgs = {
-  filter?: Maybe<ModelMessageFilterInput>;
   limit?: Maybe<Scalars["Int"]>;
   nextToken?: Maybe<Scalars["String"]>;
 };
@@ -244,15 +244,15 @@ export type Mutation = {
   createHistoryEntry?: Maybe<HistoryEntry>;
   updateHistoryEntry?: Maybe<HistoryEntry>;
   deleteHistoryEntry?: Maybe<HistoryEntry>;
+  createMessage?: Maybe<Message>;
+  updateMessage?: Maybe<Message>;
+  deleteMessage?: Maybe<Message>;
   createEc2Config?: Maybe<Ec2Config>;
   updateEc2Config?: Maybe<Ec2Config>;
   deleteEc2Config?: Maybe<Ec2Config>;
   createPost?: Maybe<Post>;
   updatePost?: Maybe<Post>;
   deletePost?: Maybe<Post>;
-  createMessage?: Maybe<Message>;
-  updateMessage?: Maybe<Message>;
-  deleteMessage?: Maybe<Message>;
 };
 
 export type MutationCreateHistoryEntryArgs = {
@@ -265,6 +265,18 @@ export type MutationUpdateHistoryEntryArgs = {
 
 export type MutationDeleteHistoryEntryArgs = {
   input: DeleteHistoryEntryInput;
+};
+
+export type MutationCreateMessageArgs = {
+  input: CreateMessageInput;
+};
+
+export type MutationUpdateMessageArgs = {
+  input: UpdateMessageInput;
+};
+
+export type MutationDeleteMessageArgs = {
+  input: DeleteMessageInput;
 };
 
 export type MutationCreateEc2ConfigArgs = {
@@ -291,32 +303,20 @@ export type MutationDeletePostArgs = {
   input: DeletePostInput;
 };
 
-export type MutationCreateMessageArgs = {
-  input: CreateMessageInput;
-};
-
-export type MutationUpdateMessageArgs = {
-  input: UpdateMessageInput;
-};
-
-export type MutationDeleteMessageArgs = {
-  input: DeleteMessageInput;
-};
-
 export type Subscription = {
   __typename?: "Subscription";
   onCreateHistoryEntry?: Maybe<HistoryEntry>;
   onUpdateHistoryEntry?: Maybe<HistoryEntry>;
   onDeleteHistoryEntry?: Maybe<HistoryEntry>;
+  onCreateMessage?: Maybe<Message>;
+  onUpdateMessage?: Maybe<Message>;
+  onDeleteMessage?: Maybe<Message>;
   onCreateEc2Config?: Maybe<Ec2Config>;
   onUpdateEc2Config?: Maybe<Ec2Config>;
   onDeleteEc2Config?: Maybe<Ec2Config>;
   onCreatePost?: Maybe<Post>;
   onUpdatePost?: Maybe<Post>;
   onDeletePost?: Maybe<Post>;
-  onCreateMessage?: Maybe<Message>;
-  onUpdateMessage?: Maybe<Message>;
-  onDeleteMessage?: Maybe<Message>;
 };
 
 export type SubscriptionOnCreateEc2ConfigArgs = {
@@ -497,6 +497,45 @@ export type DeleteHistoryEntryMutation = { __typename?: "Mutation" } & {
     { __typename?: "HistoryEntry" } & Pick<
       HistoryEntry,
       "id" | "ec2ConfigId" | "comment" | "time" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type CreateMessageMutationVariables = Exact<{
+  input: CreateMessageInput;
+}>;
+
+export type CreateMessageMutation = { __typename?: "Mutation" } & {
+  createMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type UpdateMessageMutationVariables = Exact<{
+  input: UpdateMessageInput;
+}>;
+
+export type UpdateMessageMutation = { __typename?: "Mutation" } & {
+  updateMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type DeleteMessageMutationVariables = Exact<{
+  input: DeleteMessageInput;
+}>;
+
+export type DeleteMessageMutation = { __typename?: "Mutation" } & {
+  deleteMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
     >
   >;
 };
@@ -684,45 +723,6 @@ export type DeletePostMutation = { __typename?: "Mutation" } & {
   >;
 };
 
-export type CreateMessageMutationVariables = Exact<{
-  input: CreateMessageInput;
-}>;
-
-export type CreateMessageMutation = { __typename?: "Mutation" } & {
-  createMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
-    >
-  >;
-};
-
-export type UpdateMessageMutationVariables = Exact<{
-  input: UpdateMessageInput;
-}>;
-
-export type UpdateMessageMutation = { __typename?: "Mutation" } & {
-  updateMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
-    >
-  >;
-};
-
-export type DeleteMessageMutationVariables = Exact<{
-  input: DeleteMessageInput;
-}>;
-
-export type DeleteMessageMutation = { __typename?: "Mutation" } & {
-  deleteMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
-    >
-  >;
-};
-
 export type ListTodosQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ListTodosQuery = { __typename?: "Query" } & {
@@ -774,6 +774,45 @@ export type ListHistoryEntrysQuery = { __typename?: "Query" } & {
                 | "time"
                 | "createdAt"
                 | "updatedAt"
+              >
+            >
+          >
+        >;
+      }
+  >;
+};
+
+export type GetMessageQueryVariables = Exact<{
+  id: Scalars["ID"];
+}>;
+
+export type GetMessageQuery = { __typename?: "Query" } & {
+  getMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type ListMessagesQueryVariables = Exact<{
+  filter?: Maybe<ModelMessageFilterInput>;
+  limit?: Maybe<Scalars["Int"]>;
+  nextToken?: Maybe<Scalars["String"]>;
+}>;
+
+export type ListMessagesQuery = { __typename?: "Query" } & {
+  listMessages?: Maybe<
+    { __typename?: "ModelMessageConnection" } & Pick<
+      ModelMessageConnection,
+      "nextToken"
+    > & {
+        items?: Maybe<
+          Array<
+            Maybe<
+              { __typename?: "Message" } & Pick<
+                Message,
+                "id" | "authorId" | "content" | "createdAt" | "updatedAt"
               >
             >
           >
@@ -930,45 +969,6 @@ export type ListPostsQuery = { __typename?: "Query" } & {
   >;
 };
 
-export type GetMessageQueryVariables = Exact<{
-  id: Scalars["ID"];
-}>;
-
-export type GetMessageQuery = { __typename?: "Query" } & {
-  getMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
-    >
-  >;
-};
-
-export type ListMessagesQueryVariables = Exact<{
-  filter?: Maybe<ModelMessageFilterInput>;
-  limit?: Maybe<Scalars["Int"]>;
-  nextToken?: Maybe<Scalars["String"]>;
-}>;
-
-export type ListMessagesQuery = { __typename?: "Query" } & {
-  listMessages?: Maybe<
-    { __typename?: "ModelMessageConnection" } & Pick<
-      ModelMessageConnection,
-      "nextToken"
-    > & {
-        items?: Maybe<
-          Array<
-            Maybe<
-              { __typename?: "Message" } & Pick<
-                Message,
-                "id" | "authorId" | "content" | "createdAt" | "updatedAt"
-              >
-            >
-          >
-        >;
-      }
-  >;
-};
-
 export type GetTodoQueryVariables = Exact<{
   params: QueryGetTodoParamsInput;
 }>;
@@ -1023,6 +1023,45 @@ export type OnDeleteHistoryEntrySubscription = {
     { __typename?: "HistoryEntry" } & Pick<
       HistoryEntry,
       "id" | "ec2ConfigId" | "comment" | "time" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type OnCreateMessageSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type OnCreateMessageSubscription = { __typename?: "Subscription" } & {
+  onCreateMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type OnUpdateMessageSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type OnUpdateMessageSubscription = { __typename?: "Subscription" } & {
+  onUpdateMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type OnDeleteMessageSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type OnDeleteMessageSubscription = { __typename?: "Subscription" } & {
+  onDeleteMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
     >
   >;
 };
@@ -1210,45 +1249,6 @@ export type OnDeletePostSubscription = { __typename?: "Subscription" } & {
   >;
 };
 
-export type OnCreateMessageSubscriptionVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type OnCreateMessageSubscription = { __typename?: "Subscription" } & {
-  onCreateMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
-    >
-  >;
-};
-
-export type OnUpdateMessageSubscriptionVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type OnUpdateMessageSubscription = { __typename?: "Subscription" } & {
-  onUpdateMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
-    >
-  >;
-};
-
-export type OnDeleteMessageSubscriptionVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type OnDeleteMessageSubscription = { __typename?: "Subscription" } & {
-  onDeleteMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
-    >
-  >;
-};
-
 export const CreateHistoryEntryDocument = `
     mutation CreateHistoryEntry($input: CreateHistoryEntryInput!) {
   createHistoryEntry(input: $input) {
@@ -1355,6 +1355,102 @@ export const useDeleteHistoryEntryMutation = <
         DeleteHistoryEntryMutation,
         DeleteHistoryEntryMutationVariables
       >(DeleteHistoryEntryDocument, variables)(),
+    options
+  );
+export const CreateMessageDocument = `
+    mutation CreateMessage($input: CreateMessageInput!) {
+  createMessage(input: $input) {
+    id
+    authorId
+    content
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const useCreateMessageMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CreateMessageMutation,
+    TError,
+    CreateMessageMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    CreateMessageMutation,
+    TError,
+    CreateMessageMutationVariables,
+    TContext
+  >(
+    (variables?: CreateMessageMutationVariables) =>
+      amplifyFetcher<CreateMessageMutation, CreateMessageMutationVariables>(
+        CreateMessageDocument,
+        variables
+      )(),
+    options
+  );
+export const UpdateMessageDocument = `
+    mutation UpdateMessage($input: UpdateMessageInput!) {
+  updateMessage(input: $input) {
+    id
+    authorId
+    content
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const useUpdateMessageMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateMessageMutation,
+    TError,
+    UpdateMessageMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateMessageMutation,
+    TError,
+    UpdateMessageMutationVariables,
+    TContext
+  >(
+    (variables?: UpdateMessageMutationVariables) =>
+      amplifyFetcher<UpdateMessageMutation, UpdateMessageMutationVariables>(
+        UpdateMessageDocument,
+        variables
+      )(),
+    options
+  );
+export const DeleteMessageDocument = `
+    mutation DeleteMessage($input: DeleteMessageInput!) {
+  deleteMessage(input: $input) {
+    id
+    authorId
+    content
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const useDeleteMessageMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteMessageMutation,
+    TError,
+    DeleteMessageMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteMessageMutation,
+    TError,
+    DeleteMessageMutationVariables,
+    TContext
+  >(
+    (variables?: DeleteMessageMutationVariables) =>
+      amplifyFetcher<DeleteMessageMutation, DeleteMessageMutationVariables>(
+        DeleteMessageDocument,
+        variables
+      )(),
     options
   );
 export const CreateEc2ConfigDocument = `
@@ -1603,102 +1699,6 @@ export const useDeletePostMutation = <TError = unknown, TContext = unknown>(
       )(),
     options
   );
-export const CreateMessageDocument = `
-    mutation CreateMessage($input: CreateMessageInput!) {
-  createMessage(input: $input) {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
-  }
-}
-    `;
-export const useCreateMessageMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    CreateMessageMutation,
-    TError,
-    CreateMessageMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    CreateMessageMutation,
-    TError,
-    CreateMessageMutationVariables,
-    TContext
-  >(
-    (variables?: CreateMessageMutationVariables) =>
-      amplifyFetcher<CreateMessageMutation, CreateMessageMutationVariables>(
-        CreateMessageDocument,
-        variables
-      )(),
-    options
-  );
-export const UpdateMessageDocument = `
-    mutation UpdateMessage($input: UpdateMessageInput!) {
-  updateMessage(input: $input) {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
-  }
-}
-    `;
-export const useUpdateMessageMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    UpdateMessageMutation,
-    TError,
-    UpdateMessageMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    UpdateMessageMutation,
-    TError,
-    UpdateMessageMutationVariables,
-    TContext
-  >(
-    (variables?: UpdateMessageMutationVariables) =>
-      amplifyFetcher<UpdateMessageMutation, UpdateMessageMutationVariables>(
-        UpdateMessageDocument,
-        variables
-      )(),
-    options
-  );
-export const DeleteMessageDocument = `
-    mutation DeleteMessage($input: DeleteMessageInput!) {
-  deleteMessage(input: $input) {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
-  }
-}
-    `;
-export const useDeleteMessageMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    DeleteMessageMutation,
-    TError,
-    DeleteMessageMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    DeleteMessageMutation,
-    TError,
-    DeleteMessageMutationVariables,
-    TContext
-  >(
-    (variables?: DeleteMessageMutationVariables) =>
-      amplifyFetcher<DeleteMessageMutation, DeleteMessageMutationVariables>(
-        DeleteMessageDocument,
-        variables
-      )(),
-    options
-  );
 export const ListTodosDocument = `
     query ListTodos {
   listTodos {
@@ -1774,6 +1774,58 @@ export const useListHistoryEntrysQuery = <
     ["ListHistoryEntrys", variables],
     amplifyFetcher<ListHistoryEntrysQuery, ListHistoryEntrysQueryVariables>(
       ListHistoryEntrysDocument,
+      variables
+    ),
+    options
+  );
+export const GetMessageDocument = `
+    query GetMessage($id: ID!) {
+  getMessage(id: $id) {
+    id
+    authorId
+    content
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const useGetMessageQuery = <TData = GetMessageQuery, TError = unknown>(
+  variables: GetMessageQueryVariables,
+  options?: UseQueryOptions<GetMessageQuery, TError, TData>
+) =>
+  useQuery<GetMessageQuery, TError, TData>(
+    ["GetMessage", variables],
+    amplifyFetcher<GetMessageQuery, GetMessageQueryVariables>(
+      GetMessageDocument,
+      variables
+    ),
+    options
+  );
+export const ListMessagesDocument = `
+    query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
+  listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      authorId
+      content
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+    `;
+export const useListMessagesQuery = <
+  TData = ListMessagesQuery,
+  TError = unknown
+>(
+  variables?: ListMessagesQueryVariables,
+  options?: UseQueryOptions<ListMessagesQuery, TError, TData>
+) =>
+  useQuery<ListMessagesQuery, TError, TData>(
+    ["ListMessages", variables],
+    amplifyFetcher<ListMessagesQuery, ListMessagesQueryVariables>(
+      ListMessagesDocument,
       variables
     ),
     options
@@ -1912,58 +1964,6 @@ export const useListPostsQuery = <TData = ListPostsQuery, TError = unknown>(
     ),
     options
   );
-export const GetMessageDocument = `
-    query GetMessage($id: ID!) {
-  getMessage(id: $id) {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
-  }
-}
-    `;
-export const useGetMessageQuery = <TData = GetMessageQuery, TError = unknown>(
-  variables: GetMessageQueryVariables,
-  options?: UseQueryOptions<GetMessageQuery, TError, TData>
-) =>
-  useQuery<GetMessageQuery, TError, TData>(
-    ["GetMessage", variables],
-    amplifyFetcher<GetMessageQuery, GetMessageQueryVariables>(
-      GetMessageDocument,
-      variables
-    ),
-    options
-  );
-export const ListMessagesDocument = `
-    query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
-  listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      authorId
-      content
-      createdAt
-      updatedAt
-    }
-    nextToken
-  }
-}
-    `;
-export const useListMessagesQuery = <
-  TData = ListMessagesQuery,
-  TError = unknown
->(
-  variables?: ListMessagesQueryVariables,
-  options?: UseQueryOptions<ListMessagesQuery, TError, TData>
-) =>
-  useQuery<ListMessagesQuery, TError, TData>(
-    ["ListMessages", variables],
-    amplifyFetcher<ListMessagesQuery, ListMessagesQueryVariables>(
-      ListMessagesDocument,
-      variables
-    ),
-    options
-  );
 export const GetTodoDocument = `
     query GetTodo($params: QueryGetTodoParamsInput!) {
   getTodo(params: $params) {
@@ -2017,6 +2017,39 @@ export const OnDeleteHistoryEntryDocument = `
     ec2ConfigId
     comment
     time
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const OnCreateMessageDocument = `
+    subscription OnCreateMessage {
+  onCreateMessage {
+    id
+    authorId
+    content
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const OnUpdateMessageDocument = `
+    subscription OnUpdateMessage {
+  onUpdateMessage {
+    id
+    authorId
+    content
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const OnDeleteMessageDocument = `
+    subscription OnDeleteMessage {
+  onDeleteMessage {
+    id
+    authorId
+    content
     createdAt
     updatedAt
   }
@@ -2130,39 +2163,6 @@ export const OnDeletePostDocument = `
     createdAt
     updatedAt
     owner
-  }
-}
-    `;
-export const OnCreateMessageDocument = `
-    subscription OnCreateMessage {
-  onCreateMessage {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
-  }
-}
-    `;
-export const OnUpdateMessageDocument = `
-    subscription OnUpdateMessage {
-  onUpdateMessage {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
-  }
-}
-    `;
-export const OnDeleteMessageDocument = `
-    subscription OnDeleteMessage {
-  onDeleteMessage {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
   }
 }
     `;
