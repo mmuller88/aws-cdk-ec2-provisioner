@@ -1,33 +1,15 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  RouteComponentProps
-} from "react-router-dom";
-
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation } from 'react-query';
 
-import { graphql } from 'react-apollo'
-import { observer } from 'mobx-react'
 import { css } from 'glamor'
-import { uuid } from 'uuidv4'
 
 import UserStore from '../mobx/UserStore'
-import { CreateMessageDocument, CreateMessageInput, Message, useCreateMessageMutation, useListMessagesQuery} from '../lib/api';
+import { CreateMessageDocument, CreateMessageInput, Message, useListMessagesQuery} from '../lib/api';
 import { API } from '../lib/fetcher';
-
-import { Auth } from '@aws-amplify/auth';
-import { debug } from "console";
 
 // react-apollo compose has no type export
 // https://dev.to/piglovesyou/react-apollo-codegen-typescript-how-you-can-compose-multiple-queries-mutations-to-a-component-2jic
 export declare function compose(...funcs: Function[]): (...args: any[]) => any;
-
-interface ConversationProps {
-  conversationId: string;
-  conversationName: string;
-}
 
 const initialState = { content: '' }
 
@@ -82,7 +64,7 @@ export function Chat() {
     const { username } = UserStore;
 
     const message: CreateMessageInput = {
-      id: uuid(),
+      // id: uuid(),
       createdAt: new Date().toISOString(),
       content: content,
       authorId: username
@@ -93,7 +75,7 @@ export function Chat() {
     };
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const createResult = await useCreateMessageMutation({...input}, { onSuccess: (data) => { console.log(data) } });
+    const createResult = await useCreateMessageMutation(input, { onSuccess: (data) => { console.log(data) } });
     if (createResult) {
       refetch();
     }
