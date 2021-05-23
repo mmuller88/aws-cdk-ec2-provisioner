@@ -14,7 +14,7 @@ import { css } from 'glamor'
 import { uuid } from 'uuidv4'
 
 import UserStore from '../mobx/UserStore'
-import { CreateMessageDocument, CreateMessageInput, Message, useCreateMessageMutation, useGetConversationQuery, useListConversationsQuery, useListMessagesQuery} from '../lib/api';
+import { CreateMessageDocument, CreateMessageInput, Message, useCreateMessageMutation, useListMessagesQuery} from '../lib/api';
 import { API } from '../lib/fetcher';
 
 import { Auth } from '@aws-amplify/auth';
@@ -31,22 +31,17 @@ interface ConversationProps {
 
 const initialState = { content: '' }
 
-export function Conversation( { match }: RouteComponentProps<ConversationProps>) {
+export function Chat() {
 
   const [message, setMessage] = useState(initialState);
 
   const { content } = message;
 
-  const { conversationId } = match.params;
-  const { conversationName } = match.params
-
-  console.log(`conversationId: ${conversationId}, conversationName: ${conversationName}`);
-
-  const { data, isLoading, refetch } = useGetConversationQuery({ id: conversationId }, {
+  const { data, isLoading, refetch } = useListMessagesQuery(null, {
     refetchOnWindowFocus: false,
   });
   
-  const messages = data?.getConversation?.messages?.items;
+  const messages = data?.listMessages.items;
 
   // const el = useRef<null | HTMLDivElement>(null); 
 
@@ -86,10 +81,9 @@ export function Conversation( { match }: RouteComponentProps<ConversationProps>)
 
     const { username } = UserStore;
 
-    const message = {
+    const message: CreateMessageInput = {
       id: uuid(),
       createdAt: new Date().toISOString(),
-      messageConversationId: conversationId,
       content: content,
       authorId: username
     }
@@ -110,7 +104,7 @@ export function Conversation( { match }: RouteComponentProps<ConversationProps>)
   return (
     <div>
       <div {...css(styles.conversationNameContainer)}>
-        <p {...css(styles.conversationName)}>{conversationName}</p>
+        <p {...css(styles.conversationName)}>Chat</p>
       </div>
       <div {...css(styles.messagesContainer)}>
         {
