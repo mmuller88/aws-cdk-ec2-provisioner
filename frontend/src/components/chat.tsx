@@ -35,7 +35,7 @@ export function Chat({username}:ChatProps) {
 
   const [item] = useSubscription({
     config: {
-      key: 'onCreatePost',
+      key: 'onCreateMessage',
       query: onCreateMessage,
     },
   });

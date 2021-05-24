@@ -29,7 +29,7 @@ type Post
 type Message
   @model
   # @auth(rules: [{ allow: public, provider: iam }]) 
-  @auth(rules: [{ allow: owner }, { allow: public, provider: iam }]) {
+  @auth(rules: [{ allow: owner, operations: [create, delete, update] }]) {
   id: ID!
   authorId: String!
   content: String!
