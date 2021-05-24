@@ -99,15 +99,14 @@ export class AppSyncStack extends CustomStack {
           authorizationType: appsync.AuthorizationType.USER_POOL,
           userPoolConfig: {
             userPool: userPool,
-            appIdClientRegex: userPoolClient.userPoolClientId,
             defaultAction: appsync.UserPoolDefaultAction.ALLOW,
           },
         },
-        // additionalAuthorizationModes: [
-        //   {
-        //     authorizationType: appsync.AuthorizationType.IAM,
-        //   },
-        // ],
+        additionalAuthorizationModes: [
+          {
+            authorizationType: appsync.AuthorizationType.IAM,
+          },
+        ],
       },
     });
 
@@ -131,7 +130,9 @@ export class AppSyncStack extends CustomStack {
         resources: [
           // Queries
           `arn:aws:appsync:${this.region}:${this.account}:apis/${graphQlApi.appsyncAPI.apiId}/types/Query/fields/listPosts`,
+          `arn:aws:appsync:${this.region}:${this.account}:apis/${graphQlApi.appsyncAPI.apiId}/types/Query/fields/listMessages`,
           `arn:aws:appsync:${this.region}:${this.account}:apis/${graphQlApi.appsyncAPI.apiId}/types/Query/fields/getPost`,
+          `arn:aws:appsync:${this.region}:${this.account}:apis/${graphQlApi.appsyncAPI.apiId}/types/Query/fields/getMessage`,
         ],
       }),
     );
