@@ -39,16 +39,27 @@ export function Chat({username}:ChatProps) {
 
   const [item] = useSubscription({
     config: {
-      key: 'onCreateMessage',
+      key: 'onCreateMessageById',
       query: onCreateMessage,
     },
   });
 
   // Subscribe to creation of Todo
 const subscription = API.graphql(
+  graphqlOperation(subscriptions.addedMessage)
+).subscribe({
+  next: ({ provider, value }) => {
+    console.log("Subscription fires")
+    console.log({ provider, value })},
+  error: error => console.warn(error)
+});
+
+const subscription2 = API.graphql(
   graphqlOperation(subscriptions.onCreateMessage)
 ).subscribe({
-  next: ({ provider, value }) => console.log({ provider, value }),
+  next: ({ provider, value }) => {
+    console.log("Subscription fires 2")
+    console.log({ provider, value })},
   error: error => console.warn(error)
 });
 

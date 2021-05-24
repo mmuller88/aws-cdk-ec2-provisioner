@@ -38,6 +38,13 @@ type Message
   updatedAt: AWSDateTime!
 }
 
+type Subscription {
+  # onCreateConvoLink(convoLinkUserId: ID!): ConvoLink
+  #   @aws_subscribe(mutations: ["createConvoLink"])
+  addedMessage(authorId: String): Message
+    @aws_subscribe(mutations: ["createMessage"])
+}
+
 # https://jsonplaceholder.typicode.com/
 type Todo {
   id: Int!
@@ -110,9 +117,3 @@ type Query {
 #   updatedAt: AWSDateTime!
 # }
 
-type Subscription {
-  # onCreateConvoLink(convoLinkUserId: ID!): ConvoLink
-  #   @aws_subscribe(mutations: ["createConvoLink"])
-  onCreateMessageById(id: ID!): Message
-    @aws_subscribe(mutations: ["createMessage"])
-}

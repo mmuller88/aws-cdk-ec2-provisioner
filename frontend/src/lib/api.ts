@@ -83,6 +83,51 @@ export type Message = {
   updatedAt: Scalars["AWSDateTime"];
 };
 
+export type Subscription = {
+  __typename?: "Subscription";
+  addedMessage?: Maybe<Message>;
+  onCreateHistoryEntry?: Maybe<HistoryEntry>;
+  onUpdateHistoryEntry?: Maybe<HistoryEntry>;
+  onDeleteHistoryEntry?: Maybe<HistoryEntry>;
+  onCreateMessage?: Maybe<Message>;
+  onUpdateMessage?: Maybe<Message>;
+  onDeleteMessage?: Maybe<Message>;
+  onCreateEc2Config?: Maybe<Ec2Config>;
+  onUpdateEc2Config?: Maybe<Ec2Config>;
+  onDeleteEc2Config?: Maybe<Ec2Config>;
+  onCreatePost?: Maybe<Post>;
+  onUpdatePost?: Maybe<Post>;
+  onDeletePost?: Maybe<Post>;
+};
+
+export type SubscriptionAddedMessageArgs = {
+  authorId?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnCreateEc2ConfigArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnUpdateEc2ConfigArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnDeleteEc2ConfigArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnCreatePostArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnUpdatePostArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnDeletePostArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
 export type Todo = {
   __typename?: "Todo";
   id: Scalars["Int"];
@@ -147,51 +192,6 @@ export type QueryListPostsArgs = {
 
 export type QueryGetTodoArgs = {
   params: QueryGetTodoParamsInput;
-};
-
-export type Subscription = {
-  __typename?: "Subscription";
-  onCreateMessageById?: Maybe<Message>;
-  onCreateHistoryEntry?: Maybe<HistoryEntry>;
-  onUpdateHistoryEntry?: Maybe<HistoryEntry>;
-  onDeleteHistoryEntry?: Maybe<HistoryEntry>;
-  onCreateMessage?: Maybe<Message>;
-  onUpdateMessage?: Maybe<Message>;
-  onDeleteMessage?: Maybe<Message>;
-  onCreateEc2Config?: Maybe<Ec2Config>;
-  onUpdateEc2Config?: Maybe<Ec2Config>;
-  onDeleteEc2Config?: Maybe<Ec2Config>;
-  onCreatePost?: Maybe<Post>;
-  onUpdatePost?: Maybe<Post>;
-  onDeletePost?: Maybe<Post>;
-};
-
-export type SubscriptionOnCreateMessageByIdArgs = {
-  id: Scalars["ID"];
-};
-
-export type SubscriptionOnCreateEc2ConfigArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnUpdateEc2ConfigArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnDeleteEc2ConfigArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnCreatePostArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnUpdatePostArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnDeletePostArgs = {
-  owner?: Maybe<Scalars["String"]>;
 };
 
 export enum ModelSortDirection {
@@ -987,14 +987,12 @@ export type GetTodoQuery = { __typename?: "Query" } & {
   >;
 };
 
-export type OnCreateMessageByIdSubscriptionVariables = Exact<{
-  id: Scalars["ID"];
+export type AddedMessageSubscriptionVariables = Exact<{
+  authorId?: Maybe<Scalars["String"]>;
 }>;
 
-export type OnCreateMessageByIdSubscription = {
-  __typename?: "Subscription";
-} & {
-  onCreateMessageById?: Maybe<
+export type AddedMessageSubscription = { __typename?: "Subscription" } & {
+  addedMessage?: Maybe<
     { __typename?: "Message" } & Pick<
       Message,
       "id" | "authorId" | "content" | "createdAt" | "updatedAt"
@@ -2006,9 +2004,9 @@ export const useGetTodoQuery = <TData = GetTodoQuery, TError = unknown>(
     ),
     options
   );
-export const OnCreateMessageByIdDocument = `
-    subscription OnCreateMessageById($id: ID!) {
-  onCreateMessageById(id: $id) {
+export const AddedMessageDocument = `
+    subscription AddedMessage($authorId: String) {
+  addedMessage(authorId: $authorId) {
     id
     authorId
     content

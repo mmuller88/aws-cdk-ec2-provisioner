@@ -2,9 +2,9 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateMessageById = /* GraphQL */ `
-  subscription OnCreateMessageById($id: ID!) {
-    onCreateMessageById(id: $id) {
+export const addedMessage = /* GraphQL */ `
+  subscription AddedMessage($authorId: String) {
+    addedMessage(authorId: $authorId) {
       id
       authorId
       content
