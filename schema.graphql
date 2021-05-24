@@ -27,7 +27,7 @@ type Post
 }
 
 type Message
-  @model (subscriptions: { level: public })
+  @model #(subscriptions: { level: public })
   # @auth(rules: [{ allow: public, provider: iam }])
   {
   # @auth(rules: [{ allow: owner, operations: [create, delete, update] }]) {
@@ -110,9 +110,9 @@ type Query {
 #   updatedAt: AWSDateTime!
 # }
 
-# type Subscription {
-#   # onCreateConvoLink(convoLinkUserId: ID!): ConvoLink
-#   #   @aws_subscribe(mutations: ["createConvoLink"])
-#   onCreateMessage(id: ID!): Message
-#     @aws_subscribe(mutations: ["createMessage"])
-# }
+type Subscription {
+  # onCreateConvoLink(convoLinkUserId: ID!): ConvoLink
+  #   @aws_subscribe(mutations: ["createConvoLink"])
+  onCreateMessageById(id: ID!): Message
+    @aws_subscribe(mutations: ["createMessage"])
+}
