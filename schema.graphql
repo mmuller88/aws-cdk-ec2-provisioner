@@ -27,8 +27,8 @@ type Post
 }
 
 type Message
-  @model
-  @auth(rules: [{ allow: public }]){
+  @model (subscriptions: { level: public })
+  @auth(rules: [{ allow: public, provider: iam }]){
   # @auth(rules: [{ allow: owner, operations: [create, delete, update] }]) {
   id: ID!
   authorId: String!

@@ -308,15 +308,15 @@ export type Subscription = {
   onCreateHistoryEntry?: Maybe<HistoryEntry>;
   onUpdateHistoryEntry?: Maybe<HistoryEntry>;
   onDeleteHistoryEntry?: Maybe<HistoryEntry>;
+  onCreateMessage?: Maybe<Message>;
+  onUpdateMessage?: Maybe<Message>;
+  onDeleteMessage?: Maybe<Message>;
   onCreateEc2Config?: Maybe<Ec2Config>;
   onUpdateEc2Config?: Maybe<Ec2Config>;
   onDeleteEc2Config?: Maybe<Ec2Config>;
   onCreatePost?: Maybe<Post>;
   onUpdatePost?: Maybe<Post>;
   onDeletePost?: Maybe<Post>;
-  onCreateMessage?: Maybe<Message>;
-  onUpdateMessage?: Maybe<Message>;
-  onDeleteMessage?: Maybe<Message>;
 };
 
 export type SubscriptionOnCreateEc2ConfigArgs = {
@@ -1027,6 +1027,45 @@ export type OnDeleteHistoryEntrySubscription = {
   >;
 };
 
+export type OnCreateMessageSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type OnCreateMessageSubscription = { __typename?: "Subscription" } & {
+  onCreateMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type OnUpdateMessageSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type OnUpdateMessageSubscription = { __typename?: "Subscription" } & {
+  onUpdateMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
+export type OnDeleteMessageSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type OnDeleteMessageSubscription = { __typename?: "Subscription" } & {
+  onDeleteMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
+    >
+  >;
+};
+
 export type OnCreateEc2ConfigSubscriptionVariables = Exact<{
   owner?: Maybe<Scalars["String"]>;
 }>;
@@ -1206,45 +1245,6 @@ export type OnDeletePostSubscription = { __typename?: "Subscription" } & {
       | "createdAt"
       | "updatedAt"
       | "owner"
-    >
-  >;
-};
-
-export type OnCreateMessageSubscriptionVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type OnCreateMessageSubscription = { __typename?: "Subscription" } & {
-  onCreateMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
-    >
-  >;
-};
-
-export type OnUpdateMessageSubscriptionVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type OnUpdateMessageSubscription = { __typename?: "Subscription" } & {
-  onUpdateMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
-    >
-  >;
-};
-
-export type OnDeleteMessageSubscriptionVariables = Exact<{
-  [key: string]: never;
-}>;
-
-export type OnDeleteMessageSubscription = { __typename?: "Subscription" } & {
-  onDeleteMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt"
     >
   >;
 };
@@ -2022,6 +2022,39 @@ export const OnDeleteHistoryEntryDocument = `
   }
 }
     `;
+export const OnCreateMessageDocument = `
+    subscription OnCreateMessage {
+  onCreateMessage {
+    id
+    authorId
+    content
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const OnUpdateMessageDocument = `
+    subscription OnUpdateMessage {
+  onUpdateMessage {
+    id
+    authorId
+    content
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const OnDeleteMessageDocument = `
+    subscription OnDeleteMessage {
+  onDeleteMessage {
+    id
+    authorId
+    content
+    createdAt
+    updatedAt
+  }
+}
+    `;
 export const OnCreateEc2ConfigDocument = `
     subscription OnCreateEc2Config($owner: String) {
   onCreateEc2Config(owner: $owner) {
@@ -2130,39 +2163,6 @@ export const OnDeletePostDocument = `
     createdAt
     updatedAt
     owner
-  }
-}
-    `;
-export const OnCreateMessageDocument = `
-    subscription OnCreateMessage {
-  onCreateMessage {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
-  }
-}
-    `;
-export const OnUpdateMessageDocument = `
-    subscription OnUpdateMessage {
-  onUpdateMessage {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
-  }
-}
-    `;
-export const OnDeleteMessageDocument = `
-    subscription OnDeleteMessage {
-  onDeleteMessage {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
   }
 }
     `;
