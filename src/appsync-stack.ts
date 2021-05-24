@@ -111,11 +111,11 @@ export class AppSyncStack extends CustomStack {
     });
 
     const publicRole = new iam.Role(this, 'public-role', {
-      assumedBy: new iam.WebIdentityPrincipal('cognito-identity.amazonaws.com'),
-      // .withConditions({
-      //   'StringEquals': { 'cognito-identity.amazonaws.com:aud': `${identityPool.ref}` },
-      //   'ForAnyValue:StringLike': { 'cognito-identity.amazonaws.com:amr': 'unauthenticated' },
-      // }),
+      assumedBy: new iam.WebIdentityPrincipal('cognito-identity.amazonaws.com')
+        .withConditions({
+          'StringEquals': { 'cognito-identity.amazonaws.com:aud': `${identityPool.ref}` },
+          'ForAnyValue:StringLike': { 'cognito-identity.amazonaws.com:amr': 'unauthenticated' },
+        }),
     });
 
     graphQlApi.grantPublic(publicRole);

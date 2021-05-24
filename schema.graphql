@@ -17,14 +17,14 @@
 #   time: AWSDateTime!
 # }
 
-# type Post
-#   @model
-#   @auth(rules: [{ allow: public, provider: iam }, { allow: owner }]) {
-#   id: ID!
-#   title: String!
-#   content: String!
-#   username: String!
-# }
+type Post
+  @model
+  @auth(rules: [{ allow: public, provider: iam }, { allow: owner }]) {
+  id: ID!
+  title: String!
+  content: String!
+  username: String!
+}
 
 type Message
   @model #(subscriptions: { level: public })
@@ -51,17 +51,17 @@ type Message
 # }
 
 # https://jsonplaceholder.typicode.com/
-# type Todo {
-#   id: Int!
-#   userId: Int!
-#   title: String!
-#   completed: Boolean!
-# }
+type Todo {
+  id: Int!
+  userId: Int!
+  title: String!
+  completed: Boolean!
+}
 
-# type Query {
-#   listTodos: [Todo] @http(url: "https://jsonplaceholder.typicode.com/todos")
-#   getTodo: Todo @http(url: "https://jsonplaceholder.typicode.com/todos/:id")
-# }
+type Query {
+  listTodos: [Todo] @http(url: "https://jsonplaceholder.typicode.com/todos")
+  getTodo: Todo @http(url: "https://jsonplaceholder.typicode.com/todos/:id")
+}
 
 # type User
 #   @model
