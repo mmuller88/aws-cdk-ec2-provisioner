@@ -245,15 +245,15 @@ export type Mutation = {
   createHistoryEntry?: Maybe<HistoryEntry>;
   updateHistoryEntry?: Maybe<HistoryEntry>;
   deleteHistoryEntry?: Maybe<HistoryEntry>;
+  createMessage?: Maybe<Message>;
+  updateMessage?: Maybe<Message>;
+  deleteMessage?: Maybe<Message>;
   createEc2Config?: Maybe<Ec2Config>;
   updateEc2Config?: Maybe<Ec2Config>;
   deleteEc2Config?: Maybe<Ec2Config>;
   createPost?: Maybe<Post>;
   updatePost?: Maybe<Post>;
   deletePost?: Maybe<Post>;
-  createMessage?: Maybe<Message>;
-  updateMessage?: Maybe<Message>;
-  deleteMessage?: Maybe<Message>;
 };
 
 export type MutationCreateHistoryEntryArgs = {
@@ -266,6 +266,18 @@ export type MutationUpdateHistoryEntryArgs = {
 
 export type MutationDeleteHistoryEntryArgs = {
   input: DeleteHistoryEntryInput;
+};
+
+export type MutationCreateMessageArgs = {
+  input: CreateMessageInput;
+};
+
+export type MutationUpdateMessageArgs = {
+  input: UpdateMessageInput;
+};
+
+export type MutationDeleteMessageArgs = {
+  input: DeleteMessageInput;
 };
 
 export type MutationCreateEc2ConfigArgs = {
@@ -290,18 +302,6 @@ export type MutationUpdatePostArgs = {
 
 export type MutationDeletePostArgs = {
   input: DeletePostInput;
-};
-
-export type MutationCreateMessageArgs = {
-  input: CreateMessageInput;
-};
-
-export type MutationUpdateMessageArgs = {
-  input: UpdateMessageInput;
-};
-
-export type MutationDeleteMessageArgs = {
-  input: DeleteMessageInput;
 };
 
 export type Subscription = {
@@ -514,6 +514,45 @@ export type DeleteHistoryEntryMutation = { __typename?: "Mutation" } & {
   >;
 };
 
+export type CreateMessageMutationVariables = Exact<{
+  input: CreateMessageInput;
+}>;
+
+export type CreateMessageMutation = { __typename?: "Mutation" } & {
+  createMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
+    >
+  >;
+};
+
+export type UpdateMessageMutationVariables = Exact<{
+  input: UpdateMessageInput;
+}>;
+
+export type UpdateMessageMutation = { __typename?: "Mutation" } & {
+  updateMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
+    >
+  >;
+};
+
+export type DeleteMessageMutationVariables = Exact<{
+  input: DeleteMessageInput;
+}>;
+
+export type DeleteMessageMutation = { __typename?: "Mutation" } & {
+  deleteMessage?: Maybe<
+    { __typename?: "Message" } & Pick<
+      Message,
+      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
+    >
+  >;
+};
+
 export type CreateEc2ConfigMutationVariables = Exact<{
   input: CreateEc2ConfigInput;
 }>;
@@ -693,45 +732,6 @@ export type DeletePostMutation = { __typename?: "Mutation" } & {
       | "createdAt"
       | "updatedAt"
       | "owner"
-    >
-  >;
-};
-
-export type CreateMessageMutationVariables = Exact<{
-  input: CreateMessageInput;
-}>;
-
-export type CreateMessageMutation = { __typename?: "Mutation" } & {
-  createMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
-    >
-  >;
-};
-
-export type UpdateMessageMutationVariables = Exact<{
-  input: UpdateMessageInput;
-}>;
-
-export type UpdateMessageMutation = { __typename?: "Mutation" } & {
-  updateMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
-    >
-  >;
-};
-
-export type DeleteMessageMutationVariables = Exact<{
-  input: DeleteMessageInput;
-}>;
-
-export type DeleteMessageMutation = { __typename?: "Mutation" } & {
-  deleteMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
     >
   >;
 };
@@ -1375,6 +1375,105 @@ export const useDeleteHistoryEntryMutation = <
       >(DeleteHistoryEntryDocument, variables)(),
     options
   );
+export const CreateMessageDocument = `
+    mutation CreateMessage($input: CreateMessageInput!) {
+  createMessage(input: $input) {
+    id
+    authorId
+    content
+    createdAt
+    updatedAt
+    owner
+  }
+}
+    `;
+export const useCreateMessageMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CreateMessageMutation,
+    TError,
+    CreateMessageMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    CreateMessageMutation,
+    TError,
+    CreateMessageMutationVariables,
+    TContext
+  >(
+    (variables?: CreateMessageMutationVariables) =>
+      amplifyFetcher<CreateMessageMutation, CreateMessageMutationVariables>(
+        CreateMessageDocument,
+        variables
+      )(),
+    options
+  );
+export const UpdateMessageDocument = `
+    mutation UpdateMessage($input: UpdateMessageInput!) {
+  updateMessage(input: $input) {
+    id
+    authorId
+    content
+    createdAt
+    updatedAt
+    owner
+  }
+}
+    `;
+export const useUpdateMessageMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    UpdateMessageMutation,
+    TError,
+    UpdateMessageMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    UpdateMessageMutation,
+    TError,
+    UpdateMessageMutationVariables,
+    TContext
+  >(
+    (variables?: UpdateMessageMutationVariables) =>
+      amplifyFetcher<UpdateMessageMutation, UpdateMessageMutationVariables>(
+        UpdateMessageDocument,
+        variables
+      )(),
+    options
+  );
+export const DeleteMessageDocument = `
+    mutation DeleteMessage($input: DeleteMessageInput!) {
+  deleteMessage(input: $input) {
+    id
+    authorId
+    content
+    createdAt
+    updatedAt
+    owner
+  }
+}
+    `;
+export const useDeleteMessageMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteMessageMutation,
+    TError,
+    DeleteMessageMutationVariables,
+    TContext
+  >
+) =>
+  useMutation<
+    DeleteMessageMutation,
+    TError,
+    DeleteMessageMutationVariables,
+    TContext
+  >(
+    (variables?: DeleteMessageMutationVariables) =>
+      amplifyFetcher<DeleteMessageMutation, DeleteMessageMutationVariables>(
+        DeleteMessageDocument,
+        variables
+      )(),
+    options
+  );
 export const CreateEc2ConfigDocument = `
     mutation CreateEc2Config($input: CreateEc2ConfigInput!) {
   createEc2Config(input: $input) {
@@ -1617,105 +1716,6 @@ export const useDeletePostMutation = <TError = unknown, TContext = unknown>(
     (variables?: DeletePostMutationVariables) =>
       amplifyFetcher<DeletePostMutation, DeletePostMutationVariables>(
         DeletePostDocument,
-        variables
-      )(),
-    options
-  );
-export const CreateMessageDocument = `
-    mutation CreateMessage($input: CreateMessageInput!) {
-  createMessage(input: $input) {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
-    owner
-  }
-}
-    `;
-export const useCreateMessageMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    CreateMessageMutation,
-    TError,
-    CreateMessageMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    CreateMessageMutation,
-    TError,
-    CreateMessageMutationVariables,
-    TContext
-  >(
-    (variables?: CreateMessageMutationVariables) =>
-      amplifyFetcher<CreateMessageMutation, CreateMessageMutationVariables>(
-        CreateMessageDocument,
-        variables
-      )(),
-    options
-  );
-export const UpdateMessageDocument = `
-    mutation UpdateMessage($input: UpdateMessageInput!) {
-  updateMessage(input: $input) {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
-    owner
-  }
-}
-    `;
-export const useUpdateMessageMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    UpdateMessageMutation,
-    TError,
-    UpdateMessageMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    UpdateMessageMutation,
-    TError,
-    UpdateMessageMutationVariables,
-    TContext
-  >(
-    (variables?: UpdateMessageMutationVariables) =>
-      amplifyFetcher<UpdateMessageMutation, UpdateMessageMutationVariables>(
-        UpdateMessageDocument,
-        variables
-      )(),
-    options
-  );
-export const DeleteMessageDocument = `
-    mutation DeleteMessage($input: DeleteMessageInput!) {
-  deleteMessage(input: $input) {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
-    owner
-  }
-}
-    `;
-export const useDeleteMessageMutation = <TError = unknown, TContext = unknown>(
-  options?: UseMutationOptions<
-    DeleteMessageMutation,
-    TError,
-    DeleteMessageMutationVariables,
-    TContext
-  >
-) =>
-  useMutation<
-    DeleteMessageMutation,
-    TError,
-    DeleteMessageMutationVariables,
-    TContext
-  >(
-    (variables?: DeleteMessageMutationVariables) =>
-      amplifyFetcher<DeleteMessageMutation, DeleteMessageMutationVariables>(
-        DeleteMessageDocument,
         variables
       )(),
     options

@@ -76,11 +76,11 @@ export function Chat({username}:ChatProps) {
   const [useCreateMessageMutation] = useMutation(async (input: CreateMessageInput) => {
     const result = await FAPI.getInstance().query(CreateMessageDocument, { input });
     
-    const subs = await FAPI.getInstance().query(onCreateMessage) as Observable<OnCreateMessageSubscription>;
+    const subs = await FAPI.getInstance().query(onCreateMessage) as Observable<Message>;
     subs.subscribe({
-      next: ({ provider, value }) => {
+      next: (message) => {
         console.log("Subscription fires 2")
-        console.log({ provider, value })},
+        console.log(message)},
       error: error => console.warn(error)
     });
     

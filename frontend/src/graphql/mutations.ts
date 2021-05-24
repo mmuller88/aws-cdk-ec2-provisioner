@@ -38,6 +38,42 @@ export const deleteHistoryEntry = /* GraphQL */ `
     }
   }
 `;
+export const createMessage = /* GraphQL */ `
+  mutation CreateMessage($input: CreateMessageInput!) {
+    createMessage(input: $input) {
+      id
+      authorId
+      content
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateMessage = /* GraphQL */ `
+  mutation UpdateMessage($input: UpdateMessageInput!) {
+    updateMessage(input: $input) {
+      id
+      authorId
+      content
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteMessage = /* GraphQL */ `
+  mutation DeleteMessage($input: DeleteMessageInput!) {
+    deleteMessage(input: $input) {
+      id
+      authorId
+      content
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
 export const createEc2Config = /* GraphQL */ `
   mutation CreateEc2Config($input: CreateEc2ConfigInput!) {
     createEc2Config(input: $input) {
@@ -143,42 +179,6 @@ export const deletePost = /* GraphQL */ `
       title
       content
       username
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const createMessage = /* GraphQL */ `
-  mutation CreateMessage($input: CreateMessageInput!) {
-    createMessage(input: $input) {
-      id
-      authorId
-      content
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const updateMessage = /* GraphQL */ `
-  mutation UpdateMessage($input: UpdateMessageInput!) {
-    updateMessage(input: $input) {
-      id
-      authorId
-      content
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const deleteMessage = /* GraphQL */ `
-  mutation DeleteMessage($input: DeleteMessageInput!) {
-    deleteMessage(input: $input) {
-      id
-      authorId
-      content
       createdAt
       updatedAt
       owner
