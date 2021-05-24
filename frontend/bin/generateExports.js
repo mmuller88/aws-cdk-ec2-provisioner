@@ -16,11 +16,12 @@ let config = {
   Auth: {
     identityPoolId: '',
     // cookieStorage: {
+    //   domain: 'http://localhost:3000',
+    //   path: '/',
     //   secure: true
     // },
     region: REGION,
   },
-  stage: '',
   aws_project_region: REGION,
   aws_appsync_graphqlEndpoint: '',
   aws_appsync_region: REGION,
@@ -29,6 +30,7 @@ let config = {
   aws_user_pools_id: '',
   aws_user_pools_web_client_id: '',
   aws_cognito_identity_pool_id: '',
+  stage: '',
 };
 
 main();

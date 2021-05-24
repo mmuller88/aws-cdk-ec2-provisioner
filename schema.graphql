@@ -34,7 +34,7 @@ type Message
   # ])
   # @auth(rules: [{ allow: owner }, { allow: public, provider: iam }]) {
   # @auth(rules: [{ allow: owner }, { allow: public, provider: iam, operations: [read, update, create, delete]  }]) {
-  @auth(rules: [{ allow: owner }, { allow: private, provider: iam, operations: [read] }]) {
+  @auth(rules: [{ allow: owner }, { allow: public }]) {
   # @auth(rules: [{ allow: owner, operations: [create, delete, update] }]) {
   id: ID!
   authorId: String!
