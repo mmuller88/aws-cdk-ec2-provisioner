@@ -76,13 +76,13 @@ export function Chat({username}:ChatProps) {
   const [useCreateMessageMutation] = useMutation(async (input: CreateMessageInput) => {
     const result = await FAPI.getInstance().query(CreateMessageDocument, { input });
     
-    const subs = await FAPI.getInstance().query(onCreateMessage) as Observable<Message>;
-    subs.subscribe({
-      next: (message) => {
-        console.log("Subscription fires 2")
-        console.log(message)},
-      error: error => console.warn(error)
-    });
+    // const subs = await FAPI.getInstance().query(onCreateMessage) as Observable<Message>;
+    // subs.subscribe({
+    //   next: (message) => {
+    //     console.log("Subscription fires 2")
+    //     console.log(message)},
+    //   error: error => console.warn(error)
+    // });
     
     return result.data?.createMessage as Message;
   });
