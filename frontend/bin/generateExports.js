@@ -14,6 +14,13 @@ const authenticationTypeOutputKey = 'awsAppsyncAuthenticationType';
 
 let config = {
   stage: '',
+  Auth: {
+    identityPoolId: '',
+    cookieStorage: {
+      secure: true
+    },
+    region: REGION,
+  },
   aws_project_region: REGION,
   aws_appsync_graphqlEndpoint: '',
   aws_appsync_region: REGION,
@@ -74,6 +81,7 @@ async function main() {
     return output.OutputKey === authenticationTypeOutputKey;
   });
 
+  config.Auth.identityPoolId= userPoolId.OutputValue;
   config.stage = stage;
   config.aws_appsync_graphqlEndpoint = appsyncGraphQLEndpoint.OutputValue;
   config.aws_appsync_authenticationType = authenticationType.OutputValue;

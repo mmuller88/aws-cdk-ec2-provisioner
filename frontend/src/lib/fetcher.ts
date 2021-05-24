@@ -38,4 +38,5 @@ export class API {
 
         return await AmplifyAPI.graphql(operation) as GraphQLResult<any>;
     }
+
 }

@@ -2,18 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const addedMessage = /* GraphQL */ `
-  subscription AddedMessage($authorId: String) {
-    addedMessage(authorId: $authorId) {
-      id
-      authorId
-      content
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
 export const onCreateHistoryEntry = /* GraphQL */ `
   subscription OnCreateHistoryEntry {
     onCreateHistoryEntry {

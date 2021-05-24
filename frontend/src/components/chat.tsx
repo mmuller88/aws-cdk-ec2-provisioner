@@ -9,6 +9,8 @@ import { useSubscription } from './subscriber';
 import { onCreateMessage } from '../graphql/subscriptions';
 import { API, graphqlOperation } from 'aws-amplify';
 
+import Observable from 'zen-observable';
+
 import * as subscriptions from './../graphql/subscriptions';
 
 
@@ -44,24 +46,7 @@ export function Chat({username}:ChatProps) {
     },
   });
 
-  // Subscribe to creation of Todo
-const subscription = API.graphql(
-  graphqlOperation(subscriptions.addedMessage)
-).subscribe({
-  next: ({ provider, value }) => {
-    console.log("Subscription fires")
-    console.log({ provider, value })},
-  error: error => console.warn(error)
-});
 
-const subscription2 = API.graphql(
-  graphqlOperation(subscriptions.onCreateMessage)
-).subscribe({
-  next: ({ provider, value }) => {
-    console.log("Subscription fires 2")
-    console.log({ provider, value })},
-  error: error => console.warn(error)
-});
 
   console.log('item: '+item);
 
@@ -90,6 +75,15 @@ const subscription2 = API.graphql(
 
   const [useCreateMessageMutation] = useMutation(async (input: CreateMessageInput) => {
     const result = await FAPI.getInstance().query(CreateMessageDocument, { input });
+    
+    const subs = await FAPI.getInstance().query(onCreateMessage) as Observable<OnCreateMessageSubscription>;
+    subs.subscribe({
+      next: ({ provider, value }) => {
+        console.log("Subscription fires 2")
+        console.log({ provider, value })},
+      error: error => console.warn(error)
+    });
+    
     return result.data?.createMessage as Message;
   });
 

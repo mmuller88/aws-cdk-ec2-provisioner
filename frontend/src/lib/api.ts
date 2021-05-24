@@ -84,63 +84,6 @@ export type Message = {
   owner?: Maybe<Scalars["String"]>;
 };
 
-export type Subscription = {
-  __typename?: "Subscription";
-  addedMessage?: Maybe<Message>;
-  onCreateHistoryEntry?: Maybe<HistoryEntry>;
-  onUpdateHistoryEntry?: Maybe<HistoryEntry>;
-  onDeleteHistoryEntry?: Maybe<HistoryEntry>;
-  onCreateEc2Config?: Maybe<Ec2Config>;
-  onUpdateEc2Config?: Maybe<Ec2Config>;
-  onDeleteEc2Config?: Maybe<Ec2Config>;
-  onCreatePost?: Maybe<Post>;
-  onUpdatePost?: Maybe<Post>;
-  onDeletePost?: Maybe<Post>;
-  onCreateMessage?: Maybe<Message>;
-  onUpdateMessage?: Maybe<Message>;
-  onDeleteMessage?: Maybe<Message>;
-};
-
-export type SubscriptionAddedMessageArgs = {
-  authorId?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnCreateEc2ConfigArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnUpdateEc2ConfigArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnDeleteEc2ConfigArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnCreatePostArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnUpdatePostArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnDeletePostArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnCreateMessageArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnUpdateMessageArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnDeleteMessageArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
 export type Todo = {
   __typename?: "Todo";
   id: Scalars["Int"];
@@ -359,6 +302,58 @@ export type MutationUpdateMessageArgs = {
 
 export type MutationDeleteMessageArgs = {
   input: DeleteMessageInput;
+};
+
+export type Subscription = {
+  __typename?: "Subscription";
+  onCreateHistoryEntry?: Maybe<HistoryEntry>;
+  onUpdateHistoryEntry?: Maybe<HistoryEntry>;
+  onDeleteHistoryEntry?: Maybe<HistoryEntry>;
+  onCreateEc2Config?: Maybe<Ec2Config>;
+  onUpdateEc2Config?: Maybe<Ec2Config>;
+  onDeleteEc2Config?: Maybe<Ec2Config>;
+  onCreatePost?: Maybe<Post>;
+  onUpdatePost?: Maybe<Post>;
+  onDeletePost?: Maybe<Post>;
+  onCreateMessage?: Maybe<Message>;
+  onUpdateMessage?: Maybe<Message>;
+  onDeleteMessage?: Maybe<Message>;
+};
+
+export type SubscriptionOnCreateEc2ConfigArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnUpdateEc2ConfigArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnDeleteEc2ConfigArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnCreatePostArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnUpdatePostArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnDeletePostArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnCreateMessageArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnUpdateMessageArgs = {
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type SubscriptionOnDeleteMessageArgs = {
+  owner?: Maybe<Scalars["String"]>;
 };
 
 export type ModelHistoryEntryConnection = {
@@ -1001,19 +996,6 @@ export type GetTodoQuery = { __typename?: "Query" } & {
     { __typename?: "Todo" } & Pick<
       Todo,
       "id" | "userId" | "title" | "completed"
-    >
-  >;
-};
-
-export type AddedMessageSubscriptionVariables = Exact<{
-  authorId?: Maybe<Scalars["String"]>;
-}>;
-
-export type AddedMessageSubscription = { __typename?: "Subscription" } & {
-  addedMessage?: Maybe<
-    { __typename?: "Message" } & Pick<
-      Message,
-      "id" | "authorId" | "content" | "createdAt" | "updatedAt" | "owner"
     >
   >;
 };
@@ -2027,18 +2009,6 @@ export const useGetTodoQuery = <TData = GetTodoQuery, TError = unknown>(
     ),
     options
   );
-export const AddedMessageDocument = `
-    subscription AddedMessage($authorId: String) {
-  addedMessage(authorId: $authorId) {
-    id
-    authorId
-    content
-    createdAt
-    updatedAt
-    owner
-  }
-}
-    `;
 export const OnCreateHistoryEntryDocument = `
     subscription OnCreateHistoryEntry {
   onCreateHistoryEntry {
