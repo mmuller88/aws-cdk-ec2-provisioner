@@ -28,7 +28,11 @@ type Post
 
 type Message
   @model #(subscriptions: { level: public })
-  # @auth(rules: [{ allow: public, provider: iam }])
+  # @auth(rules: [
+  #   # { allow: public, provider: iam }
+  #   { allow: private, provider: iam, operations: [read, update, create, delete] }
+  # ])
+  # @auth{ allow: private, provider: iam, operations: [read, update, create, delete] }
   {
   # @auth(rules: [{ allow: owner, operations: [create, delete, update] }]) {
   id: ID!
