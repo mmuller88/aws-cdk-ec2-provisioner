@@ -32,23 +32,18 @@ export function Chat({username}:ChatProps) {
 
   const { content } = message;
 
-  const { data, isLoading, refetch } = useListMessagesQuery(null, {
-    refetchOnWindowFocus: false,
-  });
+  const { data, isLoading, refetch } = useListMessagesQuery(null);
   
   const messages = data?.listMessages.items;
   messages?.sort((m1,m2) => new Date(m1.createdAt).getTime() - new Date(m2.createdAt).getTime());
 
-  const [item] = useSubscription({
-    config: {
-      key: 'onCreateMessageById',
-      query: onCreateMessage,
-    },
-  });
-
-
-
-  console.log('item: '+item);
+  // const [item] = useSubscription({
+  //   config: {
+  //     key: 'onCreateMessageById',
+  //     query: onCreateMessage,
+  //   },
+  // });
+  // console.log('item: '+item);
 
   // const el = useRef<null | HTMLDivElement>(null); 
 
