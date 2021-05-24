@@ -43,35 +43,6 @@ export const listHistoryEntrys = /* GraphQL */ `
     }
   }
 `;
-export const getMessage = /* GraphQL */ `
-  query GetMessage($id: ID!) {
-    getMessage(id: $id) {
-      id
-      authorId
-      content
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listMessages = /* GraphQL */ `
-  query ListMessages(
-    $filter: ModelMessageFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        authorId
-        content
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getEc2Config = /* GraphQL */ `
   query GetEc2Config($id: ID!) {
     getEc2Config(id: $id) {
@@ -152,6 +123,37 @@ export const listPosts = /* GraphQL */ `
         title
         content
         username
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getMessage = /* GraphQL */ `
+  query GetMessage($id: ID!) {
+    getMessage(id: $id) {
+      id
+      authorId
+      content
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listMessages = /* GraphQL */ `
+  query ListMessages(
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        authorId
+        content
         createdAt
         updatedAt
         owner

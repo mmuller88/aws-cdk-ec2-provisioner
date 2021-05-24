@@ -26,6 +26,17 @@ type Post
   username: String!
 }
 
+type Message
+  @model
+  # @auth(rules: [{ allow: public, provider: iam }]) 
+  @auth(rules: [{ allow: owner }, { allow: public, provider: iam }]) {
+  id: ID!
+  authorId: String!
+  content: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
 # https://jsonplaceholder.typicode.com/
 type Todo {
   id: Int!
@@ -67,17 +78,6 @@ type Query {
 #   updatedAt: AWSDateTime!
 # }
 
-type Message
-  @model
-  # @auth(rules: [{ allow: public, provider: iam }]) 
-  {
-  id: ID!
-  authorId: String!
-  content: String!
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
-}
-
 # type Message @model {
 #   # (
 #   # subscriptions: null
@@ -110,8 +110,8 @@ type Message
 # }
 
 # type Subscription {
-#   onCreateConvoLink(convoLinkUserId: ID!): ConvoLink
-#     @aws_subscribe(mutations: ["createConvoLink"])
-#   # onCreateMessage(messageConversationId: ID!): Message
-#   #   @aws_subscribe(mutations: ["createMessage"])
+#   # onCreateConvoLink(convoLinkUserId: ID!): ConvoLink
+#   #   @aws_subscribe(mutations: ["createConvoLink"])
+#   onCreateMessage(): Message
+#     @aws_subscribe(mutations: ["createMessage"])
 # }

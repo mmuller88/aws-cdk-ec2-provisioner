@@ -71,6 +71,7 @@ const frontendProject = new web.ReactTypeScriptProject({
     'react-icons',
     'react-apollo',
     'uuidv4',
+    'zen-observable-ts',
   ],
   devDeps: [
     '@graphql-codegen/cli',

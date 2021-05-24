@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData: any) => {
-      setUsername(authData.username);
+      setUsername(authData?.username);
       API.updateIsSignedIn(nextAuthState === AuthState.SignedIn);
     });
   }, []);
@@ -48,8 +48,8 @@ function App() {
       <div>
         <Router>
           <Switch>
-            <Route exact path="/" render={(props: any) => <Chat {...props}  />} />
-            <Route path="/chat" render={(props: any) => <Chat {...props}  />} />
+            <Route exact path="/" render={(props: any) => <Chat username={username} {...props}  />} />
+            <Route path="/chat" render={(props: any) => <Chat username={username} {...props}  />} />
             <Route path="/configs" render={(props: any) => <Configs {...props}  />} />
             <Route path="/posts" render={(props: any) => <Posts {...props}  />} />
             <Route path="/todos" render={(props: any) => <Todos {...props}  />} />

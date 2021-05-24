@@ -3,9 +3,10 @@ import { useMutation } from 'react-query';
 
 import { css } from 'glamor'
 
-import UserStore from '../mobx/UserStore'
-import { CreateMessageDocument, CreateMessageInput, Message, useListMessagesQuery} from '../lib/api';
+import { CreateMessageDocument, CreateMessageInput, Message, useListMessagesQuery, OnCreateMessageSubscription} from '../lib/api';
 import { API } from '../lib/fetcher';
+import { useSubscription } from './subscriber';
+import { onCreateMessage } from '../graphql/subscriptions';
 
 // react-apollo compose has no type export
 // https://dev.to/piglovesyou/react-apollo-codegen-typescript-how-you-can-compose-multiple-queries-mutations-to-a-component-2jic
@@ -13,7 +14,13 @@ export declare function compose(...funcs: Function[]): (...args: any[]) => any;
 
 const initialState = { content: '' }
 
-export function Chat() {
+interface ChatProps {
+  username: string;
+}
+
+export function Chat({username}:ChatProps) {
+
+  // console.log('username:'+username);
 
   const [message, setMessage] = useState(initialState);
 
@@ -24,6 +31,16 @@ export function Chat() {
   });
   
   const messages = data?.listMessages.items;
+  messages?.sort((m1,m2) => new Date(m1.createdAt).getTime() - new Date(m2.createdAt).getTime());
+
+  const [item] = useSubscription({
+    config: {
+      key: 'onCreatePost',
+      query: onCreateMessage,
+    },
+  });
+
+  console.log('item: '+item);
 
   // const el = useRef<null | HTMLDivElement>(null); 
 
@@ -42,7 +59,6 @@ export function Chat() {
       if (el.current === null) { }
       else
           el!.current!.scrollIntoView({ behavior: 'smooth' });
-
   }, [])
 
   const onChange = e => {
@@ -61,13 +77,11 @@ export function Chat() {
     if (content === '') return
     // console.log('u'+username);
 
-    const { username } = UserStore;
-
     const message: CreateMessageInput = {
       // id: uuid(),
       createdAt: new Date().toISOString(),
       content: content,
-      authorId: username
+      authorId: username,
     }
 
     const input = {
@@ -81,7 +95,7 @@ export function Chat() {
     }
     setMessage({ content: '' })
   }
-  const { username } = UserStore;
+  // const { username } = UserStore;
 
   return (
     <div>

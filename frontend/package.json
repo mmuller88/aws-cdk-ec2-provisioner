@@ -59,7 +59,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.0",
     "uuidv4": "^6.2.8",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "zen-observable-ts": "^1.0.0"
   },
   "bundledDependencies": [],
   "license": "Apache-2.0",
