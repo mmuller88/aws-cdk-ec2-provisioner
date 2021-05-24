@@ -1,30 +1,30 @@
-type Ec2Config
-  @model
-  @auth(rules: [{ allow: owner }, { allow: public, provider: iam }]) {
-  id: ID!
-  startDate: AWSDateTime!
-  stopDate: AWSDateTime!
-  username: String!
-  history: [HistoryEntry] @connection(keyName: "byEc2Config", fields: ["id"])
-}
+# type Ec2Config
+#   @model
+#   @auth(rules: [{ allow: owner }, { allow: public, provider: iam }]) {
+#   id: ID!
+#   startDate: AWSDateTime!
+#   stopDate: AWSDateTime!
+#   username: String!
+#   history: [HistoryEntry] @connection(keyName: "byEc2Config", fields: ["id"])
+# }
 
-type HistoryEntry
-  @model
-  @key(name: "byEc2Config", fields: ["ec2ConfigId", "comment"]) {
-  id: ID!
-  ec2ConfigId: ID!
-  comment: String!
-  time: AWSDateTime!
-}
+# type HistoryEntry
+#   @model
+#   @key(name: "byEc2Config", fields: ["ec2ConfigId", "comment"]) {
+#   id: ID!
+#   ec2ConfigId: ID!
+#   comment: String!
+#   time: AWSDateTime!
+# }
 
-type Post
-  @model
-  @auth(rules: [{ allow: public, provider: iam }, { allow: owner }]) {
-  id: ID!
-  title: String!
-  content: String!
-  username: String!
-}
+# type Post
+#   @model
+#   @auth(rules: [{ allow: public, provider: iam }, { allow: owner }]) {
+#   id: ID!
+#   title: String!
+#   content: String!
+#   username: String!
+# }
 
 type Message
   @model #(subscriptions: { level: public })
@@ -33,7 +33,7 @@ type Message
   #   { allow: private, provider: iam, operations: [read, update, create, delete] }
   # ])
   # @auth(rules: [{ allow: owner }, { allow: public, provider: iam }]) {
-  @auth(rules: [{ allow: owner }, { allow: private, provider: iam }, { allow: public, provider: iam }]) {
+  @auth(rules: [{ allow: owner }, { allow: private }, { allow: public }]) {
   # @auth(rules: [{ allow: owner }, { allow: public }]) {
   # @auth(rules: [{ allow: owner, operations: [create, delete, update] }]) {
   id: ID!
@@ -51,17 +51,17 @@ type Message
 # }
 
 # https://jsonplaceholder.typicode.com/
-type Todo {
-  id: Int!
-  userId: Int!
-  title: String!
-  completed: Boolean!
-}
+# type Todo {
+#   id: Int!
+#   userId: Int!
+#   title: String!
+#   completed: Boolean!
+# }
 
-type Query {
-  listTodos: [Todo] @http(url: "https://jsonplaceholder.typicode.com/todos")
-  getTodo: Todo @http(url: "https://jsonplaceholder.typicode.com/todos/:id")
-}
+# type Query {
+#   listTodos: [Todo] @http(url: "https://jsonplaceholder.typicode.com/todos")
+#   getTodo: Todo @http(url: "https://jsonplaceholder.typicode.com/todos/:id")
+# }
 
 # type User
 #   @model
