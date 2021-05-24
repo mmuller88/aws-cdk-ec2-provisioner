@@ -102,11 +102,11 @@ export class AppSyncStack extends CustomStack {
             defaultAction: appsync.UserPoolDefaultAction.ALLOW,
           },
         },
-        additionalAuthorizationModes: [
-          {
-            authorizationType: appsync.AuthorizationType.IAM,
-          },
-        ],
+        // additionalAuthorizationModes: [
+        //   {
+        //     authorizationType: appsync.AuthorizationType.IAM,
+        //   },
+        // ],
       },
     });
 
