@@ -28,6 +28,7 @@ export const useSubscription = <
       if (subscription instanceof Observable) {
         const sub = subscription.subscribe({
           next: payload => {
+            console.log('someting');
             try {
               const {
                 value: {

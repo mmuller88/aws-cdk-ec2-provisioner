@@ -4,9 +4,13 @@ import { useMutation } from 'react-query';
 import { css } from 'glamor'
 
 import { CreateMessageDocument, CreateMessageInput, Message, useListMessagesQuery, OnCreateMessageSubscription} from '../lib/api';
-import { API } from '../lib/fetcher';
+import { API as FAPI} from '../lib/fetcher';
 import { useSubscription } from './subscriber';
 import { onCreateMessage } from '../graphql/subscriptions';
+import { API, graphqlOperation } from 'aws-amplify';
+
+import * as subscriptions from './../graphql/subscriptions';
+
 
 // react-apollo compose has no type export
 // https://dev.to/piglovesyou/react-apollo-codegen-typescript-how-you-can-compose-multiple-queries-mutations-to-a-component-2jic
@@ -40,6 +44,14 @@ export function Chat({username}:ChatProps) {
     },
   });
 
+  // Subscribe to creation of Todo
+const subscription = API.graphql(
+  graphqlOperation(subscriptions.onCreateMessage)
+).subscribe({
+  next: ({ provider, value }) => console.log({ provider, value }),
+  error: error => console.warn(error)
+});
+
   console.log('item: '+item);
 
   // const el = useRef<null | HTMLDivElement>(null); 
@@ -66,7 +78,7 @@ export function Chat({username}:ChatProps) {
   }
 
   const [useCreateMessageMutation] = useMutation(async (input: CreateMessageInput) => {
-    const result = await API.getInstance().query(CreateMessageDocument, { input });
+    const result = await FAPI.getInstance().query(CreateMessageDocument, { input });
     return result.data?.createMessage as Message;
   });
 
