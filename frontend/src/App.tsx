@@ -18,6 +18,7 @@ import { Chat } from './components/chat';
 declare const window: any;
 
 Amplify.configure(window.ENV);
+Auth.configure(window.ENV);
 
 function App() {
 
