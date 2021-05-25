@@ -5,7 +5,7 @@ const project = new AwsCdkTypeScriptApp({
   authorName: 'martin.mueller',
   name: 'aws-cdk-ec2-provisioner',
   defaultReleaseBranch: 'main',
-  cdkVersion: '1.103.0',
+  cdkVersion: '1.104.0',
   cdkVersionPinning: true,
   cdkDependencies: [
     '@aws-cdk/aws-iam',
@@ -19,8 +19,13 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/pipelines',
     '@aws-cdk/aws-dynamodb',
     '@aws-cdk/aws-cognito',
+    '@aws-cdk/aws-lambda',
   ],
-  deps: ['aws-cdk-staging-pipeline', 'cdk-appsync-transformer'],
+  deps: [
+    'aws-cdk-staging-pipeline',
+    'cdk-appsync-transformer',
+    'cdk-iam-floyd',
+  ],
   context: {
     '@aws-cdk/core:enableStackNameDuplicates': true,
     'aws-cdk:enableDiffNoFail': true,
