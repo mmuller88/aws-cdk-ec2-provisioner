@@ -150,8 +150,8 @@ export const onDeletePost = /* GraphQL */ `
   }
 `;
 export const onCreateMessage = /* GraphQL */ `
-  subscription OnCreateMessage($owner: String) {
-    onCreateMessage(owner: $owner) {
+  subscription OnCreateMessage {
+    onCreateMessage {
       id
       authorId
       content
@@ -162,8 +162,8 @@ export const onCreateMessage = /* GraphQL */ `
   }
 `;
 export const onUpdateMessage = /* GraphQL */ `
-  subscription OnUpdateMessage($owner: String) {
-    onUpdateMessage(owner: $owner) {
+  subscription OnUpdateMessage {
+    onUpdateMessage {
       id
       authorId
       content
@@ -174,8 +174,8 @@ export const onUpdateMessage = /* GraphQL */ `
   }
 `;
 export const onDeleteMessage = /* GraphQL */ `
-  subscription OnDeleteMessage($owner: String) {
-    onDeleteMessage(owner: $owner) {
+  subscription OnDeleteMessage {
+    onDeleteMessage {
       id
       authorId
       content

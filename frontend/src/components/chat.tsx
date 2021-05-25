@@ -16,7 +16,7 @@ import * as subscriptions from './../graphql/subscriptions';
 
 // react-apollo compose has no type export
 // https://dev.to/piglovesyou/react-apollo-codegen-typescript-how-you-can-compose-multiple-queries-mutations-to-a-component-2jic
-export declare function compose(...funcs: Function[]): (...args: any[]) => any;
+// export declare function compose(...funcs: Function[]): (...args: any[]) => any;
 
 const initialState = { content: '' }
 
@@ -29,41 +29,23 @@ export function Chat({username}:ChatProps) {
   // console.log('username:'+username);
 
   const [message, setMessage] = useState(initialState);
+  const [messagess, setMessagess] = useState([]);
 
-  const { content } = message;
+  // const { content } = message;
 
+  
   const { data, isLoading, refetch } = useListMessagesQuery(null, {
     refetchOnWindowFocus: false,
   });
   
-  const messages = data?.listMessages.items;
-  messages?.sort((m1,m2) => new Date(m1.createdAt).getTime() - new Date(m2.createdAt).getTime());
-
-  // const [item] = useSubscription({
-  //   config: {
-  //     key: 'onCreateMessageById',
-  //     query: onCreateMessage,
-  //   },
-  // });
-
-
-
-  // console.log('item: '+item);
-
-  // const el = useRef<null | HTMLDivElement>(null); 
-
-  // componentDidMount() {
-  
-  //   this.props.subscribeToNewMessages()
-  // }
-  // const scrollToBottom = () => {
-  //   el.current.scrollIntoView({ behavior: "smooth" });
-  // }
-  // scrollToBottom();
+  //const messages = data?.listMessages.items;
+  data?.listMessages?.items.sort((m1,m2) => new Date(m1.createdAt).getTime() - new Date(m2.createdAt).getTime());
+  // if (messagess?.length === 0) setMessagess(messages);
 
   const el = useRef(null);
 
   useEffect(() => {
+
       if (el.current === null) { }
       else
           el!.current!.scrollIntoView({ behavior: 'smooth' });
@@ -76,13 +58,16 @@ export function Chat({username}:ChatProps) {
   const [useCreateMessageMutation] = useMutation(async (input: CreateMessageInput) => {
     const result = await FAPI.getInstance().query(CreateMessageDocument, { input });
     
-    // const subs = await FAPI.getInstance().query(onCreateMessage) as Observable<Message>;
-    // subs.subscribe({
-    //   next: (message) => {
-    //     console.log("Subscription fires 2")
-    //     console.log(message)},
-    //   error: error => console.warn(error)
-    // });
+    const subs = await FAPI.getInstance().query(onCreateMessage) as Observable<CreateMessageInput>;
+    subs.subscribe({
+      next: async (message) => {
+        console.log("Subscription fires 2");
+        console.log(message);
+        await refetch();
+        // setMessagess(['doint']);
+      },
+      error: error => console.warn(error)
+    });
     
     return result.data?.createMessage as Message;
   });
@@ -91,24 +76,20 @@ export function Chat({username}:ChatProps) {
     if (e.key !== 'Enter') {
       return
     }
-    if (content === '') return
+    if (message.content === '') return
     // console.log('u'+username);
 
-    const message: CreateMessageInput = {
+    const messageInput: CreateMessageInput = {
       // id: uuid(),
       createdAt: new Date().toISOString(),
-      content: content,
+      content: message.content,
       authorId: username,
     }
 
-    const input = {
-      ...message,
-    };
-
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const createResult = await useCreateMessageMutation(input, { onSuccess: (data) => { console.log(data) } });
+    const createResult = await useCreateMessageMutation(messageInput, { onSuccess: (data) => { console.log(data) } });
     if (createResult) {
-      refetch();
+      await refetch();
     }
     setMessage({ content: '' })
   }
@@ -121,7 +102,7 @@ export function Chat({username}:ChatProps) {
       </div>
       <div {...css(styles.messagesContainer)}>
         {
-          messages?.map((m, i) => {
+          data?.listMessages.items?.map((m, i) => {
             return (
               <div key={i} {...css([styles.message, checkSenderForMessageStyle(username, m)])}>
                 <p {...css([styles.messageText, checkSenderForTextStyle(username, m)])}>{`${m.authorId === username ? 'me' : m.authorId}: ${m.content}`}</p>
@@ -143,8 +124,6 @@ export function Chat({username}:ChatProps) {
       </div>
     </div>
   )
-
-  
 }
 
 function checkSenderForMessageStyle(username: string, message: Message) {

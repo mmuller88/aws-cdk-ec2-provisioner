@@ -1,21 +1,21 @@
-# type Ec2Config
-#   @model
-#   @auth(rules: [{ allow: owner }, { allow: public, provider: iam }]) {
-#   id: ID!
-#   startDate: AWSDateTime!
-#   stopDate: AWSDateTime!
-#   username: String!
-#   history: [HistoryEntry] @connection(keyName: "byEc2Config", fields: ["id"])
-# }
+type Ec2Config
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public, provider: iam }]) {
+  id: ID!
+  startDate: AWSDateTime!
+  stopDate: AWSDateTime!
+  username: String!
+  history: [HistoryEntry] @connection(keyName: "byEc2Config", fields: ["id"])
+}
 
-# type HistoryEntry
-#   @model
-#   @key(name: "byEc2Config", fields: ["ec2ConfigId", "comment"]) {
-#   id: ID!
-#   ec2ConfigId: ID!
-#   comment: String!
-#   time: AWSDateTime!
-# }
+type HistoryEntry
+  @model
+  @key(name: "byEc2Config", fields: ["ec2ConfigId", "comment"]) {
+  id: ID!
+  ec2ConfigId: ID!
+  comment: String!
+  time: AWSDateTime!
+}
 
 type Post
   @model

@@ -344,18 +344,6 @@ export type SubscriptionOnDeletePostArgs = {
   owner?: Maybe<Scalars["String"]>;
 };
 
-export type SubscriptionOnCreateMessageArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnUpdateMessageArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnDeleteMessageArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
 export type ModelHistoryEntryConnection = {
   __typename?: "ModelHistoryEntryConnection";
   items?: Maybe<Array<Maybe<HistoryEntry>>>;
@@ -1229,7 +1217,7 @@ export type OnDeletePostSubscription = { __typename?: "Subscription" } & {
 };
 
 export type OnCreateMessageSubscriptionVariables = Exact<{
-  owner?: Maybe<Scalars["String"]>;
+  [key: string]: never;
 }>;
 
 export type OnCreateMessageSubscription = { __typename?: "Subscription" } & {
@@ -1242,7 +1230,7 @@ export type OnCreateMessageSubscription = { __typename?: "Subscription" } & {
 };
 
 export type OnUpdateMessageSubscriptionVariables = Exact<{
-  owner?: Maybe<Scalars["String"]>;
+  [key: string]: never;
 }>;
 
 export type OnUpdateMessageSubscription = { __typename?: "Subscription" } & {
@@ -1255,7 +1243,7 @@ export type OnUpdateMessageSubscription = { __typename?: "Subscription" } & {
 };
 
 export type OnDeleteMessageSubscriptionVariables = Exact<{
-  owner?: Maybe<Scalars["String"]>;
+  [key: string]: never;
 }>;
 
 export type OnDeleteMessageSubscription = { __typename?: "Subscription" } & {
@@ -2157,8 +2145,8 @@ export const OnDeletePostDocument = `
 }
     `;
 export const OnCreateMessageDocument = `
-    subscription OnCreateMessage($owner: String) {
-  onCreateMessage(owner: $owner) {
+    subscription OnCreateMessage {
+  onCreateMessage {
     id
     authorId
     content
@@ -2169,8 +2157,8 @@ export const OnCreateMessageDocument = `
 }
     `;
 export const OnUpdateMessageDocument = `
-    subscription OnUpdateMessage($owner: String) {
-  onUpdateMessage(owner: $owner) {
+    subscription OnUpdateMessage {
+  onUpdateMessage {
     id
     authorId
     content
@@ -2181,8 +2169,8 @@ export const OnUpdateMessageDocument = `
 }
     `;
 export const OnDeleteMessageDocument = `
-    subscription OnDeleteMessage($owner: String) {
-  onDeleteMessage(owner: $owner) {
+    subscription OnDeleteMessage {
+  onDeleteMessage {
     id
     authorId
     content

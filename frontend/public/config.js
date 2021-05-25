@@ -1,15 +1,15 @@
 window.ENV = {
     "Auth": {
-        "identityPoolId": "eu-central-1:3102cf23-de4f-49e9-a94e-2dd2fcf50b7e",
+        "identityPoolId": "eu-central-1:16010d86-2db2-44d4-9b5d-29e7e08a8e30",
         "region": "eu-central-1"
     },
     "aws_project_region": "eu-central-1",
-    "aws_appsync_graphqlEndpoint": "https://x56xgoxbsvfsphvenh2qsq7gc4.appsync-api.eu-central-1.amazonaws.com/graphql",
+    "aws_appsync_graphqlEndpoint": "https://47vgj63xzjb7zp44nk2u3hxnze.appsync-api.eu-central-1.amazonaws.com/graphql",
     "aws_appsync_region": "eu-central-1",
     "aws_appsync_authenticationType": "AWS_IAM",
     "aws_cognito_region": "eu-central-1",
     "aws_user_pools_id": "eu-central-1_SSeYXA58i",
-    "aws_user_pools_web_client_id": "15t617p5f4rjk6l92cvpkgd3f8",
-    "aws_cognito_identity_pool_id": "eu-central-1:3102cf23-de4f-49e9-a94e-2dd2fcf50b7e",
+    "aws_user_pools_web_client_id": "1u1di3c8egccr1v769102bq0aq",
+    "aws_cognito_identity_pool_id": "eu-central-1:16010d86-2db2-44d4-9b5d-29e7e08a8e30",
     "stage": "dev"
 }
