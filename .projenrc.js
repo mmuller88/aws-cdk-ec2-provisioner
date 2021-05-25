@@ -5,7 +5,7 @@ const project = new AwsCdkTypeScriptApp({
   authorName: 'martin.mueller',
   name: 'aws-cdk-ec2-provisioner',
   defaultReleaseBranch: 'main',
-  cdkVersion: '1.104.0',
+  cdkVersion: '1.105.0',
   cdkVersionPinning: true,
   cdkDependencies: [
     '@aws-cdk/aws-iam',
@@ -75,7 +75,7 @@ const frontendProject = new web.ReactTypeScriptProject({
     'mobx',
     'react-icons',
     'react-apollo',
-    'uuidv4',
+    // 'uuidv4',
     'zen-observable-ts',
   ],
   devDeps: [

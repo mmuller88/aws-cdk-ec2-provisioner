@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 import { css } from 'glamor'
 
 import { CreateMessageDocument, CreateMessageInput, Message, useListMessagesQuery} from '../lib/api';
-import { API as FAPI} from '../lib/fetcher';
+import { API } from '../lib/fetcher';
 import { onCreateMessage } from '../graphql/subscriptions';
 
 import Observable from 'zen-observable';
@@ -45,7 +45,7 @@ export function Chat({username}:ChatProps) {
   }
 
   const subscribe = async () => {
-    const subs = await FAPI.getInstance().query(onCreateMessage) as Observable<CreateMessageInput>;
+    const subs = await API.getInstance().query(onCreateMessage) as Observable<CreateMessageInput>;
     subs.subscribe({
       next: async (message) => {
         console.log("Subscription fires 2");
@@ -58,7 +58,7 @@ export function Chat({username}:ChatProps) {
   }
 
   const [useCreateMessageMutation] = useMutation(async (input: CreateMessageInput) => {
-    const result = await FAPI.getInstance().query(CreateMessageDocument, { input });
+    const result = await API.getInstance().query(CreateMessageDocument, { input });
     
     return result.data?.createMessage as Message;
   });

@@ -1,7 +1,7 @@
 import * as ddb from '@aws-cdk/aws-dynamodb';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as core from '@aws-cdk/core';
-import * as ddbStream from '@aws-solutions-constructs/aws-dynamodb-stream-lambda';
+import * as statement from 'cdk-iam-floyd';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
 
 
@@ -40,16 +40,9 @@ export class SchedulerStack extends CustomStack {
       bisectBatchOnError: true,
       retryAttempts: 10,
     });
+
     const roleUpdates = myLambda.addToRolePolicy(
-      new iam.PolicyStatement({
-        actions: [
-          'dynamodb:DescribeStream',
-          'dynamodb:GetRecords',
-          'dynamodb:GetShardIterator',
-          'dynamodb:ListStreams',
-        ],
-        resources: [streamArn],
-      }),
+      new statement.Dynamodb().toDescribeStream().toGetRecords().toGetShardIterator().toListStreams(),
     );
 
 
