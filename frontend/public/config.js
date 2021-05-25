@@ -1,8 +1,4 @@
 window.ENV = {
-    "Auth": {
-        "identityPoolId": "eu-central-1:16010d86-2db2-44d4-9b5d-29e7e08a8e30",
-        "region": "eu-central-1"
-    },
     "aws_project_region": "eu-central-1",
     "aws_appsync_graphqlEndpoint": "https://47vgj63xzjb7zp44nk2u3hxnze.appsync-api.eu-central-1.amazonaws.com/graphql",
     "aws_appsync_region": "eu-central-1",

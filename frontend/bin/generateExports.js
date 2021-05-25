@@ -13,15 +13,15 @@ const identityPoolOutputKey = 'awsIdentityPoolId';
 const authenticationTypeOutputKey = 'awsAppsyncAuthenticationType';
 
 let config = {
-  Auth: {
-    identityPoolId: '',
-    // cookieStorage: {
-    //   domain: 'http://localhost:3000',
-    //   path: '/',
-    //   secure: true
-    // },
-    region: REGION,
-  },
+  // Auth: {
+  //   identityPoolId: '',
+  //   // cookieStorage: {
+  //   //   domain: 'http://localhost:3000',
+  //   //   path: '/',
+  //   //   secure: true
+  //   // },
+  //   region: REGION,
+  // },
   aws_project_region: REGION,
   aws_appsync_graphqlEndpoint: '',
   aws_appsync_region: REGION,
@@ -83,7 +83,7 @@ async function main() {
     return output.OutputKey === authenticationTypeOutputKey;
   });
 
-  config.Auth.identityPoolId= identityPoolId.OutputValue;
+  // config.Auth.identityPoolId= identityPoolId.OutputValue;
   config.stage = stage;
   config.aws_appsync_graphqlEndpoint = appsyncGraphQLEndpoint.OutputValue;
   config.aws_appsync_authenticationType = authenticationType.OutputValue;
