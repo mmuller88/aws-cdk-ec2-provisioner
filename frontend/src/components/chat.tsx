@@ -3,20 +3,11 @@ import { useMutation } from 'react-query';
 
 import { css } from 'glamor'
 
-import { CreateMessageDocument, CreateMessageInput, Message, useListMessagesQuery, OnCreateMessageSubscription} from '../lib/api';
+import { CreateMessageDocument, CreateMessageInput, Message, useListMessagesQuery} from '../lib/api';
 import { API as FAPI} from '../lib/fetcher';
-import { useSubscription } from './subscriber';
 import { onCreateMessage } from '../graphql/subscriptions';
-import { API, graphqlOperation } from 'aws-amplify';
 
 import Observable from 'zen-observable';
-
-import * as subscriptions from './../graphql/subscriptions';
-
-
-// react-apollo compose has no type export
-// https://dev.to/piglovesyou/react-apollo-codegen-typescript-how-you-can-compose-multiple-queries-mutations-to-a-component-2jic
-// export declare function compose(...funcs: Function[]): (...args: any[]) => any;
 
 const initialState = { content: '' }
 
@@ -29,11 +20,11 @@ export function Chat({username}:ChatProps) {
   // console.log('username:'+username);
 
   const [message, setMessage] = useState(initialState);
-  const [messagess, setMessagess] = useState([]);
 
-  // const { content } = message;
+  useEffect(() => {
+    scrollToBottom()
+  }, []);
 
-  
   const { data, isLoading, refetch } = useListMessagesQuery(null, {
     refetchOnWindowFocus: false,
   });
@@ -42,14 +33,23 @@ export function Chat({username}:ChatProps) {
   data?.listMessages?.items.sort((m1,m2) => new Date(m1.createdAt).getTime() - new Date(m2.createdAt).getTime());
   // if (messagess?.length === 0) setMessagess(messages);
 
-  const el = useRef(null);
+  const messagesEndRef = useRef(null);
 
-  useEffect(() => {
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+  }
 
-      if (el.current === null) { }
-      else
-          el!.current!.scrollIntoView({ behavior: 'smooth' });
-  }, [])
+  // const el = useRef(null);
+  // if(el !== null){
+  //   el.current?.scrollIntoView({ behavior: 'smooth' });
+  // }
+
+  // useEffect(() => {
+
+  //     if (el.current === null) { }
+  //     else
+  //         el!.current!.scrollIntoView({ behavior: 'smooth' });
+  // }, [])
 
   const onChange = e => {
     setMessage({ ...message, [e.target.name]: e.target.value })
@@ -110,7 +110,7 @@ export function Chat({username}:ChatProps) {
             )
           })
         }
-        {/* <div ref={val => this.div = val} {...css(styles.scroller)} /> */}
+        <div ref={messagesEndRef} {...css(styles.scroller)} />
       </div>
       <div {...css(styles.inputContainer)}>
         <input
@@ -119,7 +119,6 @@ export function Chat({username}:ChatProps) {
           name='content'
           onChange={onChange}
           onKeyPress={createMessage}
-          // value={content}
         />
       </div>
     </div>
@@ -190,83 +189,3 @@ const styles = {
     left: 0,
   }
 }
-
-// const ConversationWithData = compose(
-//   graphql(getConvo, {
-//     options: props => {
-//       const { conversationId } = props.match.params
-//       return {
-//         variables: {
-//           id: conversationId
-//         },
-//         fetchPolicy: 'cache-and-network'
-//       }
-//     },
-//     props: props => {
-//       const { conversationId } = props.ownProps.match.params
-//       let messages = props.data.getConvo ?
-//       props.data.getConvo.messages.items
-//       : []
-//       return {
-//         messages,
-//         data: props.data,
-//         subscribeToNewMessages: params => {
-//           props.data.subscribeToMore({
-//             document: OnCreateMessage,
-//             variables: { messageConversationId: conversationId },
-//             updateQuery: (prev, { subscriptionData: { data : { onCreateMessage } } }) => {
-    
-//               let messageArray = prev.getConvo.messages.items.filter(message => message.id !== onCreateMessage.id)
-//               messageArray = [
-//                 ...messageArray,
-//                 onCreateMessage,
-//               ]
-
-//               return {
-//                 ...prev,
-//                 getConvo: {
-//                   ...prev.getConvo,
-//                   messages: {
-//                     ...prev.getConvo.messages,
-//                     items: messageArray
-//                   }
-//                 }
-//               }
-//             }
-//           })
-//         },
-//       }
-//     }
-//   }),
-//   graphql(CreateMessage, {
-//     options: (props) => {
-//       const { conversationId } = props.match.params
-//       return {
-//         update: (dataProxy, { data: { createMessage } }) => {
-
-//           const query = getConvo
-//           const data = dataProxy.readQuery({ query, variables: { id: conversationId } })
-          
-//           data.getConvo.messages.items = data.getConvo.messages.items.filter(m => m.id !== createMessage.id)
-          
-//           data.getConvo.messages.items.push(createMessage)
-
-//           dataProxy.writeQuery({ query, data, variables: { id: conversationId } })
-//         }
-//       }
-//     },
-//     props: (props) => ({
-//       createMessage: message => {
-//         props.mutate({
-//           variables: message,
-//           optimisticResponse: {
-//             createMessage: { ...message, __typename: 'Message' }
-//           }
-//         })
-//       }
-//     }),
-//   }),
-//   // graphqlMutation(createMessage, getConvo, 'Message')
-// )(Conversation)
-
-// export default observer(ConversationWithData)
