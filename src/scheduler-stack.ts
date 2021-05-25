@@ -1,39 +1,33 @@
 import * as ddb from '@aws-cdk/aws-dynamodb';
 import * as lambda from '@aws-cdk/aws-lambda';
+import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
 import * as core from '@aws-cdk/core';
-import * as statement from 'cdk-iam-floyd';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
+import { AppSyncTransformer } from 'cdk-appsync-transformer';
+import * as statement from 'cdk-iam-floyd';
 
 
 export interface SchedulerStackProps extends core.StackProps {
   readonly stage: string;
-  readonly configTableName: string;
+  readonly appSyncTransformer: AppSyncTransformer;
 }
 
 export class SchedulerStack extends CustomStack {
   constructor(scope: core.Construct, id: string, props: SchedulerStackProps) {
     super(scope, id, props);
 
-    const table = ddb.Table.fromTableName(this, 'configTable', props.configTableName);
-
-    const cfnTable = table.node.defaultChild as ddb.CfnTable;
-    cfnTable.streamSpecification = {
+    const streamArn = props.appSyncTransformer.addDynamoDBStream({
+      modelTypeName: 'Ec2Config',
       streamViewType: ddb.StreamViewType.NEW_IMAGE,
-    };
-    const streamArn = cfnTable.attrStreamArn;
-
-    const myLambda = new lambda.Function(this, 'my-lambda', {
-      code: new lambda.InlineCode(`
-      exports.handler = (event, context, callback) => {
-        console.log('event',event)
-        callback(null,'10')
-      }
-        `),
-      handler: 'index.handler',
-      runtime: lambda.Runtime.NODEJS_10_X,
     });
 
-    const eventSoruce = myLambda.addEventSourceMapping('test', {
+    const cdkSchedulerLambda = new lambdajs.NodejsFunction(this, 'scheduler', {
+      entry: 'src/lambda/scheduler.ts',
+      environment: {},
+      timeout: core.Duration.minutes(15),
+    });
+
+    cdkSchedulerLambda.addEventSourceMapping('test', {
       eventSourceArn: streamArn,
       batchSize: 5,
       startingPosition: lambda.StartingPosition.TRIM_HORIZON,
@@ -41,12 +35,8 @@ export class SchedulerStack extends CustomStack {
       retryAttempts: 10,
     });
 
-    const roleUpdates = myLambda.addToRolePolicy(
+    cdkSchedulerLambda.addToRolePolicy(
       new statement.Dynamodb().toDescribeStream().toGetRecords().toGetShardIterator().toListStreams(),
     );
-
-
-    // this.cfnOutputs = { ...appsync.cfnOutputs, ...staticsite.cfnOutputs };
-
   }
 }

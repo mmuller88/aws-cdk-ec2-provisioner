@@ -1,6 +1,5 @@
 import * as appsync from '@aws-cdk/aws-appsync';
 import * as cognito from '@aws-cdk/aws-cognito';
-import * as ddb from '@aws-cdk/aws-dynamodb';
 import * as iam from '@aws-cdk/aws-iam';
 import * as cdk from '@aws-cdk/core';
 // import * as db from '@aws-cdk/aws-dynamodb';
@@ -14,6 +13,7 @@ export interface AppSyncStackProps extends cdk.StackProps {
 }
 
 export class AppSyncStack extends CustomStack {
+  appSyncTransformer: AppSyncTransformer;
   constructor(scope: cdk.Construct, id: string, props: AppSyncStackProps) {
     super(scope, id, props);
 
@@ -92,7 +92,7 @@ export class AppSyncStack extends CustomStack {
     //   },
     // });
 
-    const graphQlApi = new AppSyncTransformer(this, 'GraphQlApi', {
+    this.appSyncTransformer = new AppSyncTransformer(this, 'GraphQlApi', {
       apiName: 'ec2-pro-api',
       schemaPath: './schema.graphql',
       authorizationConfig: {
@@ -119,7 +119,7 @@ export class AppSyncStack extends CustomStack {
         }),
     });
 
-    graphQlApi.grantPublic(publicRole);
+    this.appSyncTransformer.grantPublic(publicRole);
 
     // Add allowed queries to the unauthorized identity pool role
     unauthRole.addToPolicy(
@@ -130,15 +130,15 @@ export class AppSyncStack extends CustomStack {
         ],
         resources: [
           // Queries
-          `arn:aws:appsync:${this.region}:${this.account}:apis/${graphQlApi.appsyncAPI.apiId}/types/Query/fields/listPosts`,
-          `arn:aws:appsync:${this.region}:${this.account}:apis/${graphQlApi.appsyncAPI.apiId}/types/Query/fields/listMessages`,
-          `arn:aws:appsync:${this.region}:${this.account}:apis/${graphQlApi.appsyncAPI.apiId}/types/Query/fields/getPost`,
-          `arn:aws:appsync:${this.region}:${this.account}:apis/${graphQlApi.appsyncAPI.apiId}/types/Query/fields/getMessage`,
+          `arn:aws:appsync:${this.region}:${this.account}:apis/${this.appSyncTransformer.appsyncAPI.apiId}/types/Query/fields/listPosts`,
+          `arn:aws:appsync:${this.region}:${this.account}:apis/${this.appSyncTransformer.appsyncAPI.apiId}/types/Query/fields/listMessages`,
+          `arn:aws:appsync:${this.region}:${this.account}:apis/${this.appSyncTransformer.appsyncAPI.apiId}/types/Query/fields/getPost`,
+          `arn:aws:appsync:${this.region}:${this.account}:apis/${this.appSyncTransformer.appsyncAPI.apiId}/types/Query/fields/getMessage`,
         ],
       }),
     );
 
-    // const todoDS = graphQlApi.addDynamoDbDataSource('todoDataSource', todoTable);
+    // const todoDS = this.appSyncTransformer.addDynamoDbDataSource('todoDataSource', todoTable);
 
     // todoDS.createResolver({
     //   typeName: 'Query',
@@ -164,7 +164,7 @@ export class AppSyncStack extends CustomStack {
     // Outputs
     const graphql = new cdk.CfnOutput(this, 'appsyncEndpointOutput', {
       description: 'GraphQL Endpoint',
-      value: graphQlApi.appsyncAPI.graphqlUrl,
+      value: this.appSyncTransformer.appsyncAPI.graphqlUrl,
     });
     this.cfnOutputs.appsyncEndpointOutput = graphql;
 

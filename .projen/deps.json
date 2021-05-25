@@ -155,7 +155,19 @@
       "type": "runtime"
     },
     {
+      "name": "@types/aws-lambda",
+      "type": "runtime"
+    },
+    {
       "name": "aws-cdk-staging-pipeline",
+      "type": "runtime"
+    },
+    {
+      "name": "aws-lambda",
+      "type": "runtime"
+    },
+    {
+      "name": "aws-sdk",
       "type": "runtime"
     },
     {
@@ -164,6 +176,11 @@
     },
     {
       "name": "cdk-iam-floyd",
+      "type": "runtime"
+    },
+    {
+      "name": "esbuild",
+      "version": "^0",
       "type": "runtime"
     }
   ],

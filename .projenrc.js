@@ -22,6 +22,10 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-lambda',
   ],
   deps: [
+    '@types/aws-lambda',
+    'aws-lambda',
+    'aws-sdk',
+    'esbuild@^0',
     'aws-cdk-staging-pipeline',
     'cdk-appsync-transformer',
     'cdk-iam-floyd',
