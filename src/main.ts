@@ -96,8 +96,8 @@ new PipelineStack(app, 'ec2-pro-vm-pipeline', {
   repositoryName: 'aws-cdk-ec2-provisioner',
   customStack: (scope, stageAccount) => {
 
-    const stack = new Ec2Stack(scope, `ec2-stack-${stageAccount.stage}`, {
-      stackName: `ec2-stack-${stageAccount.stage}`,
+    const stack = new Ec2Stack(scope, `ec2-vm-stack-${stageAccount.stage}`, {
+      stackName: `ec2-vm-stack-${stageAccount.stage}`,
       stage: stageAccount.stage,
     });
 

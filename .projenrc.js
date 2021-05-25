@@ -21,6 +21,7 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-cognito',
     '@aws-cdk/aws-lambda',
     '@aws-cdk/aws-logs',
+    '@aws-cdk/aws-ec2',
   ],
   deps: [
     '@types/aws-lambda',
