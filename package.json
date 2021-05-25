@@ -23,8 +23,6 @@
     "start": "npx projen start",
     "cdkDeploy": "cdk deploy",
     "cdkDestroy": "cdk destroy",
-    "cdkDeployEc2": "cdk deploy --app \"npx ts-node src/ec2/main.ts\"",
-    "cdkDestroyEc2": "cdk destroy",
     "dev": "cd frontend && yarn dev"
   },
   "author": {
