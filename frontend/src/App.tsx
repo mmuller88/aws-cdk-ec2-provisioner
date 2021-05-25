@@ -24,6 +24,11 @@ function App() {
   const [username, setUsername] = useState('nope');
 
   useEffect(() => {
+    onAuthUIStateChange((nextAuthState, authData: any) => {
+      setUsername(authData?.username);
+      setUsername(authData?.username);
+      API.updateIsSignedIn(nextAuthState === AuthState.SignedIn);
+    });
     return onAuthUIStateChange((nextAuthState, authData: any) => {
       setUsername(authData?.username);
       setUsername(authData?.username);

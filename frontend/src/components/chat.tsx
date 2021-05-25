@@ -22,7 +22,8 @@ export function Chat({username}:ChatProps) {
   const [message, setMessage] = useState(initialState);
 
   useEffect(() => {
-    scrollToBottom()
+    subscribe();
+    scrollToBottom();
   }, []);
 
   const { data, isLoading, refetch } = useListMessagesQuery(null, {
@@ -43,9 +44,7 @@ export function Chat({username}:ChatProps) {
     setMessage({ ...message, [e.target.name]: e.target.value })
   }
 
-  const [useCreateMessageMutation] = useMutation(async (input: CreateMessageInput) => {
-    const result = await FAPI.getInstance().query(CreateMessageDocument, { input });
-    
+  const subscribe = async () => {
     const subs = await FAPI.getInstance().query(onCreateMessage) as Observable<CreateMessageInput>;
     subs.subscribe({
       next: async (message) => {
@@ -56,6 +55,10 @@ export function Chat({username}:ChatProps) {
       },
       error: error => console.warn(error)
     });
+  }
+
+  const [useCreateMessageMutation] = useMutation(async (input: CreateMessageInput) => {
+    const result = await FAPI.getInstance().query(CreateMessageDocument, { input });
     
     return result.data?.createMessage as Message;
   });
