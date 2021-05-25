@@ -1485,7 +1485,7 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
-"@types/aws-lambda@*":
+"@types/aws-lambda@^8.10.76":
   version "8.10.76"
   resolved "https://registry.yarnpkg.com/@types/aws-lambda/-/aws-lambda-8.10.76.tgz#a20191677f1f5e32fe1f26739b1d6fbbea9cf636"
   integrity sha512-lCTyeRm3NWqSwDnoji0z82Pl0tsOpr1p+33AiNeidgarloWXh3wdiVRUuxEa+sY9S5YLOYGz5X3N3Zvpibvm5w==
@@ -2056,7 +2056,7 @@ aws-cdk@1.105.0:
     yaml "1.10.2"
     yargs "^16.2.0"
 
-aws-lambda@*:
+aws-lambda@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/aws-lambda/-/aws-lambda-1.0.6.tgz#ba562478264646b51e9dc817d7d25ea468ed011b"
   integrity sha512-Z9lmZBiDYejzjMWuQSDXuZWAqAun6vGt7WApB1r0f8tLNf0IlTGsH30qENfP1kXeTbbMgPpt1bPEeMZjYDTXxQ==
@@ -2066,7 +2066,7 @@ aws-lambda@*:
     js-yaml "^3.13.1"
     watchpack "^2.0.0-beta.10"
 
-aws-sdk@*, aws-sdk@^2.848.0:
+aws-sdk@*, aws-sdk@^2.848.0, aws-sdk@^2.913.0:
   version "2.913.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.913.0.tgz#633623dce1cf219ee333a0c1a0040988f67e0e5c"
   integrity sha512-FF6J79wONw04ZDDjH7B/1wc4uyayWl62NUlkmc/81juHtUpn3cDUu4bPaNSbcaLSgWK7pYVsTN1/kKs6d+/yJA==

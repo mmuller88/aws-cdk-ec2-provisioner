@@ -20,6 +20,7 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-dynamodb',
     '@aws-cdk/aws-cognito',
     '@aws-cdk/aws-lambda',
+    '@aws-cdk/aws-logs',
   ],
   deps: [
     '@types/aws-lambda',
@@ -45,6 +46,9 @@ project.buildTask.prependExec(
 
 project.setScript('cdkDeploy', 'cdk deploy');
 project.setScript('cdkDestroy', 'cdk destroy');
+
+project.setScript('cdkDeployEc2', 'cdk deploy --app "npx ts-node src/ec2/main.ts"');
+project.setScript('cdkDestroyEc2', 'cdk destroy --app "npx ts-node src/ec2/main.ts"');
 
 project.addTask('updateSchema', {
   description: 'Udates all places when changing the schema.graphql',

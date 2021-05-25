@@ -2,6 +2,7 @@ import * as ddb from '@aws-cdk/aws-dynamodb';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
 import * as core from '@aws-cdk/core';
+import * as logs from '@aws-cdk/aws-logs';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
 import { AppSyncTransformer } from 'cdk-appsync-transformer';
 import * as statement from 'cdk-iam-floyd';
@@ -23,6 +24,7 @@ export class SchedulerStack extends CustomStack {
 
     const cdkSchedulerLambda = new lambdajs.NodejsFunction(this, 'scheduler', {
       entry: 'src/lambda/scheduler.ts',
+      logRetention: logs.RetentionDays.ONE_DAY,
       environment: {},
       timeout: core.Duration.minutes(15),
     });

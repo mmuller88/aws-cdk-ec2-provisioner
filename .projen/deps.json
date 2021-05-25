@@ -130,6 +130,11 @@
       "type": "runtime"
     },
     {
+      "name": "@aws-cdk/aws-logs",
+      "version": "1.105.0",
+      "type": "runtime"
+    },
+    {
       "name": "@aws-cdk/aws-s3-deployment",
       "version": "1.105.0",
       "type": "runtime"

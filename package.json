@@ -23,6 +23,8 @@
     "start": "npx projen start",
     "cdkDeploy": "cdk deploy",
     "cdkDestroy": "cdk destroy",
+    "cdkDeployEc2": "cdk deploy --app \"npx ts-node src/ec2/main.ts\"",
+    "cdkDestroyEc2": "cdk destroy",
     "dev": "cd frontend && yarn dev"
   },
   "author": {
@@ -59,6 +61,7 @@
     "@aws-cdk/aws-iam": "1.105.0",
     "@aws-cdk/aws-lambda": "1.105.0",
     "@aws-cdk/aws-lambda-nodejs": "1.105.0",
+    "@aws-cdk/aws-logs": "1.105.0",
     "@aws-cdk/aws-s3": "1.105.0",
     "@aws-cdk/aws-s3-deployment": "1.105.0",
     "@aws-cdk/core": "1.105.0",

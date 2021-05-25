@@ -4,8 +4,8 @@ import { Ec2Stack } from './ec2-stack';
 
 const app = new core.App();
 
-new PipelineStack(app, 'ec2-provisioner-pipeline', {
-  stackName: 'ec2-provisioner-pipeline',
+new PipelineStack(app, 'ec2-pro-ec2-pipeline', {
+  stackName: 'ec2-pro-ec2-pipeline',
   // Account and region where the pipeline will be build
   env: {
     account: '981237193288',
@@ -18,12 +18,6 @@ new PipelineStack(app, 'ec2-provisioner-pipeline', {
       region: 'eu-central-1',
     },
     stage: 'dev',
-  }, {
-    account: {
-      id: '981237193288',
-      region: 'us-east-1',
-    },
-    stage: 'prod',
   }],
   branch: 'main',
   repositoryName: 'aws-cdk-ec2-provisioner',
