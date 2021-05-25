@@ -39,18 +39,6 @@ export function Chat({username}:ChatProps) {
     messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
   }
 
-  // const el = useRef(null);
-  // if(el !== null){
-  //   el.current?.scrollIntoView({ behavior: 'smooth' });
-  // }
-
-  // useEffect(() => {
-
-  //     if (el.current === null) { }
-  //     else
-  //         el!.current!.scrollIntoView({ behavior: 'smooth' });
-  // }, [])
-
   const onChange = e => {
     setMessage({ ...message, [e.target.name]: e.target.value })
   }
