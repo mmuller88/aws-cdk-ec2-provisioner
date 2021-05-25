@@ -38,7 +38,7 @@ export class SchedulerStack extends CustomStack {
     });
 
     cdkSchedulerLambda.addToRolePolicy(
-      new statement.Dynamodb().toDescribeStream().toGetRecords().toGetShardIterator().toListStreams(),
+      new statement.Dynamodb().allow().toDescribeStream().toGetRecords().toGetShardIterator().toListStreams(),
     );
   }
 }
