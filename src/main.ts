@@ -125,4 +125,10 @@ new PipelineStack(app, 'ec2-pro-vm-pipeline', {
   },
 });
 
+// stack for deploying with lambda
+new Ec2Stack(app, 'ec2-vm-stack', {
+  stackName: 'ec2-vm-stack',
+  stage: '',
+});
+
 app.synth();

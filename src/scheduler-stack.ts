@@ -24,6 +24,19 @@ export class SchedulerStack extends CustomStack {
 
     const cdkSchedulerLambda = new lambdajs.NodejsFunction(this, 'scheduler', {
       entry: 'src/lambda/scheduler.ts',
+      bundling: {
+        commandHooks: {
+          afterBundling(inputDir: string, outputDir: string): string[] {
+            return ['npx projen'];
+          },
+          beforeInstall(_inputDir: string, _outputDir: string): string[] {
+            return [];
+          },
+          beforeBundling(_inputDir: string, _outputDir: string): string[] {
+            return [];
+          },
+        },
+      },
       logRetention: logs.RetentionDays.ONE_DAY,
       environment: {},
       timeout: core.Duration.minutes(15),
