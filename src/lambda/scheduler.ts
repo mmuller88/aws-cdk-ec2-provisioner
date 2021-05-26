@@ -23,7 +23,7 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
     console.log(`stdout: ${stdout}`);
   });
 
-  return 'donee';
+  return 'doneeee';
   // {
   //   statusCode: 200,
   // };

@@ -1,1 +1,5 @@
-cdk.out/ass*
+cdk.out/asset.*
+node_modules
+frontend
+misc
+Dockerfile
