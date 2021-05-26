@@ -1,7 +1,8 @@
 # The correct AWS SAM build image based on the runtime of the function will be
 # passed as build arg. The default allows to do `docker build .` when testing.
-ARG IMAGE=public.ecr.aws/sam/build-nodejs14.x
-FROM $IMAGE
+# ARG IMAGE=public.ecr.aws/sam/build-nodejs14.x
+# FROM $IMAGE
+FROM amazon/aws-lambda-nodejs:12
 
 # Install yarn
 RUN npm install --global yarn@1.22.5
@@ -28,11 +29,15 @@ RUN mkdir /tmp/yarn-cache && \
 RUN npm config --global set update-notifier false
 
 # create non root user and change allow execute command for non root user
-RUN /sbin/useradd -u 1000 user && chmod 711 /
+#RUN /sbin/useradd -u 1000 user && chmod 711 /
 
-COPY lambda/scheduler.js ./
-RUN "esbuild scheduler.ts --bundle --outfile=scheduler.js"
+COPY lambda/scheduler.ts ./
+# RUN "esbuild scheduler.js --bundle --outfile=scheduler.js"
+# CMD [ "esbuild", "scheduler.handler" ]
+# RUN "esbuild"
+RUN esbuild scheduler.ts --outfile=scheduler.js
 CMD [ "scheduler.handler" ]
+# CMD [ "esbuild scheduler.js --bundle --outfile=scheduler.js; scheduler.handler" ]
 
 # CMD [ "esbuild" ]
 
