@@ -2,7 +2,7 @@ FROM amazon/aws-lambda-nodejs:12
 
 COPY src/lambda/scheduler.ts ./
 
-RUN npm install -g cdk
+RUN npm install -g cdk@1.105.0
 
 COPY cdk.out/ ./
 # COPY cdk.out/ec2-vm-stack.template.json ./
