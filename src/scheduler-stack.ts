@@ -6,6 +6,7 @@ import * as core from '@aws-cdk/core';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
 import { AppSyncTransformer } from 'cdk-appsync-transformer';
 import * as statement from 'cdk-iam-floyd';
+import * as path from "path";
 
 
 export interface SchedulerStackProps extends core.StackProps {
@@ -22,8 +23,10 @@ export class SchedulerStack extends CustomStack {
       streamViewType: ddb.StreamViewType.NEW_IMAGE,
     });
 
+    const dockerfile = path.join(__dirname, '..');
+
     const cdkSchedulerLambda = new lambda.DockerImageFunction(this, 'scheduler', {
-      code: lambda.DockerImageCode.fromImageAsset('src'),
+      code: lambda.DockerImageCode.fromImageAsset(dockerfile),
       logRetention: logs.RetentionDays.ONE_DAY,
       environment: {},
       timeout: core.Duration.minutes(15),
