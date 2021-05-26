@@ -1,6 +1,6 @@
 import * as ddb from '@aws-cdk/aws-dynamodb';
 import * as lambda from '@aws-cdk/aws-lambda';
-import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
+// import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
 import * as logs from '@aws-cdk/aws-logs';
 import * as core from '@aws-cdk/core';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
@@ -22,21 +22,8 @@ export class SchedulerStack extends CustomStack {
       streamViewType: ddb.StreamViewType.NEW_IMAGE,
     });
 
-    const cdkSchedulerLambda = new lambdajs.NodejsFunction(this, 'scheduler', {
-      entry: 'src/lambda/scheduler.ts',
-      bundling: {
-        commandHooks: {
-          afterBundling(inputDir: string, outputDir: string): string[] {
-            return ['npx projen'];
-          },
-          beforeInstall(_inputDir: string, _outputDir: string): string[] {
-            return [];
-          },
-          beforeBundling(_inputDir: string, _outputDir: string): string[] {
-            return [];
-          },
-        },
-      },
+    const cdkSchedulerLambda = new lambda.DockerImageFunction(this, 'scheduler', {
+      code: lambda.DockerImageCode.fromImageAsset('src'),
       logRetention: logs.RetentionDays.ONE_DAY,
       environment: {},
       timeout: core.Duration.minutes(15),
