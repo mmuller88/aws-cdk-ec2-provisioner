@@ -23,7 +23,7 @@ type Ec2 {
 type Query {
   listTodos: [Todo] @http(url: "https://jsonplaceholder.typicode.com/todos")
   getTodo: Todo @http(url: "https://jsonplaceholder.typicode.com/todos/:id")
-  listEc2: [Ec2]
+  listEc2: [Ec2] @function(name: "queryEc2")
 }
 
 type HistoryEntry
