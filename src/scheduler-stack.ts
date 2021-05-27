@@ -47,5 +47,8 @@ export class SchedulerStack extends CustomStack {
     cdkSchedulerLambda.addToRolePolicy(
       new statement.Cloudformation().allow().toDescribeStacks().toCreateStack(),
     );
+    cdkSchedulerLambda.addToRolePolicy(
+      new statement.Ssm().allow().toGetParameter(),
+    );
   }
 }
