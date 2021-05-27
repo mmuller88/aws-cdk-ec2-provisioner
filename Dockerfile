@@ -1,11 +1,12 @@
 FROM amazon/aws-lambda-nodejs:12
 # ARG CDKOUT=cdk.out
-RUN npm install -g cdk@1.105.0
+#RUN npm install -g cdk@1.105.0
 
 # COPY ${CDKOUT} ./
 COPY ./ ./
-RUN ls -l
+# RUN ls -l
 RUN npm install
+RUN npm install --global yarn
 #RUN yarn add projen && npx projen
 RUN npm run synth
 # COPY cdk.out/ ./
