@@ -30,11 +30,18 @@
     "organization": false
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.76",
     "@types/jest": "^26.0.23",
     "@types/node": "^10.17.0",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
     "aws-cdk": "1.106.1",
+    "aws-cdk-staging-pipeline": "^1.97.21",
+    "aws-lambda": "^1.0.6",
+    "aws-sdk": "^2.916.0",
+    "cdk-appsync-transformer": "^1.77.15",
+    "cdk-iam-floyd": "^0.190.0",
+    "esbuild": "^0",
     "eslint": "^7.27.0",
     "eslint-import-resolver-node": "^0.3.4",
     "eslint-import-resolver-typescript": "^2.4.0",

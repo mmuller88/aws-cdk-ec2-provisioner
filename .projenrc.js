@@ -1,9 +1,20 @@
-const { web, AwsCdkTypeScriptApp } = require('projen');
+const { web, AwsCdkTypeScriptApp, NodePackageManager} = require('projen');
+
+const deps = [
+  '@types/aws-lambda',
+  'aws-lambda',
+  'aws-sdk',
+  'esbuild@^0',
+  'aws-cdk-staging-pipeline',
+  'cdk-appsync-transformer',
+  'cdk-iam-floyd',
+];
 
 const project = new AwsCdkTypeScriptApp({
   authorAddress: 'damadden88@googlemail.com',
   authorName: 'martin.mueller',
   name: 'aws-cdk-ec2-provisioner',
+  // packageManager: NodePackageManager.NPM,
   defaultReleaseBranch: 'main',
   cdkVersion: '1.106.1',
   cdkVersionPinning: true,
@@ -23,20 +34,20 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-logs',
     '@aws-cdk/aws-ec2',
   ],
-  deps: [
-    '@types/aws-lambda',
-    'aws-lambda',
-    'aws-sdk',
-    'esbuild@^0',
-    'aws-cdk-staging-pipeline',
-    'cdk-appsync-transformer',
-    'cdk-iam-floyd',
-  ],
+  deps,
+  devDeps: deps,
+  // bundledDeps: deps,
+  // peerDeps: deps,
   context: {
     '@aws-cdk/core:enableStackNameDuplicates': true,
     'aws-cdk:enableDiffNoFail': true,
     '@aws-cdk/core:stackRelativeExports': true,
     '@aws-cdk/core:newStyleStackSynthesis': true,
+  },
+  tsconfig: {
+    compilerOptions: {
+      rootDir: undefined,
+    },
   },
   releaseWorkflow: false,
 });

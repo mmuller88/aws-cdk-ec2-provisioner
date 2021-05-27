@@ -1,6 +1,10 @@
 {
   "dependencies": [
     {
+      "name": "@types/aws-lambda",
+      "type": "build"
+    },
+    {
       "name": "@types/jest",
       "type": "build"
     },
@@ -18,8 +22,33 @@
       "type": "build"
     },
     {
+      "name": "aws-cdk-staging-pipeline",
+      "type": "build"
+    },
+    {
       "name": "aws-cdk",
       "version": "1.106.1",
+      "type": "build"
+    },
+    {
+      "name": "aws-lambda",
+      "type": "build"
+    },
+    {
+      "name": "aws-sdk",
+      "type": "build"
+    },
+    {
+      "name": "cdk-appsync-transformer",
+      "type": "build"
+    },
+    {
+      "name": "cdk-iam-floyd",
+      "type": "build"
+    },
+    {
+      "name": "esbuild",
+      "version": "^0",
       "type": "build"
     },
     {

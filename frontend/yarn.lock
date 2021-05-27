@@ -58,13 +58,13 @@
   dependencies:
     tslib "~2.0.1"
 
-"@aws-amplify/analytics@5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/analytics/-/analytics-5.0.0.tgz#dd383f6a4c640832b2eb5afea43784d2d1c02ccd"
-  integrity sha512-HJwhPgP7sYYKEZD3krYXvWsXmc4kjIWfulURKgWNOycrDw5IcFLkQvkclMC6CdTex0vUphoHmkrbHrj2EgVBnA==
+"@aws-amplify/analytics@5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/analytics/-/analytics-5.0.1.tgz#1c437cc5eb52713d06e5fe4f1465d7c6cc887909"
+  integrity sha512-uK7/7+ElPtQ1+lRJ5waUF8nIe9zotgv5T6ndZBqqLFeCruEz5aa+HaLcwg07BTMograokzRzOJ42BzcMZD9dXQ==
   dependencies:
-    "@aws-amplify/cache" "4.0.2"
-    "@aws-amplify/core" "4.0.2"
+    "@aws-amplify/cache" "4.0.3"
+    "@aws-amplify/core" "4.0.3"
     "@aws-sdk/client-firehose" "3.6.1"
     "@aws-sdk/client-kinesis" "3.6.1"
     "@aws-sdk/client-personalize-events" "3.6.1"
@@ -73,57 +73,57 @@
     lodash "^4.17.20"
     uuid "^3.2.1"
 
-"@aws-amplify/api-graphql@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/api-graphql/-/api-graphql-2.0.0.tgz#d484c6e053b0e0130d8d3ecf46ccc09ecf49165d"
-  integrity sha512-3ifVFUUsq5zKwZaGdFEBqty3SunRvN7vT1rbDVnjwmzNB+lPvHp7PbVb6DIbrGxtqiME7Uo5e79AMWbOq8jurw==
+"@aws-amplify/api-graphql@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/api-graphql/-/api-graphql-2.0.1.tgz#b69dce018b22cb77a9548a02d763e9577e55f9bb"
+  integrity sha512-oiz9g9jgwH6gtisonQS7UF/N7+gXegnPNH4KNoDHnLliEIMbbOxHmUcjkFYNNnYntl0VByOG8XPrn3Z52ixRzw==
   dependencies:
-    "@aws-amplify/api-rest" "2.0.0"
-    "@aws-amplify/auth" "4.0.0"
-    "@aws-amplify/cache" "4.0.2"
-    "@aws-amplify/core" "4.0.2"
-    "@aws-amplify/pubsub" "4.0.0"
+    "@aws-amplify/api-rest" "2.0.1"
+    "@aws-amplify/auth" "4.0.1"
+    "@aws-amplify/cache" "4.0.3"
+    "@aws-amplify/core" "4.0.3"
+    "@aws-amplify/pubsub" "4.0.1"
     graphql "14.0.0"
     uuid "^3.2.1"
     zen-observable-ts "0.8.19"
 
-"@aws-amplify/api-rest@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/api-rest/-/api-rest-2.0.0.tgz#70c940dbb681cb72535974fd3d4f37a32cf4c2c7"
-  integrity sha512-fD9MSgqT6wkrS7w/s4a0uiH8WWeBLWrtYX0EMTm5orE6+VyF5oVYCjP4YuEKLAEi9S1sAPGF5QHgfzW2lqoITQ==
+"@aws-amplify/api-rest@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/api-rest/-/api-rest-2.0.1.tgz#a35ec4bc15d78a0c4e83626e0d6e206e2346534f"
+  integrity sha512-0Np3HPcZodlckdGbP7leN2oxdiB1HQK4G29I4a+yGfYwYDd9NVMq9BL8IiCQfg82g8IEjk5f6BBDS+Au7Njg7w==
   dependencies:
-    "@aws-amplify/core" "4.0.2"
+    "@aws-amplify/core" "4.0.3"
     axios "0.21.1"
 
-"@aws-amplify/api@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/api/-/api-4.0.0.tgz#32520721abe33083b843613ce08b068b1558f9dc"
-  integrity sha512-iN94NerWLo9GRTwvVEDXOX5+8Iy2Rrbx1vhE35RInuATj24hN7OXuHnj35cVDxup2gPrvq+hVVOz/++VrMAgLQ==
+"@aws-amplify/api@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/api/-/api-4.0.1.tgz#980ac589f076eb16fad3960f5e4332ced66a9381"
+  integrity sha512-bW9KdkkMQjIb/OBLaArhayxevJrF1cIbUlKI9nVmuds6IXibRJ4Wyjs6sH71nPOSciLP9183Nt3uuHeRCl4ohw==
   dependencies:
-    "@aws-amplify/api-graphql" "2.0.0"
-    "@aws-amplify/api-rest" "2.0.0"
+    "@aws-amplify/api-graphql" "2.0.1"
+    "@aws-amplify/api-rest" "2.0.1"
 
-"@aws-amplify/auth@*", "@aws-amplify/auth@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/auth/-/auth-4.0.0.tgz#d2a4ee603eecb6189ad45958a5ba84b45605b864"
-  integrity sha512-enLsBoLH7hpqJnTw/Z1bXFD35Bh5GcgNRSh2jFcdZPTSETCup8InSLThuNNOuNIM3QkbDO+oqwFMRLosFMwRPQ==
+"@aws-amplify/auth@*", "@aws-amplify/auth@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/auth/-/auth-4.0.1.tgz#95df27c5aa34ca61f50e6ed80c263b0959b53d25"
+  integrity sha512-K93AqhSymUext8HuqCjalmegVBFwO/U6CErxaComb3cJcykL+1vqzPG8qfX27Spo7kBe/u3ySzYYD8JnxwQurw==
   dependencies:
-    "@aws-amplify/cache" "4.0.2"
-    "@aws-amplify/core" "4.0.2"
-    amazon-cognito-identity-js "5.0.1"
+    "@aws-amplify/cache" "4.0.3"
+    "@aws-amplify/core" "4.0.3"
+    amazon-cognito-identity-js "5.0.2"
     crypto-js "^4.0.0"
 
-"@aws-amplify/cache@4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/cache/-/cache-4.0.2.tgz#71215d87b8fa73f382fa557e2dfc4967173d94d6"
-  integrity sha512-je2ph0wv8HWyk3TsggCtja52hzXOHw8ACdu7ErrHhX6RwEDZhaAxyX4A/Qx9INLEbdFZqDuzfq+H6qDWSDcCuQ==
+"@aws-amplify/cache@4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/cache/-/cache-4.0.3.tgz#6b99db75197162e9cffffeb939a734b7fbf4dbea"
+  integrity sha512-K/a9kWjnS62kXjxHU0qfAUY8Nwhr+O+I4T+IeSfx4pDF+JvuDCckIPW2HjLRqgW8i1x0SANB2KMESj+H+NHkWg==
   dependencies:
-    "@aws-amplify/core" "4.0.2"
+    "@aws-amplify/core" "4.0.3"
 
-"@aws-amplify/core@4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/core/-/core-4.0.2.tgz#a0e01f2e97b33a7187802483e785b2a48fc6fdf4"
-  integrity sha512-BsiAOwCI2RRT4aTxYPOhRZrcmNSNKM7xsDNbwsehU/GbIrUmVDvjk8iNKxWnhrtKsmIhgQ9PA4EW7ZuaFsB9Lg==
+"@aws-amplify/core@4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/core/-/core-4.0.3.tgz#929d6e4b131524208f212d61612e89e9ff172d19"
+  integrity sha512-+0AI7nF4b/fphib23ybFgDcGkyGzTaGwFynv2U8yPL8d6tLp2nDUAFIci9KlbZfP9rToPnEmQGJXJregDAbzhA==
   dependencies:
     "@aws-crypto/sha256-js" "1.0.0-alpha.0"
     "@aws-sdk/client-cognito-identity" "3.6.1"
@@ -133,16 +133,16 @@
     universal-cookie "^4.0.4"
     zen-observable-ts "0.8.19"
 
-"@aws-amplify/datastore@3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/datastore/-/datastore-3.0.2.tgz#371673416429ccca2c5507cc1c2566ab8ce1b6bf"
-  integrity sha512-HVz5Y3GGz6Ko4rzUA4w1KPvBJOTEoP6OpQj7yoeeypxq1mcE34iVWZRGK9Ad4GqJqhQz73AlmWQH/mxBzpngCw==
+"@aws-amplify/datastore@3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/datastore/-/datastore-3.0.3.tgz#7b0990ab18bf02fd11495004d7588dc1bd99a92c"
+  integrity sha512-/Sj9/hPwa7LdS0JDMwC265M/w9f8NBaRI5FjIDW7qlxh0j39NkNFi6ozcRfMgWePw/aBGM6S/sJmg+bvms1X9A==
   dependencies:
-    "@aws-amplify/api" "4.0.0"
-    "@aws-amplify/auth" "4.0.0"
-    "@aws-amplify/core" "4.0.2"
-    "@aws-amplify/pubsub" "4.0.0"
-    amazon-cognito-identity-js "5.0.1"
+    "@aws-amplify/api" "4.0.1"
+    "@aws-amplify/auth" "4.0.1"
+    "@aws-amplify/core" "4.0.3"
+    "@aws-amplify/pubsub" "4.0.1"
+    amazon-cognito-identity-js "5.0.2"
     idb "5.0.6"
     immer "8.0.1"
     ulid "2.3.0"
@@ -150,21 +150,21 @@
     zen-observable-ts "0.8.19"
     zen-push "0.2.1"
 
-"@aws-amplify/interactions@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/interactions/-/interactions-4.0.0.tgz#86a6cee74327ce4efce99cec1c0eaf80667a1326"
-  integrity sha512-JH+wqW+v2ylrW7UikZxdV2UsxrPFVX5EXeSxni1YoWeyy4HEMJgIbpUMlRrYvo9VIGPVLrbDbWsNehh2zqBHOw==
+"@aws-amplify/interactions@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/interactions/-/interactions-4.0.1.tgz#acb74fba113b63edca33b05fb09a4ba8f3ab6f84"
+  integrity sha512-gWSHbPly0Aj69V4J4lJ98XuQhqYzx9WQsgJSLjX2AP7D1Wggfe3jWumrOuRbsVFFdBa83b76jsbbE+mF69rR1w==
   dependencies:
-    "@aws-amplify/core" "4.0.2"
+    "@aws-amplify/core" "4.0.3"
     "@aws-sdk/client-lex-runtime-service" "3.6.1"
 
-"@aws-amplify/predictions@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/predictions/-/predictions-4.0.0.tgz#016a80961808df8faf5849764eed51b7159270e7"
-  integrity sha512-Zyc8vLJypBjKpdbLkn6Ecv2xfXozCq5Y4xIfLC7SZBnCDJJ7nw8U0Hu2qjhXhCs8K35IwU0GHD+D9Yr1SGytsg==
+"@aws-amplify/predictions@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/predictions/-/predictions-4.0.1.tgz#7cdc40d9d63461cf394fd2efda22b070ef1df9b7"
+  integrity sha512-O8UU1qWSdrYAiTsA3NYMtSny7AWuzMqjiw63n++bYNEtn22iJW7X/IwLMTdSZAgVcXjikfQPb3ft/nR5UqvtDw==
   dependencies:
-    "@aws-amplify/core" "4.0.2"
-    "@aws-amplify/storage" "4.0.0"
+    "@aws-amplify/core" "4.0.3"
+    "@aws-amplify/storage" "4.1.0"
     "@aws-sdk/client-comprehend" "3.6.1"
     "@aws-sdk/client-polly" "3.6.1"
     "@aws-sdk/client-rekognition" "3.6.1"
@@ -174,25 +174,25 @@
     "@aws-sdk/util-utf8-node" "3.6.1"
     uuid "^3.2.1"
 
-"@aws-amplify/pubsub@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/pubsub/-/pubsub-4.0.0.tgz#47d34a6abc9d927dc07beecd304868dbc94cbdc8"
-  integrity sha512-BhbybU7mFwvSoph140tMUSH9NDkGe4BBkrUo0imUBOvNu24Eu3ppIe9/wJKEx3tndOi9hlyQXfFMH6i2DiBxPQ==
+"@aws-amplify/pubsub@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/pubsub/-/pubsub-4.0.1.tgz#33f72427f961b96adf4cdaf656ebbd9a3f61902f"
+  integrity sha512-8nNLvQPtDe3D96ReSKa66zyD7145+L2kD1SmgY8NYSgiDDKG35HTV7c3obo40LjPfhK/0z1RhLAuGdYYMgIKVw==
   dependencies:
-    "@aws-amplify/auth" "4.0.0"
-    "@aws-amplify/cache" "4.0.2"
-    "@aws-amplify/core" "4.0.2"
+    "@aws-amplify/auth" "4.0.1"
+    "@aws-amplify/cache" "4.0.3"
+    "@aws-amplify/core" "4.0.3"
     graphql "14.0.0"
     paho-mqtt "^1.1.0"
     uuid "^3.2.1"
     zen-observable-ts "0.8.19"
 
-"@aws-amplify/storage@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/storage/-/storage-4.0.0.tgz#01c3dae3449bef6017a26b90be4b28a1559edd7d"
-  integrity sha512-ITqvsauNoH99OvMUn0ryZ5hfY2glcYw+za1jizq9Tesr16iL7G+51+G71XXCzsXo3LDdqpBbPPFJFhWgkLhM2Q==
+"@aws-amplify/storage@4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/storage/-/storage-4.1.0.tgz#9eca208ee8ec508daebae015ea845caea505cc98"
+  integrity sha512-ZmNqLa2dvM3a8+stHxzNMmtdCzkB6Wg4UjNTOp98jbarIN4j9eXnlrtWMg8/H+N6r0WwyIHv++50fJS/PkOLqw==
   dependencies:
-    "@aws-amplify/core" "4.0.2"
+    "@aws-amplify/core" "4.0.3"
     "@aws-sdk/client-s3" "3.6.1"
     "@aws-sdk/s3-request-presigner" "3.6.1"
     "@aws-sdk/util-create-request" "3.6.1"
@@ -201,32 +201,32 @@
     events "^3.1.0"
     sinon "^7.5.0"
 
-"@aws-amplify/ui-components@*", "@aws-amplify/ui-components@1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/ui-components/-/ui-components-1.3.1.tgz#138245019c0b33861b56d254d615298d4b6220fa"
-  integrity sha512-fzt5+103jcf8DR/SDInz/nuFvvzbk/hc7ttaDcmkBOyRm71nj/GpNOF8AEUFnN6jBJECz+PtDJrUwX3DvfwMuw==
+"@aws-amplify/ui-components@*", "@aws-amplify/ui-components@1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/ui-components/-/ui-components-1.3.2.tgz#c2d3db79e656526ae4b54d732b3a7e2c7800a2e6"
+  integrity sha512-T5J9KM3NAsNa4ZQy5x8PPoGX99D8cC+4U71knLb5ArgcXcvr4RJug5Tex7+ctkKezGDoUUfCzHyJoBleQYM5TQ==
   dependencies:
     qrcode "^1.4.4"
     uuid "^8.2.0"
 
 "@aws-amplify/ui-react@*":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/ui-react/-/ui-react-1.2.0.tgz#1635cf32d217e0117bc3c89995e086c174cf9452"
-  integrity sha512-/Te6lOvbXRpw0tg9dcVnyCD2hUCY8r1z0hQ/ieKR2LVrB7aFGpC0JCqPXhQcOzs00HaeZgX7PtJ4jpP0ByOz4Q==
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/ui-react/-/ui-react-1.2.1.tgz#4bd4feabed43c4bd4517e6817029e24c02d145f9"
+  integrity sha512-qR8fBEpTaK2p2Y+etMTPuij1eQBq7mLqiCelRgqYumoEWDsbkJIlI1BOtHSvOs0IZDQlogGWFRLxNyGCYprisw==
   dependencies:
-    "@aws-amplify/ui-components" "1.3.1"
+    "@aws-amplify/ui-components" "1.3.2"
 
 "@aws-amplify/ui@2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@aws-amplify/ui/-/ui-2.0.3.tgz#7a88a416942aedbc6a6ea9850a2c98693c80340a"
   integrity sha512-LxbmPGD/S4bWzUh2PXMPSt/rXeUVJTsCbMpwH18XilTkXgOSmKH/eyVZNXUBY8C/xwqjzMTC68EtTlsM1DCq1A==
 
-"@aws-amplify/xr@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/xr/-/xr-3.0.0.tgz#86d4048be61da91a8eeaadba97a510cbfa6340a1"
-  integrity sha512-+4m8ieg4pfz06c2qh9Y1KrM6I1astWBQ8nLpANfGwvPN25PCB0PHoGGCrtLqKyL2EJjBWaWZaSc31lMqz93NtQ==
+"@aws-amplify/xr@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/xr/-/xr-3.0.1.tgz#06d072d13adedc1699cd171d52eb62455ed6be03"
+  integrity sha512-RzYSPG2t0rJVcpUK6mMMisKd2bSjBzDEZMNM23lxpnFaNclxkViRr54+hyC5l9JtO86701hvibiEHaofZNQMdw==
   dependencies:
-    "@aws-amplify/core" "4.0.2"
+    "@aws-amplify/core" "4.0.3"
 
 "@aws-crypto/crc32@^1.0.0":
   version "1.0.0"
@@ -2647,34 +2647,33 @@
     strip-json-comments "^3.1.1"
 
 "@graphql-codegen/cli@*":
-  version "1.21.4"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-1.21.4.tgz#41ce6abc6b33e369a3ee795621373b8ffa1aadeb"
-  integrity sha512-fCrPn7DeGnCU6d9xjo04VSzIGioVLj1BAjuZpgRJNNjyzTmv+qZJJVTWfD55J17XxlhFsfKJBprtdmRxZ3V2hw==
+  version "1.21.5"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-1.21.5.tgz#b9041553747cfb2dee7c3473a2e2461ec3e7ada5"
+  integrity sha512-w3SovNJ9qtMhFLAdPZeCdGvHXDgfdb53mueWDTyncOt04m+tohVnY4qExvyKLTN5zlGxrA/5ubp2x8Az0xQarA==
   dependencies:
-    "@graphql-codegen/core" "1.17.9"
-    "@graphql-codegen/plugin-helpers" "^1.18.5"
-    "@graphql-tools/apollo-engine-loader" "^6"
-    "@graphql-tools/code-file-loader" "^6"
-    "@graphql-tools/git-loader" "^6"
-    "@graphql-tools/github-loader" "^6"
-    "@graphql-tools/graphql-file-loader" "^6"
-    "@graphql-tools/json-file-loader" "^6"
-    "@graphql-tools/load" "^6"
-    "@graphql-tools/prisma-loader" "^6"
-    "@graphql-tools/url-loader" "^6"
-    "@graphql-tools/utils" "^7.0.0"
+    "@graphql-codegen/core" "1.17.10"
+    "@graphql-codegen/plugin-helpers" "^1.18.7"
+    "@graphql-tools/apollo-engine-loader" "^6.2.5"
+    "@graphql-tools/code-file-loader" "^6.3.1"
+    "@graphql-tools/git-loader" "^6.2.6"
+    "@graphql-tools/github-loader" "^6.2.5"
+    "@graphql-tools/graphql-file-loader" "^6.2.7"
+    "@graphql-tools/json-file-loader" "^6.2.6"
+    "@graphql-tools/load" "^6.2.8"
+    "@graphql-tools/prisma-loader" "^6.3.0"
+    "@graphql-tools/url-loader" "^6.10.1"
+    "@graphql-tools/utils" "^7.9.1"
     ansi-escapes "^4.3.1"
     chalk "^4.1.0"
     change-case-all "1.0.14"
-    chokidar "^3.4.3"
+    chokidar "^3.5.1"
     common-tags "^1.8.0"
     cosmiconfig "^7.0.0"
     debounce "^1.2.0"
     dependency-graph "^0.11.0"
     detect-indent "^6.0.0"
     glob "^7.1.6"
-    graphql-config "^3.2.0"
-    indent-string "^4.0.0"
+    graphql-config "^3.3.0"
     inquirer "^7.3.3"
     is-glob "^4.0.1"
     json-to-pretty-yaml "^1.2.2"
@@ -2690,17 +2689,17 @@
     valid-url "^1.0.9"
     wrap-ansi "^7.0.0"
     yaml "^1.10.0"
-    yargs "^16.1.1"
+    yargs "^17.0.0"
 
-"@graphql-codegen/core@1.17.9":
-  version "1.17.9"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/core/-/core-1.17.9.tgz#c03e71018ff04d26f5139a2d90a32b31d3bb2b43"
-  integrity sha512-7nwy+bMWqb0iYJ2DKxA9UiE16meeJ2Ch2XWS/N/ZnA0snTR+GZ20USI8z6YqP1Fuist7LvGO1MbitO2qBT8raA==
+"@graphql-codegen/core@1.17.10":
+  version "1.17.10"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/core/-/core-1.17.10.tgz#3b85b5bc2e84fcacbd25fced5af47a4bb2d7a8bd"
+  integrity sha512-RA3umgVDs/RI/+ztHh+H4GfJxrJUfWJQqoAkMfX4qPTVO5qsy3R4vPudE0oP8w+kFbL8dFsRfAAPUZxI4jV/hQ==
   dependencies:
-    "@graphql-codegen/plugin-helpers" "^1.18.2"
-    "@graphql-tools/merge" "^6"
-    "@graphql-tools/utils" "^6"
-    tslib "~2.0.1"
+    "@graphql-codegen/plugin-helpers" "^1.18.7"
+    "@graphql-tools/merge" "^6.2.14"
+    "@graphql-tools/utils" "^7.9.1"
+    tslib "~2.2.0"
 
 "@graphql-codegen/plugin-helpers@1.18.7-alpha-9bb4c1c7.0":
   version "1.18.7-alpha-9bb4c1c7.0"
@@ -2713,25 +2712,25 @@
     lodash "~4.17.0"
     tslib "~2.2.0"
 
-"@graphql-codegen/plugin-helpers@^1.18.2", "@graphql-codegen/plugin-helpers@^1.18.5":
-  version "1.18.6"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/plugin-helpers/-/plugin-helpers-1.18.6.tgz#eedd5d0fbca43ab2a19705cdfe3d72eb4b29db64"
-  integrity sha512-iLUVvhLSPCyiIRWCLqV7irtyV+316TeOy6R7a5bkKEOcHM9/51xIjPyj1VD72SiiUrmgnK1XdzRRFnV8lQW5+Q==
+"@graphql-codegen/plugin-helpers@^1.18.7":
+  version "1.18.7"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/plugin-helpers/-/plugin-helpers-1.18.7.tgz#465af3e5b02de89e49ddc76ad2546b880fe240f2"
+  integrity sha512-8ICOrXlsvyL1dpVz8C9b7H31d4DJpDd75WfjMn6Xjqz81Ah8xDn1Bi+7YXRCCILCBmvI94k6fi8qpsIVhFBBjQ==
   dependencies:
-    "@graphql-tools/utils" "^7.0.0"
+    "@graphql-tools/utils" "^7.9.1"
     common-tags "1.8.0"
     import-from "3.0.0"
     lodash "~4.17.0"
     tslib "~2.2.0"
 
 "@graphql-codegen/typescript-operations@*":
-  version "1.17.16"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-operations/-/typescript-operations-1.17.16.tgz#75eb389f268b2dbd2e46b235bcb957be561c31cb"
-  integrity sha512-DoWIhg/c2XS4IpgRLRXRBJDwmKoIl6KuzL2iO9GElX0rdjYguwbqx6iDV1pgktTTajMy8pXP56oZhmEcZLRD2Q==
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-operations/-/typescript-operations-1.18.0.tgz#04c007df476948ff972daed69c73a77a922c8968"
+  integrity sha512-Q4b+jySBgU39uYzSWQcHBn/q5j/gs2yUQGNiCXhV8IIHDJJNR0Zfb2ywY6AMwT7N3rgXmFuIzKAA++xBf2yKRw==
   dependencies:
-    "@graphql-codegen/plugin-helpers" "^1.18.5"
-    "@graphql-codegen/typescript" "^1.22.0"
-    "@graphql-codegen/visitor-plugin-common" "^1.20.0"
+    "@graphql-codegen/plugin-helpers" "^1.18.7"
+    "@graphql-codegen/typescript" "^1.22.1"
+    "@graphql-codegen/visitor-plugin-common" "1.21.0"
     auto-bind "~4.0.0"
     tslib "~2.2.0"
 
@@ -2746,13 +2745,13 @@
     change-case-all "1.0.14"
     tslib "~2.2.0"
 
-"@graphql-codegen/typescript@*", "@graphql-codegen/typescript@^1.22.0":
-  version "1.22.0"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-1.22.0.tgz#d05be3a971e5d75a076a43e123b6330f4366a6ab"
-  integrity sha512-YzN/3MBYHrP110m8JgUWQIHt7Ivi3JXiq0RT5XNx/F9mVOSbZz6Ezbaji8YJA3y04Gl2f6ZgtdGazWANUvcOcg==
+"@graphql-codegen/typescript@*", "@graphql-codegen/typescript@^1.22.1":
+  version "1.22.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-1.22.1.tgz#9a2e215d4cf095d942c1671db4bad78b619b11ce"
+  integrity sha512-3f/siciXrhhMdcs9qcxnwWXETsAhZNNiUOlr6IUEm82kVx5xvFuxc0KZZE88w3iEVJXE7xYo1oWmrttvkQP4Aw==
   dependencies:
-    "@graphql-codegen/plugin-helpers" "^1.18.5"
-    "@graphql-codegen/visitor-plugin-common" "^1.20.0"
+    "@graphql-codegen/plugin-helpers" "^1.18.7"
+    "@graphql-codegen/visitor-plugin-common" "1.21.0"
     auto-bind "~4.0.0"
     tslib "~2.2.0"
 
@@ -2772,14 +2771,14 @@
     parse-filepath "^1.0.2"
     tslib "~2.2.0"
 
-"@graphql-codegen/visitor-plugin-common@^1.20.0":
-  version "1.20.0"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-1.20.0.tgz#38d829eab7370c79aa5229190788f94adcae8f76"
-  integrity sha512-AYrpy8NA3DpvhDLqYGerQRv44S+YAMPKtwT8x9GNVjzP0gVfmqi3gG1bDWbP5sm6kOZKvDC0kTxGePuBSZerxw==
+"@graphql-codegen/visitor-plugin-common@1.21.0":
+  version "1.21.0"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-1.21.0.tgz#1cb59a8ce9a9d6486f859a254645e162c6736cfb"
+  integrity sha512-gw6mUCOpKwJ4aR+wnUXureQi4dV6jezEiXvX0CEZdpqBIGAJ4G8h7CKyGW66lBzvaoLCB7siOF86UJO3dw5ctg==
   dependencies:
-    "@graphql-codegen/plugin-helpers" "^1.18.5"
+    "@graphql-codegen/plugin-helpers" "^1.18.7"
     "@graphql-tools/optimize" "^1.0.1"
-    "@graphql-tools/relay-operation-optimizer" "^6"
+    "@graphql-tools/relay-operation-optimizer" "^6.3.0"
     array.prototype.flatmap "^1.2.4"
     auto-bind "~4.0.0"
     change-case-all "1.0.14"
@@ -2788,7 +2787,7 @@
     parse-filepath "^1.0.2"
     tslib "~2.2.0"
 
-"@graphql-tools/apollo-engine-loader@^6":
+"@graphql-tools/apollo-engine-loader@^6.2.5":
   version "6.2.5"
   resolved "https://registry.yarnpkg.com/@graphql-tools/apollo-engine-loader/-/apollo-engine-loader-6.2.5.tgz#b9e65744f522bb9f6ca50651e5622820c4f059a8"
   integrity sha512-CE4uef6PyxtSG+7OnLklIr2BZZDgjO89ZXK47EKdY7jQy/BQD/9o+8SxPsgiBc+2NsDJH2I6P/nqoaJMOEat6g==
@@ -2807,7 +2806,7 @@
     tslib "~2.2.0"
     value-or-promise "1.0.6"
 
-"@graphql-tools/code-file-loader@^6":
+"@graphql-tools/code-file-loader@^6.3.1":
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/@graphql-tools/code-file-loader/-/code-file-loader-6.3.1.tgz#42dfd4db5b968acdb453382f172ec684fa0c34ed"
   integrity sha512-ZJimcm2ig+avgsEOWWVvAaxZrXXhiiSZyYYOJi0hk9wh5BxZcLUNKkTp6EFnZE/jmGUwuos3pIjUD3Hwi3Bwhg==
@@ -2829,7 +2828,7 @@
     tslib "~2.2.0"
     value-or-promise "1.0.6"
 
-"@graphql-tools/git-loader@^6":
+"@graphql-tools/git-loader@^6.2.6":
   version "6.2.6"
   resolved "https://registry.yarnpkg.com/@graphql-tools/git-loader/-/git-loader-6.2.6.tgz#c2226f4b8f51f1c05c9ab2649ba32d49c68cd077"
   integrity sha512-ooQTt2CaG47vEYPP3CPD+nbA0F+FYQXfzrB1Y1ABN9K3d3O2RK3g8qwslzZaI8VJQthvKwt0A95ZeE4XxteYfw==
@@ -2838,7 +2837,7 @@
     "@graphql-tools/utils" "^7.0.0"
     tslib "~2.1.0"
 
-"@graphql-tools/github-loader@^6":
+"@graphql-tools/github-loader@^6.2.5":
   version "6.2.5"
   resolved "https://registry.yarnpkg.com/@graphql-tools/github-loader/-/github-loader-6.2.5.tgz#460dff6f5bbaa26957a5ea3be4f452b89cc6a44b"
   integrity sha512-DLuQmYeNNdPo8oWus8EePxWCfCAyUXPZ/p1PWqjrX/NGPyH2ZObdqtDAfRHztljt0F/qkBHbGHCEk2TKbRZTRw==
@@ -2848,7 +2847,7 @@
     cross-fetch "3.0.6"
     tslib "~2.0.1"
 
-"@graphql-tools/graphql-file-loader@^6", "@graphql-tools/graphql-file-loader@^6.0.0":
+"@graphql-tools/graphql-file-loader@^6.0.0", "@graphql-tools/graphql-file-loader@^6.2.7":
   version "6.2.7"
   resolved "https://registry.yarnpkg.com/@graphql-tools/graphql-file-loader/-/graphql-file-loader-6.2.7.tgz#d3720f2c4f4bb90eb2a03a7869a780c61945e143"
   integrity sha512-5k2SNz0W87tDcymhEMZMkd6/vs6QawDyjQXWtqkuLTBF3vxjxPD1I4dwHoxgWPIjjANhXybvulD7E+St/7s9TQ==
@@ -2876,7 +2875,7 @@
     resolve-from "5.0.0"
     tslib "~2.2.0"
 
-"@graphql-tools/json-file-loader@^6", "@graphql-tools/json-file-loader@^6.0.0":
+"@graphql-tools/json-file-loader@^6.0.0", "@graphql-tools/json-file-loader@^6.2.6":
   version "6.2.6"
   resolved "https://registry.yarnpkg.com/@graphql-tools/json-file-loader/-/json-file-loader-6.2.6.tgz#830482cfd3721a0799cbf2fe5b09959d9332739a"
   integrity sha512-CnfwBSY5926zyb6fkDBHnlTblHnHI4hoBALFYXnrg0Ev4yWU8B04DZl/pBRUc459VNgO2x8/mxGIZj2hPJG1EA==
@@ -2884,7 +2883,7 @@
     "@graphql-tools/utils" "^7.0.0"
     tslib "~2.0.1"
 
-"@graphql-tools/load@^6", "@graphql-tools/load@^6.0.0":
+"@graphql-tools/load@^6.0.0", "@graphql-tools/load@^6.2.8":
   version "6.2.8"
   resolved "https://registry.yarnpkg.com/@graphql-tools/load/-/load-6.2.8.tgz#16900fb6e75e1d075cad8f7ea439b334feb0b96a"
   integrity sha512-JpbyXOXd8fJXdBh2ta0Q4w8ia6uK5FHzrTNmcvYBvflFuWly2LDTk2abbSl81zKkzswQMEd2UIYghXELRg8eTA==
@@ -2899,7 +2898,7 @@
     unixify "1.0.0"
     valid-url "1.0.9"
 
-"@graphql-tools/merge@^6", "@graphql-tools/merge@^6.0.0", "@graphql-tools/merge@^6.2.12":
+"@graphql-tools/merge@^6.0.0", "@graphql-tools/merge@^6.2.12", "@graphql-tools/merge@^6.2.14":
   version "6.2.14"
   resolved "https://registry.yarnpkg.com/@graphql-tools/merge/-/merge-6.2.14.tgz#694e2a2785ba47558e5665687feddd2935e9d94e"
   integrity sha512-RWT4Td0ROJai2eR66NHejgf8UwnXJqZxXgDWDI+7hua5vNA2OW8Mf9K1Wav1ZkjWnuRp4ztNtkZGie5ISw55ow==
@@ -2915,7 +2914,7 @@
   dependencies:
     tslib "~2.0.1"
 
-"@graphql-tools/prisma-loader@^6":
+"@graphql-tools/prisma-loader@^6.3.0":
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@graphql-tools/prisma-loader/-/prisma-loader-6.3.0.tgz#c907e17751ff2b26e7c2bc75d0913ebf03f970da"
   integrity sha512-9V3W/kzsFBmUQqOsd96V4a4k7Didz66yh/IK89B1/rrvy9rYj+ULjEqR73x9BYZ+ww9FV8yP8LasWAJwWaqqJQ==
@@ -2942,7 +2941,7 @@
     tslib "~2.1.0"
     yaml-ast-parser "^0.0.43"
 
-"@graphql-tools/relay-operation-optimizer@^6", "@graphql-tools/relay-operation-optimizer@^6.3.0":
+"@graphql-tools/relay-operation-optimizer@^6.3.0":
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/@graphql-tools/relay-operation-optimizer/-/relay-operation-optimizer-6.3.0.tgz#f8c7f6c8aa4a9cf50ab151fbc5db4f4282a79532"
   integrity sha512-Or3UgRvkY9Fq1AAx7q38oPqFmTepLz7kp6wDHKyR0ceG7AvHv5En22R12mAeISInbhff4Rpwgf6cE8zHRu6bCw==
@@ -2960,7 +2959,7 @@
     tslib "~2.2.0"
     value-or-promise "1.0.6"
 
-"@graphql-tools/url-loader@^6", "@graphql-tools/url-loader@^6.0.0", "@graphql-tools/url-loader@^6.8.2":
+"@graphql-tools/url-loader@^6.0.0", "@graphql-tools/url-loader@^6.10.1", "@graphql-tools/url-loader@^6.8.2":
   version "6.10.1"
   resolved "https://registry.yarnpkg.com/@graphql-tools/url-loader/-/url-loader-6.10.1.tgz#dc741e4299e0e7ddf435eba50a1f713b3e763b33"
   integrity sha512-DSDrbhQIv7fheQ60pfDpGD256ixUQIR6Hhf9Z5bRjVkXOCvO5XrkwoWLiU7iHL81GB1r0Ba31bf+sl+D4nyyfw==
@@ -2984,15 +2983,6 @@
     tslib "~2.2.0"
     valid-url "1.0.9"
     ws "7.4.5"
-
-"@graphql-tools/utils@^6":
-  version "6.2.4"
-  resolved "https://registry.yarnpkg.com/@graphql-tools/utils/-/utils-6.2.4.tgz#38a2314d2e5e229ad4f78cca44e1199e18d55856"
-  integrity sha512-ybgZ9EIJE3JMOtTrTd2VcIpTXtDrn2q6eiYkeYMKRVh3K41+LZa6YnR2zKERTXqTWqhobROwLt4BZbw2O3Aeeg==
-  dependencies:
-    "@ardatan/aggregate-error" "0.0.6"
-    camel-case "4.1.1"
-    tslib "~2.0.1"
 
 "@graphql-tools/utils@^7.0.0", "@graphql-tools/utils@^7.1.0", "@graphql-tools/utils@^7.1.2", "@graphql-tools/utils@^7.5.0", "@graphql-tools/utils@^7.7.0", "@graphql-tools/utils@^7.7.1", "@graphql-tools/utils@^7.8.1", "@graphql-tools/utils@^7.9.0", "@graphql-tools/utils@^7.9.1":
   version "7.10.0"
@@ -4323,10 +4313,10 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
-amazon-cognito-identity-js@5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/amazon-cognito-identity-js/-/amazon-cognito-identity-js-5.0.1.tgz#e2914fac8861d8f0bdfd6c91fb1bcb0e6eb08ad8"
-  integrity sha512-/GQn6yCaZ0S6XUwZwvIH5FdvVgLcQyj6pqpMLUPQfZ7GK0ecjBiOm8fBSEDwQxpZ9y0xA/iFMmNqBl+ML5LIZQ==
+amazon-cognito-identity-js@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/amazon-cognito-identity-js/-/amazon-cognito-identity-js-5.0.2.tgz#5b765d125350df35982612199a16ed31d9b3fde5"
+  integrity sha512-VxQ/NKpwNJgD7YgCPB359kHth7PPfPFmTJj9kCo6XdyE9fdiOghJIivkyaMhlWnl25JxDPRhG9CqRC/0rCAeUg==
   dependencies:
     buffer "4.9.2"
     crypto-js "^4.0.0"
@@ -4685,22 +4675,22 @@ autoprefixer@^9.6.1:
     postcss-value-parser "^4.1.0"
 
 aws-amplify@*:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/aws-amplify/-/aws-amplify-4.0.2.tgz#b9c6a5cbfabc9f7d96a18761f6a4f4b803e371d9"
-  integrity sha512-pGEfzksx+A/R6cfvOddJ51WsgQUGmhDY3dlGuWPTCky6/qTUBGQGRRgxhSJnlywV075RgCR7KvQYf9PmlmtFfg==
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/aws-amplify/-/aws-amplify-4.0.3.tgz#6f4857f2a1bb9b8d908b42b57e276e6a18ddd77d"
+  integrity sha512-LLMLchukaTOoOHQpuOXpTlM3GW7uQd1ZoCdIbi4wwQee7W6GAsJqa8RBgwivMvsURWO+qV661APZQKRbn/1nsg==
   dependencies:
-    "@aws-amplify/analytics" "5.0.0"
-    "@aws-amplify/api" "4.0.0"
-    "@aws-amplify/auth" "4.0.0"
-    "@aws-amplify/cache" "4.0.2"
-    "@aws-amplify/core" "4.0.2"
-    "@aws-amplify/datastore" "3.0.2"
-    "@aws-amplify/interactions" "4.0.0"
-    "@aws-amplify/predictions" "4.0.0"
-    "@aws-amplify/pubsub" "4.0.0"
-    "@aws-amplify/storage" "4.0.0"
+    "@aws-amplify/analytics" "5.0.1"
+    "@aws-amplify/api" "4.0.1"
+    "@aws-amplify/auth" "4.0.1"
+    "@aws-amplify/cache" "4.0.3"
+    "@aws-amplify/core" "4.0.3"
+    "@aws-amplify/datastore" "3.0.3"
+    "@aws-amplify/interactions" "4.0.1"
+    "@aws-amplify/predictions" "4.0.1"
+    "@aws-amplify/pubsub" "4.0.1"
+    "@aws-amplify/storage" "4.1.0"
     "@aws-amplify/ui" "2.0.3"
-    "@aws-amplify/xr" "3.0.0"
+    "@aws-amplify/xr" "3.0.1"
 
 aws-sdk@^2:
   version "2.913.0"
@@ -5428,14 +5418,6 @@ callsites@^3.0.0:
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-3.1.0.tgz#b3630abd8943432f54b3f0519238e33cd7df2f73"
   integrity sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
 
-camel-case@4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/camel-case/-/camel-case-4.1.1.tgz#1fc41c854f00e2f7d0139dfeba1542d6896fe547"
-  integrity sha512-7fa2WcG4fYFkclIvEmxBbTvmibwF2/agfEBc6q3lOpVu0A13ltLsA+Hr/8Hp6kp5f+G7hKi6t8lys6XxP+1K6Q==
-  dependencies:
-    pascal-case "^3.1.1"
-    tslib "^1.10.0"
-
 camel-case@4.1.2, camel-case@^4.1.1, camel-case@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/camel-case/-/camel-case-4.1.2.tgz#9728072a954f805228225a6deea6b38461e1bd5a"
@@ -5621,7 +5603,7 @@ chokidar@^2.1.8:
   optionalDependencies:
     fsevents "^1.2.7"
 
-chokidar@^3.4.1, chokidar@^3.4.3:
+chokidar@^3.4.1, chokidar@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.1.tgz#ee9ce7bbebd2b79f49f304799d5468e31e14e68a"
   integrity sha512-9+s+Od+W0VJJzawDma/gvBNQqkTiqYTWLuZoyAsivsI4AaWTCzHG06/TMjsf1cYe9Cb97UCEhjz7HvnPk2p/tw==
@@ -8472,7 +8454,7 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
   integrity sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
 
-graphql-config@^3.2.0:
+graphql-config@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/graphql-config/-/graphql-config-3.3.0.tgz#24c3672a427cb67c0c717ca3b9d70e9f0c9e752b"
   integrity sha512-mSQIsPMssr7QrgqhnjI+CyVH6oQgCrgS6irHsTvwf7RFDRnR2k9kqpQOQgVoOytBSn0DOYryS0w0SAg9xor/Jw==
@@ -12188,7 +12170,7 @@ parseurl@~1.3.2, parseurl@~1.3.3:
   resolved "https://registry.yarnpkg.com/parseurl/-/parseurl-1.3.3.tgz#9da19e7bee8d12dff0513ed5b76957793bc2e8d4"
   integrity sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==
 
-pascal-case@^3.1.1, pascal-case@^3.1.2:
+pascal-case@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/pascal-case/-/pascal-case-3.1.2.tgz#b48e0ef2b98e205e7c1dae747d0b1508237660eb"
   integrity sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==
@@ -16713,10 +16695,23 @@ yargs@^15.1.0, yargs@^15.3.1, yargs@^15.4.1:
     y18n "^4.0.0"
     yargs-parser "^18.1.2"
 
-yargs@^16.0.0, yargs@^16.1.1, yargs@^16.2.0:
+yargs@^16.0.0, yargs@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-16.2.0.tgz#1c82bf0f6b6a66eafce7ef30e376f49a12477f66"
   integrity sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==
+  dependencies:
+    cliui "^7.0.2"
+    escalade "^3.1.1"
+    get-caller-file "^2.0.5"
+    require-directory "^2.1.1"
+    string-width "^4.2.0"
+    y18n "^5.0.5"
+    yargs-parser "^20.2.2"
+
+yargs@^17.0.0:
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.0.1.tgz#6a1ced4ed5ee0b388010ba9fd67af83b9362e0bb"
+  integrity sha512-xBBulfCc8Y6gLFcrPvtqKz9hz8SO0l1Ni8GgDekvBX2ro0HRQImDGnikfc33cgzcYUSncapnNcZDjVFIH3f6KQ==
   dependencies:
     cliui "^7.0.2"
     escalade "^3.1.1"

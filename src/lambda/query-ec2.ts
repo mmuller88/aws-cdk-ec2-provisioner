@@ -2,7 +2,7 @@
 // import * as lambda from 'aws-lambda';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import * as AWS from 'aws-sdk';
-import { Ec2, State } from './../../frontend/src/lib/api'
+import { Ec2, State } from './../../frontend/src/lib/api';
 const ec2 = new AWS.EC2();
 
 // export interface QueryEc2Props {
