@@ -1,11 +1,14 @@
 import * as appsync from '@aws-cdk/aws-appsync';
 import * as cognito from '@aws-cdk/aws-cognito';
 import * as iam from '@aws-cdk/aws-iam';
+import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
+import * as lambda from '@aws-cdk/aws-lambda';
 import * as cdk from '@aws-cdk/core';
 // import * as db from '@aws-cdk/aws-dynamodb';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
 import { AppSyncTransformer } from 'cdk-appsync-transformer';
-
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const path = require('path');
 
 export interface AppSyncStackProps extends cdk.StackProps {
   readonly stage: string;
@@ -110,6 +113,14 @@ export class AppSyncStack extends CustomStack {
         ],
       },
     });
+
+    // const queryEc2 = 
+    new lambdajs.NodejsFunction(this, 'queryEc2LambdaJs', {
+      runtime: lambda.Runtime.NODEJS_12_X,
+      entry: `${path.join(__dirname)}/lambda/query-ec2.ts`,
+    });
+
+    // this.appSyncTransformer.functionResolvers.addLambdaDataSourceAndResolvers()
 
     const publicRole = new iam.Role(this, 'public-role', {
       assumedBy: new iam.WebIdentityPrincipal('cognito-identity.amazonaws.com')

@@ -12,6 +12,15 @@ export const listTodos = /* GraphQL */ `
     }
   }
 `;
+export const listEc2 = /* GraphQL */ `
+  query ListEc2 {
+    listEc2 {
+      id
+      name
+      state
+    }
+  }
+`;
 export const getHistoryEntry = /* GraphQL */ `
   query GetHistoryEntry($id: ID!) {
     getHistoryEntry(id: $id) {

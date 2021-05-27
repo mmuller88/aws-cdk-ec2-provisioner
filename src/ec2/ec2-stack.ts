@@ -36,7 +36,10 @@ aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
       userData,
     });
 
+    cdk.Tags.of(instance).add('Owner', 'Hacklab');
+
     instance.addToRolePolicy(new statement.Ec2().allow().toDescribeVolumes().toDetachVolume()
       .toAttachVolume().toCreateTags().toDescribeTags().toTerminateInstances().toDeleteSecurityGroup().toDescribeInstances().toStopInstances());
+
   }
 }

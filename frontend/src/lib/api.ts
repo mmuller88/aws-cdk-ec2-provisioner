@@ -21,16 +21,68 @@ export type Scalars = {
   Int: number;
   Float: number;
   AWSDate: any;
-  AWSTime: any;
   AWSDateTime: any;
-  AWSTimestamp: any;
   AWSEmail: any;
-  AWSJSON: any;
-  AWSURL: any;
-  AWSPhone: any;
   AWSIPAddress: any;
+  AWSJSON: any;
+  AWSPhone: any;
+  AWSTime: any;
+  AWSTimestamp: any;
+  AWSURL: any;
   BigInt: any;
   Double: any;
+};
+
+export type CreateEc2ConfigInput = {
+  id?: Maybe<Scalars["ID"]>;
+  startDate: Scalars["AWSDateTime"];
+  stopDate: Scalars["AWSDateTime"];
+  username: Scalars["String"];
+};
+
+export type CreateHistoryEntryInput = {
+  id?: Maybe<Scalars["ID"]>;
+  ec2ConfigId: Scalars["ID"];
+  comment: Scalars["String"];
+  time: Scalars["AWSDateTime"];
+};
+
+export type CreateMessageInput = {
+  id?: Maybe<Scalars["ID"]>;
+  authorId: Scalars["String"];
+  content: Scalars["String"];
+  createdAt?: Maybe<Scalars["AWSDateTime"]>;
+  updatedAt?: Maybe<Scalars["AWSDateTime"]>;
+};
+
+export type CreatePostInput = {
+  id?: Maybe<Scalars["ID"]>;
+  title: Scalars["String"];
+  content: Scalars["String"];
+  username: Scalars["String"];
+};
+
+export type DeleteEc2ConfigInput = {
+  id?: Maybe<Scalars["ID"]>;
+};
+
+export type DeleteHistoryEntryInput = {
+  id?: Maybe<Scalars["ID"]>;
+};
+
+export type DeleteMessageInput = {
+  id?: Maybe<Scalars["ID"]>;
+};
+
+export type DeletePostInput = {
+  id?: Maybe<Scalars["ID"]>;
+};
+
+export type Ec2 = {
+  __typename?: "Ec2";
+  id: Scalars["ID"];
+  name: Scalars["String"];
+  state: State;
 };
 
 export type Ec2Config = {
@@ -63,17 +115,6 @@ export type HistoryEntry = {
   updatedAt: Scalars["AWSDateTime"];
 };
 
-export type Post = {
-  __typename?: "Post";
-  id: Scalars["ID"];
-  title: Scalars["String"];
-  content: Scalars["String"];
-  username: Scalars["String"];
-  createdAt: Scalars["AWSDateTime"];
-  updatedAt: Scalars["AWSDateTime"];
-  owner?: Maybe<Scalars["String"]>;
-};
-
 export type Message = {
   __typename?: "Message";
   id: Scalars["ID"];
@@ -84,76 +125,10 @@ export type Message = {
   owner?: Maybe<Scalars["String"]>;
 };
 
-export type Todo = {
-  __typename?: "Todo";
-  id: Scalars["Int"];
-  userId: Scalars["Int"];
-  title: Scalars["String"];
-  completed: Scalars["Boolean"];
+export type ModelBooleanFilterInput = {
+  ne?: Maybe<Scalars["Boolean"]>;
+  eq?: Maybe<Scalars["Boolean"]>;
 };
-
-export type Query = {
-  __typename?: "Query";
-  listTodos?: Maybe<Array<Maybe<Todo>>>;
-  getHistoryEntry?: Maybe<HistoryEntry>;
-  listHistoryEntrys?: Maybe<ModelHistoryEntryConnection>;
-  getEc2Config?: Maybe<Ec2Config>;
-  listEc2Configs?: Maybe<ModelEc2ConfigConnection>;
-  getPost?: Maybe<Post>;
-  listPosts?: Maybe<ModelPostConnection>;
-  getMessage?: Maybe<Message>;
-  listMessages?: Maybe<ModelMessageConnection>;
-  getTodo?: Maybe<Todo>;
-};
-
-export type QueryGetHistoryEntryArgs = {
-  id: Scalars["ID"];
-};
-
-export type QueryListHistoryEntrysArgs = {
-  filter?: Maybe<ModelHistoryEntryFilterInput>;
-  limit?: Maybe<Scalars["Int"]>;
-  nextToken?: Maybe<Scalars["String"]>;
-};
-
-export type QueryGetEc2ConfigArgs = {
-  id: Scalars["ID"];
-};
-
-export type QueryListEc2ConfigsArgs = {
-  filter?: Maybe<ModelEc2ConfigFilterInput>;
-  limit?: Maybe<Scalars["Int"]>;
-  nextToken?: Maybe<Scalars["String"]>;
-};
-
-export type QueryGetPostArgs = {
-  id: Scalars["ID"];
-};
-
-export type QueryListPostsArgs = {
-  filter?: Maybe<ModelPostFilterInput>;
-  limit?: Maybe<Scalars["Int"]>;
-  nextToken?: Maybe<Scalars["String"]>;
-};
-
-export type QueryGetMessageArgs = {
-  id: Scalars["ID"];
-};
-
-export type QueryListMessagesArgs = {
-  filter?: Maybe<ModelMessageFilterInput>;
-  limit?: Maybe<Scalars["Int"]>;
-  nextToken?: Maybe<Scalars["String"]>;
-};
-
-export type QueryGetTodoArgs = {
-  params: QueryGetTodoParamsInput;
-};
-
-export enum ModelSortDirection {
-  Asc = "ASC",
-  Desc = "DESC"
-}
 
 export type ModelEc2ConfigConnection = {
   __typename?: "ModelEc2ConfigConnection";
@@ -161,17 +136,40 @@ export type ModelEc2ConfigConnection = {
   nextToken?: Maybe<Scalars["String"]>;
 };
 
-export type ModelStringFilterInput = {
-  ne?: Maybe<Scalars["String"]>;
-  eq?: Maybe<Scalars["String"]>;
-  le?: Maybe<Scalars["String"]>;
-  lt?: Maybe<Scalars["String"]>;
-  ge?: Maybe<Scalars["String"]>;
-  gt?: Maybe<Scalars["String"]>;
-  contains?: Maybe<Scalars["String"]>;
-  notContains?: Maybe<Scalars["String"]>;
-  between?: Maybe<Array<Maybe<Scalars["String"]>>>;
-  beginsWith?: Maybe<Scalars["String"]>;
+export type ModelEc2ConfigFilterInput = {
+  id?: Maybe<ModelIdFilterInput>;
+  startDate?: Maybe<ModelStringFilterInput>;
+  stopDate?: Maybe<ModelStringFilterInput>;
+  username?: Maybe<ModelStringFilterInput>;
+  and?: Maybe<Array<Maybe<ModelEc2ConfigFilterInput>>>;
+  or?: Maybe<Array<Maybe<ModelEc2ConfigFilterInput>>>;
+  not?: Maybe<ModelEc2ConfigFilterInput>;
+};
+
+export type ModelFloatFilterInput = {
+  ne?: Maybe<Scalars["Float"]>;
+  eq?: Maybe<Scalars["Float"]>;
+  le?: Maybe<Scalars["Float"]>;
+  lt?: Maybe<Scalars["Float"]>;
+  ge?: Maybe<Scalars["Float"]>;
+  gt?: Maybe<Scalars["Float"]>;
+  between?: Maybe<Array<Maybe<Scalars["Float"]>>>;
+};
+
+export type ModelHistoryEntryConnection = {
+  __typename?: "ModelHistoryEntryConnection";
+  items?: Maybe<Array<Maybe<HistoryEntry>>>;
+  nextToken?: Maybe<Scalars["String"]>;
+};
+
+export type ModelHistoryEntryFilterInput = {
+  id?: Maybe<ModelIdFilterInput>;
+  ec2ConfigId?: Maybe<ModelIdFilterInput>;
+  comment?: Maybe<ModelStringFilterInput>;
+  time?: Maybe<ModelStringFilterInput>;
+  and?: Maybe<Array<Maybe<ModelHistoryEntryFilterInput>>>;
+  or?: Maybe<Array<Maybe<ModelHistoryEntryFilterInput>>>;
+  not?: Maybe<ModelHistoryEntryFilterInput>;
 };
 
 export type ModelIdFilterInput = {
@@ -197,47 +195,65 @@ export type ModelIntFilterInput = {
   between?: Maybe<Array<Maybe<Scalars["Int"]>>>;
 };
 
-export type ModelFloatFilterInput = {
-  ne?: Maybe<Scalars["Float"]>;
-  eq?: Maybe<Scalars["Float"]>;
-  le?: Maybe<Scalars["Float"]>;
-  lt?: Maybe<Scalars["Float"]>;
-  ge?: Maybe<Scalars["Float"]>;
-  gt?: Maybe<Scalars["Float"]>;
-  between?: Maybe<Array<Maybe<Scalars["Float"]>>>;
+export type ModelMessageConnection = {
+  __typename?: "ModelMessageConnection";
+  items?: Maybe<Array<Maybe<Message>>>;
+  nextToken?: Maybe<Scalars["String"]>;
 };
 
-export type ModelBooleanFilterInput = {
-  ne?: Maybe<Scalars["Boolean"]>;
-  eq?: Maybe<Scalars["Boolean"]>;
-};
-
-export type ModelEc2ConfigFilterInput = {
+export type ModelMessageFilterInput = {
   id?: Maybe<ModelIdFilterInput>;
-  startDate?: Maybe<ModelStringFilterInput>;
-  stopDate?: Maybe<ModelStringFilterInput>;
+  authorId?: Maybe<ModelStringFilterInput>;
+  content?: Maybe<ModelStringFilterInput>;
+  createdAt?: Maybe<ModelStringFilterInput>;
+  updatedAt?: Maybe<ModelStringFilterInput>;
+  and?: Maybe<Array<Maybe<ModelMessageFilterInput>>>;
+  or?: Maybe<Array<Maybe<ModelMessageFilterInput>>>;
+  not?: Maybe<ModelMessageFilterInput>;
+};
+
+export type ModelPostConnection = {
+  __typename?: "ModelPostConnection";
+  items?: Maybe<Array<Maybe<Post>>>;
+  nextToken?: Maybe<Scalars["String"]>;
+};
+
+export type ModelPostFilterInput = {
+  id?: Maybe<ModelIdFilterInput>;
+  title?: Maybe<ModelStringFilterInput>;
+  content?: Maybe<ModelStringFilterInput>;
   username?: Maybe<ModelStringFilterInput>;
-  and?: Maybe<Array<Maybe<ModelEc2ConfigFilterInput>>>;
-  or?: Maybe<Array<Maybe<ModelEc2ConfigFilterInput>>>;
-  not?: Maybe<ModelEc2ConfigFilterInput>;
+  and?: Maybe<Array<Maybe<ModelPostFilterInput>>>;
+  or?: Maybe<Array<Maybe<ModelPostFilterInput>>>;
+  not?: Maybe<ModelPostFilterInput>;
 };
 
-export type CreateEc2ConfigInput = {
-  id?: Maybe<Scalars["ID"]>;
-  startDate: Scalars["AWSDateTime"];
-  stopDate: Scalars["AWSDateTime"];
-  username: Scalars["String"];
+export enum ModelSortDirection {
+  Asc = "ASC",
+  Desc = "DESC"
+}
+
+export type ModelStringFilterInput = {
+  ne?: Maybe<Scalars["String"]>;
+  eq?: Maybe<Scalars["String"]>;
+  le?: Maybe<Scalars["String"]>;
+  lt?: Maybe<Scalars["String"]>;
+  ge?: Maybe<Scalars["String"]>;
+  gt?: Maybe<Scalars["String"]>;
+  contains?: Maybe<Scalars["String"]>;
+  notContains?: Maybe<Scalars["String"]>;
+  between?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  beginsWith?: Maybe<Scalars["String"]>;
 };
 
-export type UpdateEc2ConfigInput = {
-  id: Scalars["ID"];
-  startDate?: Maybe<Scalars["AWSDateTime"]>;
-  stopDate?: Maybe<Scalars["AWSDateTime"]>;
-  username?: Maybe<Scalars["String"]>;
-};
-
-export type DeleteEc2ConfigInput = {
-  id?: Maybe<Scalars["ID"]>;
+export type ModelStringKeyConditionInput = {
+  eq?: Maybe<Scalars["String"]>;
+  le?: Maybe<Scalars["String"]>;
+  lt?: Maybe<Scalars["String"]>;
+  ge?: Maybe<Scalars["String"]>;
+  gt?: Maybe<Scalars["String"]>;
+  between?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  beginsWith?: Maybe<Scalars["String"]>;
 };
 
 export type Mutation = {
@@ -304,6 +320,86 @@ export type MutationDeleteMessageArgs = {
   input: DeleteMessageInput;
 };
 
+export type Post = {
+  __typename?: "Post";
+  id: Scalars["ID"];
+  title: Scalars["String"];
+  content: Scalars["String"];
+  username: Scalars["String"];
+  createdAt: Scalars["AWSDateTime"];
+  updatedAt: Scalars["AWSDateTime"];
+  owner?: Maybe<Scalars["String"]>;
+};
+
+export type Query = {
+  __typename?: "Query";
+  listTodos?: Maybe<Array<Maybe<Todo>>>;
+  listEc2?: Maybe<Array<Maybe<Ec2>>>;
+  getHistoryEntry?: Maybe<HistoryEntry>;
+  listHistoryEntrys?: Maybe<ModelHistoryEntryConnection>;
+  getEc2Config?: Maybe<Ec2Config>;
+  listEc2Configs?: Maybe<ModelEc2ConfigConnection>;
+  getPost?: Maybe<Post>;
+  listPosts?: Maybe<ModelPostConnection>;
+  getMessage?: Maybe<Message>;
+  listMessages?: Maybe<ModelMessageConnection>;
+  getTodo?: Maybe<Todo>;
+};
+
+export type QueryGetHistoryEntryArgs = {
+  id: Scalars["ID"];
+};
+
+export type QueryListHistoryEntrysArgs = {
+  filter?: Maybe<ModelHistoryEntryFilterInput>;
+  limit?: Maybe<Scalars["Int"]>;
+  nextToken?: Maybe<Scalars["String"]>;
+};
+
+export type QueryGetEc2ConfigArgs = {
+  id: Scalars["ID"];
+};
+
+export type QueryListEc2ConfigsArgs = {
+  filter?: Maybe<ModelEc2ConfigFilterInput>;
+  limit?: Maybe<Scalars["Int"]>;
+  nextToken?: Maybe<Scalars["String"]>;
+};
+
+export type QueryGetPostArgs = {
+  id: Scalars["ID"];
+};
+
+export type QueryListPostsArgs = {
+  filter?: Maybe<ModelPostFilterInput>;
+  limit?: Maybe<Scalars["Int"]>;
+  nextToken?: Maybe<Scalars["String"]>;
+};
+
+export type QueryGetMessageArgs = {
+  id: Scalars["ID"];
+};
+
+export type QueryListMessagesArgs = {
+  filter?: Maybe<ModelMessageFilterInput>;
+  limit?: Maybe<Scalars["Int"]>;
+  nextToken?: Maybe<Scalars["String"]>;
+};
+
+export type QueryGetTodoArgs = {
+  params: QueryGetTodoParamsInput;
+};
+
+export type QueryGetTodoParamsInput = {
+  id: Scalars["String"];
+};
+
+export enum State {
+  Running = "RUNNING",
+  Stopped = "STOPPED",
+  Terminated = "TERMINATED"
+}
+
 export type Subscription = {
   __typename?: "Subscription";
   onCreateHistoryEntry?: Maybe<HistoryEntry>;
@@ -344,27 +440,19 @@ export type SubscriptionOnDeletePostArgs = {
   owner?: Maybe<Scalars["String"]>;
 };
 
-export type ModelHistoryEntryConnection = {
-  __typename?: "ModelHistoryEntryConnection";
-  items?: Maybe<Array<Maybe<HistoryEntry>>>;
-  nextToken?: Maybe<Scalars["String"]>;
+export type Todo = {
+  __typename?: "Todo";
+  id: Scalars["Int"];
+  userId: Scalars["Int"];
+  title: Scalars["String"];
+  completed: Scalars["Boolean"];
 };
 
-export type ModelHistoryEntryFilterInput = {
-  id?: Maybe<ModelIdFilterInput>;
-  ec2ConfigId?: Maybe<ModelIdFilterInput>;
-  comment?: Maybe<ModelStringFilterInput>;
-  time?: Maybe<ModelStringFilterInput>;
-  and?: Maybe<Array<Maybe<ModelHistoryEntryFilterInput>>>;
-  or?: Maybe<Array<Maybe<ModelHistoryEntryFilterInput>>>;
-  not?: Maybe<ModelHistoryEntryFilterInput>;
-};
-
-export type CreateHistoryEntryInput = {
-  id?: Maybe<Scalars["ID"]>;
-  ec2ConfigId: Scalars["ID"];
-  comment: Scalars["String"];
-  time: Scalars["AWSDateTime"];
+export type UpdateEc2ConfigInput = {
+  id: Scalars["ID"];
+  startDate?: Maybe<Scalars["AWSDateTime"]>;
+  stopDate?: Maybe<Scalars["AWSDateTime"]>;
+  username?: Maybe<Scalars["String"]>;
 };
 
 export type UpdateHistoryEntryInput = {
@@ -372,69 +460,6 @@ export type UpdateHistoryEntryInput = {
   ec2ConfigId?: Maybe<Scalars["ID"]>;
   comment?: Maybe<Scalars["String"]>;
   time?: Maybe<Scalars["AWSDateTime"]>;
-};
-
-export type DeleteHistoryEntryInput = {
-  id?: Maybe<Scalars["ID"]>;
-};
-
-export type ModelPostConnection = {
-  __typename?: "ModelPostConnection";
-  items?: Maybe<Array<Maybe<Post>>>;
-  nextToken?: Maybe<Scalars["String"]>;
-};
-
-export type ModelPostFilterInput = {
-  id?: Maybe<ModelIdFilterInput>;
-  title?: Maybe<ModelStringFilterInput>;
-  content?: Maybe<ModelStringFilterInput>;
-  username?: Maybe<ModelStringFilterInput>;
-  and?: Maybe<Array<Maybe<ModelPostFilterInput>>>;
-  or?: Maybe<Array<Maybe<ModelPostFilterInput>>>;
-  not?: Maybe<ModelPostFilterInput>;
-};
-
-export type CreatePostInput = {
-  id?: Maybe<Scalars["ID"]>;
-  title: Scalars["String"];
-  content: Scalars["String"];
-  username: Scalars["String"];
-};
-
-export type UpdatePostInput = {
-  id: Scalars["ID"];
-  title?: Maybe<Scalars["String"]>;
-  content?: Maybe<Scalars["String"]>;
-  username?: Maybe<Scalars["String"]>;
-};
-
-export type DeletePostInput = {
-  id?: Maybe<Scalars["ID"]>;
-};
-
-export type ModelMessageConnection = {
-  __typename?: "ModelMessageConnection";
-  items?: Maybe<Array<Maybe<Message>>>;
-  nextToken?: Maybe<Scalars["String"]>;
-};
-
-export type ModelMessageFilterInput = {
-  id?: Maybe<ModelIdFilterInput>;
-  authorId?: Maybe<ModelStringFilterInput>;
-  content?: Maybe<ModelStringFilterInput>;
-  createdAt?: Maybe<ModelStringFilterInput>;
-  updatedAt?: Maybe<ModelStringFilterInput>;
-  and?: Maybe<Array<Maybe<ModelMessageFilterInput>>>;
-  or?: Maybe<Array<Maybe<ModelMessageFilterInput>>>;
-  not?: Maybe<ModelMessageFilterInput>;
-};
-
-export type CreateMessageInput = {
-  id?: Maybe<Scalars["ID"]>;
-  authorId: Scalars["String"];
-  content: Scalars["String"];
-  createdAt?: Maybe<Scalars["AWSDateTime"]>;
-  updatedAt?: Maybe<Scalars["AWSDateTime"]>;
 };
 
 export type UpdateMessageInput = {
@@ -445,22 +470,11 @@ export type UpdateMessageInput = {
   updatedAt?: Maybe<Scalars["AWSDateTime"]>;
 };
 
-export type DeleteMessageInput = {
-  id?: Maybe<Scalars["ID"]>;
-};
-
-export type ModelStringKeyConditionInput = {
-  eq?: Maybe<Scalars["String"]>;
-  le?: Maybe<Scalars["String"]>;
-  lt?: Maybe<Scalars["String"]>;
-  ge?: Maybe<Scalars["String"]>;
-  gt?: Maybe<Scalars["String"]>;
-  between?: Maybe<Array<Maybe<Scalars["String"]>>>;
-  beginsWith?: Maybe<Scalars["String"]>;
-};
-
-export type QueryGetTodoParamsInput = {
-  id: Scalars["String"];
+export type UpdatePostInput = {
+  id: Scalars["ID"];
+  title?: Maybe<Scalars["String"]>;
+  content?: Maybe<Scalars["String"]>;
+  username?: Maybe<Scalars["String"]>;
 };
 
 export type CreateHistoryEntryMutationVariables = Exact<{
@@ -736,6 +750,14 @@ export type ListTodosQuery = { __typename?: "Query" } & {
         >
       >
     >
+  >;
+};
+
+export type ListEc2QueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListEc2Query = { __typename?: "Query" } & {
+  listEc2?: Maybe<
+    Array<Maybe<{ __typename?: "Ec2" } & Pick<Ec2, "id" | "name" | "state">>>
   >;
 };
 
@@ -1726,6 +1748,27 @@ export const useListTodosQuery = <TData = ListTodosQuery, TError = unknown>(
     ["ListTodos", variables],
     amplifyFetcher<ListTodosQuery, ListTodosQueryVariables>(
       ListTodosDocument,
+      variables
+    ),
+    options
+  );
+export const ListEc2Document = `
+    query ListEc2 {
+  listEc2 {
+    id
+    name
+    state
+  }
+}
+    `;
+export const useListEc2Query = <TData = ListEc2Query, TError = unknown>(
+  variables?: ListEc2QueryVariables,
+  options?: UseQueryOptions<ListEc2Query, TError, TData>
+) =>
+  useQuery<ListEc2Query, TError, TData>(
+    ["ListEc2", variables],
+    amplifyFetcher<ListEc2Query, ListEc2QueryVariables>(
+      ListEc2Document,
       variables
     ),
     options

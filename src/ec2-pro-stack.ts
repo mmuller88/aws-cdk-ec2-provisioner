@@ -1,7 +1,7 @@
 import * as core from '@aws-cdk/core';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
 import { AppSyncStack } from './appsync-stack';
-import { SchedulerStack } from './scheduler-stack';
+// import { SchedulerStack } from './scheduler-stack';
 import { StaticSite } from './static-site';
 
 
@@ -25,13 +25,13 @@ export class Ec2ProStack extends CustomStack {
       stage: props.stage,
     });
 
-    const scheduler = new SchedulerStack(scope, `ec2-pro-scheduler-stack-${props.stage}`, {
-      stackName: `ec2-pro-scheduler-stack-${props.stage}`,
-      stage: props.stage,
-      appSyncTransformer: appsync.appSyncTransformer,
-    });
+    // const scheduler = new SchedulerStack(scope, `ec2-pro-scheduler-stack-${props.stage}`, {
+    //   stackName: `ec2-pro-scheduler-stack-${props.stage}`,
+    //   stage: props.stage,
+    //   appSyncTransformer: appsync.appSyncTransformer,
+    // });
 
-    this.cfnOutputs = { ...appsync.cfnOutputs, ...staticsite.cfnOutputs, ...scheduler.cfnOutputs };
+    this.cfnOutputs = { ...appsync.cfnOutputs, ...staticsite.cfnOutputs /*, ...scheduler.cfnOutputs*/ };
 
   }
 }

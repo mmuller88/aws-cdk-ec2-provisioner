@@ -5,7 +5,7 @@ const project = new AwsCdkTypeScriptApp({
   authorName: 'martin.mueller',
   name: 'aws-cdk-ec2-provisioner',
   defaultReleaseBranch: 'main',
-  cdkVersion: '1.105.0',
+  cdkVersion: '1.106.1',
   cdkVersionPinning: true,
   cdkDependencies: [
     '@aws-cdk/aws-iam',

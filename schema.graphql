@@ -8,6 +8,24 @@ type Ec2Config
   history: [HistoryEntry] @connection(keyName: "byEc2Config", fields: ["id"])
 }
 
+enum State {
+  RUNNING
+  STOPPED
+  TERMINATED
+}
+
+type Ec2 {
+  id: ID!
+  name: String!
+  state: State!
+}
+
+type Query {
+  listTodos: [Todo] @http(url: "https://jsonplaceholder.typicode.com/todos")
+  getTodo: Todo @http(url: "https://jsonplaceholder.typicode.com/todos/:id")
+  listEc2: [Ec2]
+}
+
 type HistoryEntry
   @model
   @key(name: "byEc2Config", fields: ["ec2ConfigId", "comment"]) {
@@ -43,24 +61,12 @@ type Message
   updatedAt: AWSDateTime!
 }
 
-# type Subscription {
-#   # onCreateConvoLink(convoLinkUserId: ID!): ConvoLink
-#   #   @aws_subscribe(mutations: ["createConvoLink"])
-#   addedMessage(authorId: String): Message
-#     @aws_subscribe(mutations: ["createMessage"])
-# }
-
 # https://jsonplaceholder.typicode.com/
 type Todo {
   id: Int!
   userId: Int!
   title: String!
   completed: Boolean!
-}
-
-type Query {
-  listTodos: [Todo] @http(url: "https://jsonplaceholder.typicode.com/todos")
-  getTodo: Todo @http(url: "https://jsonplaceholder.typicode.com/todos/:id")
 }
 
 # type User
