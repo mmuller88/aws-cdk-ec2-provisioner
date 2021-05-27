@@ -125,9 +125,11 @@ new PipelineStack(app, 'ec2-pro-vm-pipeline', {
   },
 });
 
+const userId = app.node.tryGetContext('userId');
+const vmType = app.node.tryGetContext('vmType');
 // stack for deploying with lambda
 new Ec2Stack(app, 'ec2-vm-stack', {
-  stackName: 'ec2-vm-stack',
+  stackName: `vm-${userId ?? 'noUserId'}-${vmType ?? 'noVmType'}`,
   env: {
     account: '981237193288',
     region: 'eu-central-1',

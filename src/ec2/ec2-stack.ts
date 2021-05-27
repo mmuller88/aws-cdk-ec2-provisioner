@@ -26,6 +26,7 @@ aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
     `);
 
     const instance = new ec2.Instance(this, 'instance', {
+      instanceName: this.stackName,
       instanceType: new ec2.InstanceType('t2.micro'),
       vpc,
       keyName: 'ec2dev',
