@@ -1,6 +1,6 @@
 FROM amazon/aws-lambda-nodejs:12
 # ARG CDKOUT=cdk.out
-# RUN npm install -g cdk@1.105.0
+RUN npm install -g cdk@1.105.0
 
 # COPY ${CDKOUT} ./
 COPY ./ ./
