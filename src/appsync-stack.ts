@@ -1,8 +1,8 @@
 import * as appsync from '@aws-cdk/aws-appsync';
 import * as cognito from '@aws-cdk/aws-cognito';
 import * as iam from '@aws-cdk/aws-iam';
-import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
 import * as lambda from '@aws-cdk/aws-lambda';
+import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
 import * as cdk from '@aws-cdk/core';
 // import * as db from '@aws-cdk/aws-dynamodb';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
@@ -114,7 +114,7 @@ export class AppSyncStack extends CustomStack {
       },
     });
 
-    // const queryEc2 = 
+    // const queryEc2 =
     new lambdajs.NodejsFunction(this, 'queryEc2LambdaJs', {
       runtime: lambda.Runtime.NODEJS_12_X,
       entry: `${path.join(__dirname)}/lambda/query-ec2.ts`,

@@ -2,12 +2,24 @@
 // import * as lambda from 'aws-lambda';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import * as AWS from 'aws-sdk';
-import { Ec2, State } from './../../frontend/src/lib/api';
+// import { Ec2, State } from './../../frontend/src/lib/api';
 const ec2 = new AWS.EC2();
 
 // export interface QueryEc2Props {
 
 // }
+
+export enum State {
+  Running = 'RUNNING',
+  Stopped = 'STOPPED',
+  Terminated = 'TERMINATED'
+}
+
+export type Ec2 = {
+  id: String;
+  name: String;
+  state: State;
+};
 
 export interface ResolverEvent {
   field: string;
