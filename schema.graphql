@@ -9,9 +9,12 @@ type Ec2Config
 }
 
 enum State {
+  PENDING
   RUNNING
-  STOPPED
   TERMINATED
+  STOPPING
+  STOPPED
+  UNKOWN
 }
 
 type Ec2 {

@@ -395,9 +395,12 @@ export type QueryGetTodoParamsInput = {
 };
 
 export enum State {
+  Pending = "PENDING",
   Running = "RUNNING",
+  Terminated = "TERMINATED",
+  Stopping = "STOPPING",
   Stopped = "STOPPED",
-  Terminated = "TERMINATED"
+  Unkown = "UNKOWN"
 }
 
 export type Subscription = {

@@ -9,16 +9,12 @@ const ec2 = new AWS.EC2();
 
 // }
 
-export enum State {
-  Running = 'RUNNING',
-  Stopped = 'STOPPED',
-  Terminated = 'TERMINATED'
-}
+// export type InstanceStateName = "pending"|"running"|"shutting-down"|"terminated"|"stopping"|"stopped"|string;
 
 export type Ec2 = {
-  id: String;
-  name: String;
-  state: State;
+  id: string;
+  name: string;
+  state: string;
 };
 
 export interface ResolverEvent {
@@ -47,7 +43,7 @@ export async function handler(event: ResolverEvent/*, context: lambda.AppSyncRes
           instances.push({
             id: instance.InstanceId || 'noId',
             name: instance.Tags?.filter(t => t.Key == 'Name')[0].Value || 'noName',
-            state: State.Running,
+            state: instance.State?.Name?.toUpperCase() || 'UNKOWN',
           });
         }
       }
