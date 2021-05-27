@@ -26,11 +26,7 @@ export class SchedulerStack extends CustomStack {
     const dockerfile = path.join(__dirname, '..');
 
     const cdkSchedulerLambda = new lambda.DockerImageFunction(this, 'scheduler', {
-      code: lambda.DockerImageCode.fromImageAsset(dockerfile, {
-        buildArgs: {
-          CDKOUT: './',
-        },
-      }),
+      code: lambda.DockerImageCode.fromImageAsset(dockerfile),
       logRetention: logs.RetentionDays.ONE_DAY,
       environment: {},
       timeout: core.Duration.minutes(15),
@@ -46,6 +42,10 @@ export class SchedulerStack extends CustomStack {
 
     cdkSchedulerLambda.addToRolePolicy(
       new statement.Dynamodb().allow().toDescribeStream().toGetRecords().toGetShardIterator().toListStreams(),
+    );
+
+    cdkSchedulerLambda.addToRolePolicy(
+      new statement.Cloudformation().allow().toDescribeStacks().toCreateStack(),
     );
   }
 }
