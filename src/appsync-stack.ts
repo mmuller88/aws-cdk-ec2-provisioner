@@ -4,6 +4,7 @@ import * as iam from '@aws-cdk/aws-iam';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
 import * as cdk from '@aws-cdk/core';
+import * as statement from 'cdk-iam-floyd';
 // import * as db from '@aws-cdk/aws-dynamodb';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
 import { AppSyncTransformer } from 'cdk-appsync-transformer';
@@ -114,13 +115,14 @@ export class AppSyncStack extends CustomStack {
       },
     });
 
-    // const queryEc2 =
-    new lambdajs.NodejsFunction(this, 'queryEc2LambdaJs', {
+    const queryEc2 = new lambdajs.NodejsFunction(this, 'queryEc2LambdaJs', {
       runtime: lambda.Runtime.NODEJS_12_X,
       entry: `${path.join(__dirname)}/lambda/query-ec2.ts`,
     });
 
-    // this.appSyncTransformer.functionResolvers.addLambdaDataSourceAndResolvers()
+    queryEc2.addToRolePolicy(new statement.Ec2().allow().toDescribeInstances());
+
+    this.appSyncTransformer.addLambdaDataSourceAndResolvers('queryEc2', 'queryEc2', queryEc2);
 
     const publicRole = new iam.Role(this, 'public-role', {
       assumedBy: new iam.WebIdentityPrincipal('cognito-identity.amazonaws.com')
