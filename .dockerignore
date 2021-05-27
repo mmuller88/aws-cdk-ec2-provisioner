@@ -1,5 +1,7 @@
-cdk.out/asset.*
+cdk.out
+appsync
+converage
 node_modules
-frontend
 misc
-Dockerfile
+test-reports
+test
