@@ -57,7 +57,6 @@ export async function handler(event: ResolverEvent/*, context: lambda.AppSyncRes
       const error: Error = { errorMessage: 'Unknown field, unable to resolve', errorType: 'MISSING' };
       console.debug(JSON.stringify(error));
       result = error;
-      return null;
   }
 
   console.debug('Result: ' + result);
