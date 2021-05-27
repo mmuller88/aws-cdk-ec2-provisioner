@@ -51,7 +51,7 @@ export class SchedulerStack extends CustomStack {
       new statement.Ssm().allow().toGetParameter(),
     );
     cdkSchedulerLambda.addToRolePolicy(
-      new statement.S3().allow().toGetBucketLocation(),
+      new statement.S3().allow().toGetBucketLocation().toListBucket().toGetObject().toPutObject().toDeleteObject(),
     );
   }
 }
