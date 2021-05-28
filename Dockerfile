@@ -8,6 +8,7 @@ COPY ./ ./
 RUN npm install
 RUN npm install --global yarn
 #RUN yarn add projen && npx projen
+RUN mkdir cdk.out
 # RUN npm run synth
 # COPY cdk.out/ ./
 # COPY cdk.out/ec2-vm-stack.template.json ./
