@@ -8,9 +8,28 @@ AWS.DynamoDB.Converter;
 // const ec2 = new AWS.EC2();
 
 describe('all', () => {
-  test('simple create cfn', async () => {
-    const response = await handler(event);
-    expect(response).toEqual('done');
+  test('create / update cfn when new Image', async () => {
+    let response = await handler({ Records: [{ dynamodb: { NewImage: event.Records[0]!.dynamodb!.NewImage! } }] });
+    expect(response).toEqual('success');
+    response = await handler({
+      Records: [{
+        dynamodb: {
+          NewImage: event.Records[0]!.dynamodb!.NewImage!,
+          OldImage: event.Records[0]!.dynamodb!.NewImage!,
+        },
+      }],
+    });
+    expect(response).toEqual('success');
+  });
+
+  test('delete cfn when no new Image but old Image', async () => {
+    let response = await handler({ Records: [{ dynamodb: { OldImage: event.Records[0]!.dynamodb!.NewImage! } }] });
+    expect(response).toEqual('deleted');
+  });
+
+  test('fail when no new Image and no old Image', async () => {
+    let response = await handler({ Records: [{ dynamodb: { SizeBytes: 2 } }] });
+    expect(response).toEqual('failed');
   });
 
   test('to much records', async () => {

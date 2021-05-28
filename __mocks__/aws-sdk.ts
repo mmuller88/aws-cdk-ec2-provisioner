@@ -18,16 +18,20 @@ export const updateStackResponse = jest.fn().mockReturnValue(Promise.resolve(tru
 const updateStackFn = jest.fn().mockImplementation(() => ({ promise: updateStackResponse }));
 export const waitForResponse = jest.fn().mockReturnValue(Promise.resolve(true));
 const waitForFn = jest.fn().mockImplementation(() => ({ promise: waitForResponse }));
+export const deleteStackResponse = jest.fn().mockReturnValue(Promise.resolve(true));
+const deleteStackFn = jest.fn().mockImplementation(() => ({ promise: deleteStackResponse }));
 export class CloudFormation {
 
   public createStack: jest.Mock<any, any>;
   public updateStack: jest.Mock<any, any>;
   public waitFor: jest.Mock<any, any>;
+  public deleteStack: jest.Mock<any, any>;
 
   constructor() {
     this.createStack = createStackFn;
     this.updateStack = updateStackFn;
     this.waitFor = waitForFn;
+    this.deleteStack = deleteStackFn;
   }
 }
 
