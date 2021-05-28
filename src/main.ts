@@ -4,6 +4,7 @@ import { PipelineStack } from 'aws-cdk-staging-pipeline';
 // import { AppSyncStack } from './appsync-stack';
 import { Ec2ProStack } from './ec2-pro-stack';
 import { Ec2Stack } from './ec2/ec2-stack';
+import { SchedulerStack } from './scheduler-stack';
 // import { StaticSite } from './static-site';
 
 const app = new core.App();
@@ -20,6 +21,11 @@ new Ec2Stack(app, 'ec2-vm-stack', {
   userId: userId ?? 'noUserId',
   vmType: vmType ?? -1,
   stage: '',
+});
+
+new SchedulerStack(app, 'ec2-pro-scheduler-stack-dev', {
+  stackName: 'ec2-pro-scheduler-stack-dev',
+  stage: 'dev',
 });
 
 new PipelineStack(app, 'ec2-provisioner-pipeline', {

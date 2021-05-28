@@ -11,18 +11,12 @@ import * as statement from 'cdk-iam-floyd';
 
 export interface SchedulerStackProps extends core.StackProps {
   readonly stage: string;
-  readonly appSyncTransformer: AppSyncTransformer;
+  readonly appSyncTransformer?: AppSyncTransformer;
 }
 
 export class SchedulerStack extends CustomStack {
   constructor(scope: core.Construct, id: string, props: SchedulerStackProps) {
     super(scope, id, props);
-
-    const streamArn = props.appSyncTransformer.addDynamoDBStream({
-      modelTypeName: 'Ec2Config',
-      streamViewType: ddb.StreamViewType.NEW_IMAGE,
-    });
-
     // const dockerfile = path.join(__dirname, '..');
 
     // const cdkSchedulerLambda = new lambda.DockerImageFunction(this, 'scheduler', {
@@ -30,11 +24,11 @@ export class SchedulerStack extends CustomStack {
       entry: `${path.join(__dirname)}/lambda/scheduler.ts`,
       bundling: {
         commandHooks: {
-          afterBundling(_inputDir: string, _outputDir: string): string[] {
-            return [];
+          afterBundling(inputDir: string, outputDir: string): string[] {
+            return [`cp ${inputDir}/cfn/ec2-vm-stack.template.json ${outputDir} 2>/dev/null`];
           },
-          beforeInstall(inputDir: string, outputDir: string): string[] {
-            return [`cp ${inputDir}/cdk.out/ec2-vm-stack.template.json ${outputDir} 2>/dev/null`];
+          beforeInstall(_inputDir: string, _outputDir: string): string[] {
+            return [];
           },
           beforeBundling(_inputDir: string, _outputDir: string): string[] {
             return [];
@@ -47,30 +41,40 @@ export class SchedulerStack extends CustomStack {
       timeout: core.Duration.minutes(15),
     });
 
-    cdkSchedulerLambda.addEventSourceMapping('test', {
-      eventSourceArn: streamArn,
-      batchSize: 5,
-      startingPosition: lambda.StartingPosition.TRIM_HORIZON,
-      bisectBatchOnError: true,
-      retryAttempts: 10,
-    });
+    if (props.appSyncTransformer) {
+      const streamArn = props.appSyncTransformer.addDynamoDBStream({
+        modelTypeName: 'Ec2Config',
+        streamViewType: ddb.StreamViewType.NEW_IMAGE,
+      });
+
+      cdkSchedulerLambda.addEventSourceMapping('test', {
+        eventSourceArn: streamArn,
+        batchSize: 5,
+        startingPosition: lambda.StartingPosition.TRIM_HORIZON,
+        bisectBatchOnError: true,
+        retryAttempts: 10,
+      });
+    }
 
     cdkSchedulerLambda.addToRolePolicy(
       new statement.Dynamodb().allow().toDescribeStream().toGetRecords().toGetShardIterator().toListStreams(),
     );
-
     cdkSchedulerLambda.addToRolePolicy(
       new statement.Cloudformation().allow().toDescribeStacks().toCreateStack().toCreateChangeSet().toExecuteChangeSet().toDescribeChangeSet()
-        .toGetTemplate().toDeleteChangeSet().toDescribeStackEvents(),
+        .toGetTemplate().toDeleteChangeSet().toDescribeStackEvents().toUpdateStack(),
     );
     cdkSchedulerLambda.addToRolePolicy(
-      new statement.Ssm().allow().toGetParameter(),
+      new statement.Ssm().allow().toGetParameter().toGetParameters(),
     );
     cdkSchedulerLambda.addToRolePolicy(
       new statement.S3().allow().toGetBucketLocation().toListBucket().toGetObject().toPutObject().toDeleteObject(),
     );
     cdkSchedulerLambda.addToRolePolicy(
-      new statement.Iam().allow().toPassRole(),
+      new statement.Iam().allow().toPassRole().toCreateRole().toCreateInstanceProfile().toPutRolePolicy().toAddRoleToInstanceProfile(),
+    );
+    cdkSchedulerLambda.addToRolePolicy(
+      new statement.Ec2().allow().toDescribeImages().toCreateSecurityGroup().toDescribeSecurityGroups().toRevokeSecurityGroupEgress().toCreateTags()
+        .toAuthorizeSecurityGroupEgress().toRunInstances().toDescribeInstances(),
     );
   }
 }

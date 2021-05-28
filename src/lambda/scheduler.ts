@@ -16,11 +16,24 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
   const templateBody = readFileSync('./ec2-vm-stack.template.json', 'utf-8');
   console.debug(`templateBody: ${JSON.stringify(templateBody)}`);
 
-  const params: AWS.CloudFormation.Types.CreateStackInput = {
+  const createStackParams: AWS.CloudFormation.Types.CreateStackInput = {
     StackName: 'bulla',
     TemplateBody: templateBody,
+    Capabilities: ['CAPABILITY_IAM'],
   };
-  const result = await cfn.createStack(params).promise();
+  try {
+    const createStackResult = await cfn.createStack(createStackParams).promise();
+    console.debug(`createStackResult: ${JSON.stringify(createStackResult)}`);
+  } catch (error) {
+    const updateStackResult = await cfn.updateStack(createStackParams).promise();
+    console.debug(`updateStackResult: ${JSON.stringify(updateStackResult)}`);
+  }
+
+  const waitForParams: AWS.CloudFormation.Types.DescribeStacksInput = {
+    StackName: createStackParams.StackName,
+  };
+  const waitForResult = await cfn.waitFor('stackCreateComplete', waitForParams).promise();
+  console.debug(`waitForResult: ${JSON.stringify(waitForResult)}`);
 
   // let res;
   // try {
@@ -40,7 +53,7 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
   //   console.log(`stdout: ${stdout}`);
   // });
 
-  console.debug(`result: ${JSON.stringify(result)}`);
+  // console.debug(`result: ${JSON.stringify(result)}`);
 
   return 'doneeee';
   // {
