@@ -4,36 +4,13 @@ import * as lambda from 'aws-lambda';
 import * as AWS from '../__mocks__/aws-sdk';
 import { handler } from '../src/lambda/scheduler';
 
-const ec2 = new AWS.EC2();
+AWS.DynamoDB.Converter;
+// const ec2 = new AWS.EC2();
 
 describe('all', () => {
   test('simple create cfn', async () => {
-    // const mockResult: DescribeInstancesResult = {
-    //   Reservations: [
-    //     {
-    //       Instances: [{
-    //         InstanceId: 'i-123',
-    //         Tags: [
-    //           { Key: 'Owner', Value: 'Hacklab' },
-    //           { Key: 'Name', Value: 'doiiing' },
-    //         ],
-    //         State: {
-    //           Name: 'running',
-    //         },
-    //       }],
-    //     },
-    //   ],
-    // };
-    // AWS.describeInstancesResponse.mockReturnValueOnce(mockResult);
-
     const response = await handler(event);
-    expect(ec2.describeInstances).toHaveBeenCalled();
-
-    expect(response).toEqual([{
-      id: 'i-123',
-      name: 'doiiing',
-      state: 'RUNNING',
-    }]);
+    expect(response).toEqual('done');
   });
 
   test('to much records', async () => {

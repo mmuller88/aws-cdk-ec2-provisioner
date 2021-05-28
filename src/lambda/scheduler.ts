@@ -48,5 +48,5 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
   const waitForResult = await cfn.waitFor('stackCreateComplete', waitForParams).promise();
   console.debug(`waitForResult: ${JSON.stringify(waitForResult)}`);
 
-  return 'doneeee';
+  return 'done';
 };
