@@ -16,7 +16,7 @@ const initialState = { startDate: '', stopDate: '', vmType: -1, userId: 'noUserI
 
 export function Configs() {
   const [config, setConfig] = useState(initialState);
-  const { startDate, stopDate} = config;
+  const { startDate, stopDate, vmType, userId} = config;
 
   const { data, isLoading, refetch } = useListEc2ConfigsQuery(null, {
     refetchOnWindowFocus: false
@@ -35,17 +35,16 @@ export function Configs() {
   });
 
   const createNewEc2Config = async () => {
-    if (!startDate || !stopDate) return
+    if (!startDate || !stopDate || !userId || vmType < 1) return
 
     console.log(config);
 
-    const userData = await Auth.currentAuthenticatedUser();
+    //const userData = await Auth.currentAuthenticatedUser();
 
     const input = {
       ...config,
       // startDate: startDate2.toISOString(),
-      userId: userData.userId,
-
+      //userId: userData.userId,
     };
 
     const createResult = await createEc2Config(input, { onSuccess: (data) => { console.log(data) } });
@@ -87,21 +86,25 @@ export function Configs() {
       </div>
       <br />
       <br />
+      <h3>Create Ec2 Config:</h3>
       <div>
-        <h3>Create Ec2 Config:</h3>
         <div>
-          <input onChange={onChange} name="userId" placeholder="UserId" />
+          UserId:
+          <input onChange={onChange} name="userId" placeholder="martin" />
         </div>
         <div>
-          <input onChange={onChange} name="vmType" placeholder="VmType" />
+          VmType:
+          <input onChange={onChange} name="vmType" placeholder="1" />
         </div>
         <div>
+          StartDate:
           <Datetime
             onChange={ (date: string | Moment) => setConfig(() => ({ ...config, startDate: (date as Moment).toISOString() }))}
             // value={new Date(new Date().setHours(new Date().getHours() + 1))}
           />
         </div>
         <div>
+          StopDate:
           <Datetime
             onChange={ (date: string | Moment) => setConfig(() => ({ ...config, stopDate: (date as Moment).toISOString() }))}
             // value={new Date(new Date().setHours(new Date().getHours() + 1))}

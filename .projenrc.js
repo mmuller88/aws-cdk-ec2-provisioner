@@ -58,6 +58,7 @@ project.buildTask.prependExec(
 
 project.setScript('cdkDeploy', 'cdk deploy');
 project.setScript('cdkDestroy', 'cdk destroy');
+project.setScript('cdk', 'cdk');
 
 // project.setScript('cdkDeployEc2', 'cdk deploy --app "npx ts-node src/ec2/main.ts"');
 // project.setScript('cdkDestroyEc2', 'cdk destroy --app "npx ts-node src/ec2/main.ts"');

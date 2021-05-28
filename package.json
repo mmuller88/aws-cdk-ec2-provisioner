@@ -23,6 +23,7 @@
     "start": "npx projen start",
     "cdkDeploy": "cdk deploy",
     "cdkDestroy": "cdk destroy",
+    "cdk": "cdk",
     "dev": "cd frontend && yarn dev"
   },
   "author": {
