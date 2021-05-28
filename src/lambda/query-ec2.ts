@@ -15,6 +15,8 @@ export type Ec2 = {
   id: string;
   name: string;
   state: string;
+  userId: string;
+  vmType: number;
 };
 
 // export interface ResolverEvent {
@@ -44,6 +46,8 @@ export async function handler(event: lambda.AppSyncResolverEvent<QueryEc2Args> |
             id: instance.InstanceId || 'noId',
             name: instance.Tags?.filter(t => t.Key == 'Name')[0].Value || 'noName',
             state: instance.State?.Name?.toUpperCase() || 'UNKOWN',
+            userId: instance.Tags?.filter(t => t.Key == 'UserId')[0].Value || 'noUserId',
+            vmType: Number(instance.Tags?.filter(t => t.Key == 'VmType')[0].Value) || -1,
           });
         }
       }

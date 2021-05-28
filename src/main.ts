@@ -99,6 +99,8 @@ new PipelineStack(app, 'ec2-pro-vm-pipeline', {
     const stack = new Ec2Stack(scope, `ec2-vm-stack-${stageAccount.stage}`, {
       stackName: `ec2-vm-stack-${stageAccount.stage}`,
       stage: stageAccount.stage,
+      userId: 'testUser',
+      vmType: 0,
     });
 
     return stack;
@@ -134,8 +136,8 @@ new Ec2Stack(app, 'ec2-vm-stack', {
     account: '981237193288',
     region: 'eu-central-1',
   },
-  userId,
-  vmType,
+  userId: userId ?? 'noUserId',
+  vmType: vmType ?? -1,
   stage: '',
 });
 

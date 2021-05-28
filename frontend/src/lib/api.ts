@@ -37,7 +37,8 @@ export type CreateEc2ConfigInput = {
   id?: Maybe<Scalars["ID"]>;
   startDate: Scalars["AWSDateTime"];
   stopDate: Scalars["AWSDateTime"];
-  username: Scalars["String"];
+  userId: Scalars["String"];
+  vmType: Scalars["Int"];
 };
 
 export type CreateHistoryEntryInput = {
@@ -92,7 +93,8 @@ export type Ec2Config = {
   id: Scalars["ID"];
   startDate: Scalars["AWSDateTime"];
   stopDate: Scalars["AWSDateTime"];
-  username: Scalars["String"];
+  userId: Scalars["String"];
+  vmType: Scalars["Int"];
   history?: Maybe<ModelHistoryEntryConnection>;
   createdAt: Scalars["AWSDateTime"];
   updatedAt: Scalars["AWSDateTime"];
@@ -142,7 +144,8 @@ export type ModelEc2ConfigFilterInput = {
   id?: Maybe<ModelIdFilterInput>;
   startDate?: Maybe<ModelStringFilterInput>;
   stopDate?: Maybe<ModelStringFilterInput>;
-  username?: Maybe<ModelStringFilterInput>;
+  userId?: Maybe<ModelStringFilterInput>;
+  vmType?: Maybe<ModelIntFilterInput>;
   and?: Maybe<Array<Maybe<ModelEc2ConfigFilterInput>>>;
   or?: Maybe<Array<Maybe<ModelEc2ConfigFilterInput>>>;
   not?: Maybe<ModelEc2ConfigFilterInput>;
@@ -457,7 +460,8 @@ export type UpdateEc2ConfigInput = {
   id: Scalars["ID"];
   startDate?: Maybe<Scalars["AWSDateTime"]>;
   stopDate?: Maybe<Scalars["AWSDateTime"]>;
-  username?: Maybe<Scalars["String"]>;
+  userId?: Maybe<Scalars["String"]>;
+  vmType?: Maybe<Scalars["Int"]>;
 };
 
 export type UpdateHistoryEntryInput = {
@@ -532,7 +536,8 @@ export type CreateEc2ConfigMutation = { __typename?: "Mutation" } & {
       | "id"
       | "startDate"
       | "stopDate"
-      | "username"
+      | "userId"
+      | "vmType"
       | "createdAt"
       | "updatedAt"
       | "owner"
@@ -574,7 +579,8 @@ export type UpdateEc2ConfigMutation = { __typename?: "Mutation" } & {
       | "id"
       | "startDate"
       | "stopDate"
-      | "username"
+      | "userId"
+      | "vmType"
       | "createdAt"
       | "updatedAt"
       | "owner"
@@ -616,7 +622,8 @@ export type DeleteEc2ConfigMutation = { __typename?: "Mutation" } & {
       | "id"
       | "startDate"
       | "stopDate"
-      | "username"
+      | "userId"
+      | "vmType"
       | "createdAt"
       | "updatedAt"
       | "owner"
@@ -828,7 +835,8 @@ export type GetEc2ConfigQuery = { __typename?: "Query" } & {
       | "id"
       | "startDate"
       | "stopDate"
-      | "username"
+      | "userId"
+      | "vmType"
       | "createdAt"
       | "updatedAt"
       | "owner"
@@ -879,7 +887,8 @@ export type ListEc2ConfigsQuery = { __typename?: "Query" } & {
                 | "id"
                 | "startDate"
                 | "stopDate"
-                | "username"
+                | "userId"
+                | "vmType"
                 | "createdAt"
                 | "updatedAt"
                 | "owner"
@@ -1078,7 +1087,8 @@ export type OnCreateEc2ConfigSubscription = { __typename?: "Subscription" } & {
       | "id"
       | "startDate"
       | "stopDate"
-      | "username"
+      | "userId"
+      | "vmType"
       | "createdAt"
       | "updatedAt"
       | "owner"
@@ -1120,7 +1130,8 @@ export type OnUpdateEc2ConfigSubscription = { __typename?: "Subscription" } & {
       | "id"
       | "startDate"
       | "stopDate"
-      | "username"
+      | "userId"
+      | "vmType"
       | "createdAt"
       | "updatedAt"
       | "owner"
@@ -1162,7 +1173,8 @@ export type OnDeleteEc2ConfigSubscription = { __typename?: "Subscription" } & {
       | "id"
       | "startDate"
       | "stopDate"
-      | "username"
+      | "userId"
+      | "vmType"
       | "createdAt"
       | "updatedAt"
       | "owner"
@@ -1403,7 +1415,8 @@ export const CreateEc2ConfigDocument = `
     id
     startDate
     stopDate
-    username
+    userId
+    vmType
     history {
       items {
         id
@@ -1451,7 +1464,8 @@ export const UpdateEc2ConfigDocument = `
     id
     startDate
     stopDate
-    username
+    userId
+    vmType
     history {
       items {
         id
@@ -1499,7 +1513,8 @@ export const DeleteEc2ConfigDocument = `
     id
     startDate
     stopDate
-    username
+    userId
+    vmType
     history {
       items {
         id
@@ -1850,7 +1865,8 @@ export const GetEc2ConfigDocument = `
     id
     startDate
     stopDate
-    username
+    userId
+    vmType
     history {
       items {
         id
@@ -1890,7 +1906,8 @@ export const ListEc2ConfigsDocument = `
       id
       startDate
       stopDate
-      username
+      userId
+      vmType
       history {
         items {
           id
@@ -2096,7 +2113,8 @@ export const OnCreateEc2ConfigDocument = `
     id
     startDate
     stopDate
-    username
+    userId
+    vmType
     history {
       items {
         id
@@ -2120,7 +2138,8 @@ export const OnUpdateEc2ConfigDocument = `
     id
     startDate
     stopDate
-    username
+    userId
+    vmType
     history {
       items {
         id
@@ -2144,7 +2163,8 @@ export const OnDeleteEc2ConfigDocument = `
     id
     startDate
     stopDate
-    username
+    userId
+    vmType
     history {
       items {
         id

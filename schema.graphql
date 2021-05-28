@@ -4,7 +4,8 @@ type Ec2Config
   id: ID!
   startDate: AWSDateTime!
   stopDate: AWSDateTime!
-  username: String!
+  userId: String!
+  vmType: Int!
   history: [HistoryEntry] @connection(keyName: "byEc2Config", fields: ["id"])
 }
 

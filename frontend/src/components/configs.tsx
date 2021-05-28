@@ -12,7 +12,7 @@ import "react-datetime/css/react-datetime.css";
 import { Moment } from "moment";
 import * as moment from "moment";
 
-const initialState = { startDate: '', stopDate: ''};
+const initialState = { startDate: '', stopDate: '', vmType: -1, userId: 'noUserId'};
 
 export function Configs() {
   const [config, setConfig] = useState(initialState);
@@ -44,13 +44,18 @@ export function Configs() {
     const input = {
       ...config,
       // startDate: startDate2.toISOString(),
-      username: userData.username
+      userId: userData.userId,
+
     };
 
     const createResult = await createEc2Config(input, { onSuccess: (data) => { console.log(data) } });
     if (createResult) {
       refetch();
     }
+  }
+
+  const onChange = (e) => {
+    setConfig(() => ({ ...config, [e.target.name]: e.target.value }))
   }
 
   if (isLoading) return <div>Loading...</div>;
@@ -64,9 +69,10 @@ export function Configs() {
             ? data?.listEc2Configs?.items?.map(config => {
               return (
                 <div>
+                  <h5>UserId: {config.userId}</h5>
+                  <h4>VmType: {config.vmType}</h4>
                   <h4>Start Date: {new Date(config.startDate).toLocaleString()}</h4>
                   <h4>Stop Date: {new Date(config.stopDate).toLocaleString()}</h4>
-                  <h4>Owner: {config.owner}</h4>
                   <button onClick={async () => {
                     const deleteResult = await deleteEc2Config({id: config.id});
                     if (deleteResult) {
@@ -83,6 +89,12 @@ export function Configs() {
       <br />
       <div>
         <h3>Create Ec2 Config:</h3>
+        <div>
+          <input onChange={onChange} name="userId" placeholder="UserId" />
+        </div>
+        <div>
+          <input onChange={onChange} name="vmType" placeholder="VmType" />
+        </div>
         <div>
           <Datetime
             onChange={ (date: string | Moment) => setConfig(() => ({ ...config, startDate: (date as Moment).toISOString() }))}

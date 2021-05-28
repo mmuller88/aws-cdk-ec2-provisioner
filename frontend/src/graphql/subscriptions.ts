@@ -44,7 +44,8 @@ export const onCreateEc2Config = /* GraphQL */ `
       id
       startDate
       stopDate
-      username
+      userId
+      vmType
       history {
         items {
           id
@@ -68,7 +69,8 @@ export const onUpdateEc2Config = /* GraphQL */ `
       id
       startDate
       stopDate
-      username
+      userId
+      vmType
       history {
         items {
           id
@@ -92,7 +94,8 @@ export const onDeleteEc2Config = /* GraphQL */ `
       id
       startDate
       stopDate
-      username
+      userId
+      vmType
       history {
         items {
           id
