@@ -1,8 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { readFileSync } from 'fs';
 import * as lambda from 'aws-lambda';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-// const execSync = require('child_process').execSync;
 
 import * as AWS from 'aws-sdk';
 import { Ec2 } from './query-ec2';
@@ -10,7 +8,6 @@ import { Ec2 } from './query-ec2';
 const cfn = new AWS.CloudFormation();
 
 export async function handler(event: lambda.DynamoDBStreamEvent) {
-  // exports.handler = async (event/*: lambda.DynamoDBStreamEvent*/) => {
   console.debug(`event: ${JSON.stringify(event)}`);
 
   if (event.Records.length !== 1) {
