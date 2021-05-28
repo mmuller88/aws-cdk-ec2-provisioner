@@ -37,7 +37,7 @@ export function Chat({username}:ChatProps) {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   const onChange = e => {
@@ -85,6 +85,8 @@ export function Chat({username}:ChatProps) {
     setMessage({ content: '' })
   }
   // const { username } = UserStore;
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div>

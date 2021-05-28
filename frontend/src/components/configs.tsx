@@ -6,7 +6,7 @@ import { DeleteEc2ConfigDocument, DeleteEc2ConfigInput, useListEc2ConfigsQuery }
 import { CreateEc2ConfigInput, CreateEc2ConfigDocument, Ec2Config } from '../lib/api';
 import { API } from '../lib/fetcher';
 
-import ReactDatetime from 'react-datetime';
+import Datetime from 'react-datetime';
 import "react-datetime/css/react-datetime.css";
 
 import { Moment } from "moment";
@@ -84,15 +84,15 @@ export function Configs() {
       <div>
         <h3>Create Ec2 Config:</h3>
         <div>
-          <ReactDatetime
+          <Datetime
             onChange={ (date: string | Moment) => setConfig(() => ({ ...config, startDate: (date as Moment).toISOString() }))}
-            value={new Date(new Date().setHours(new Date().getHours() + 1))}
+            // value={new Date(new Date().setHours(new Date().getHours() + 1))}
           />
         </div>
         <div>
-          <ReactDatetime
+          <Datetime
             onChange={ (date: string | Moment) => setConfig(() => ({ ...config, stopDate: (date as Moment).toISOString() }))}
-            value={new Date(new Date().setHours(new Date().getHours() + 1))}
+            // value={new Date(new Date().setHours(new Date().getHours() + 1))}
           />
         </div>
         <div> 

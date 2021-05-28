@@ -6,6 +6,8 @@ import * as statement from 'cdk-iam-floyd';
 
 export interface Ec2StackProps extends cdk.StackProps {
   readonly stage: string;
+  readonly userId: string;
+  readonly vmType: number;
 }
 export class Ec2Stack extends CustomStack {
   constructor(scope: cdk.Construct, id: string, props: Ec2StackProps) {
@@ -37,6 +39,8 @@ aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
     });
 
     cdk.Tags.of(instance).add('Owner', 'Hacklab');
+    cdk.Tags.of(instance).add('UserId', props.userId);
+    cdk.Tags.of(instance).add('VmType', props.vmType.toString());
 
     instance.addToRolePolicy(new statement.Ec2().allow().toDescribeVolumes().toDetachVolume()
       .toAttachVolume().toCreateTags().toDescribeTags().toTerminateInstances().toDeleteSecurityGroup().toDescribeInstances().toStopInstances());

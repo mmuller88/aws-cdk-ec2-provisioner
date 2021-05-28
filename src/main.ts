@@ -134,6 +134,8 @@ new Ec2Stack(app, 'ec2-vm-stack', {
     account: '981237193288',
     region: 'eu-central-1',
   },
+  userId,
+  vmType,
   stage: '',
 });
 

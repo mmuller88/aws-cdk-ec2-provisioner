@@ -14,6 +14,7 @@ import { Posts } from './components/posts';
 import { Todos } from './components/todos';
 import { Configs } from './components/configs';
 import { Chat } from './components/chat';
+import { Vms } from './components/vms';
 
 declare const window: any;
 
@@ -42,6 +43,7 @@ function App() {
       <nav className="Navbar">
         <h1 className="navbar-logo">Hacklab Demo</h1>
         <ul className="nav-menu">
+          <li> <a href="/vms">VMs</a></li>
           <li> <a href="/chat">Chat</a></li>
           <li> <a href="/configs">Configs</a></li>
           <li> <a href="/posts">Posts</a></li>
@@ -55,7 +57,8 @@ function App() {
       <div>
         <Router>
           <Switch>
-            <Route exact path="/" render={(props: any) => <Configs {...props}  />} />
+            <Route exact path="/" render={(props: any) => <Vms {...props}  />} />
+            <Route path="/vms" render={(props: any) => <Vms {...props}  />} />
             <Route path="/chat" render={(props: any) => <Chat username={username} {...props}  />} />
             <Route path="/configs" render={(props: any) => <Configs {...props}  />} />
             <Route path="/posts" render={(props: any) => <Posts {...props}  />} />

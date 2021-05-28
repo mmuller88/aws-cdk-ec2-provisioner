@@ -81,6 +81,8 @@ export type DeletePostInput = {
 export type Ec2 = {
   __typename?: "Ec2";
   id: Scalars["ID"];
+  userId: Scalars["String"];
+  vmType: Scalars["Int"];
   name: Scalars["String"];
   state: State;
 };
@@ -760,7 +762,14 @@ export type ListEc2QueryVariables = Exact<{ [key: string]: never }>;
 
 export type ListEc2Query = { __typename?: "Query" } & {
   listEc2?: Maybe<
-    Array<Maybe<{ __typename?: "Ec2" } & Pick<Ec2, "id" | "name" | "state">>>
+    Array<
+      Maybe<
+        { __typename?: "Ec2" } & Pick<
+          Ec2,
+          "id" | "userId" | "vmType" | "name" | "state"
+        >
+      >
+    >
   >;
 };
 
@@ -1759,6 +1768,8 @@ export const ListEc2Document = `
     query ListEc2 {
   listEc2 {
     id
+    userId
+    vmType
     name
     state
   }

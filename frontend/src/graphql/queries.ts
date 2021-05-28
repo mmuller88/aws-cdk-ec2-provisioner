@@ -16,6 +16,8 @@ export const listEc2 = /* GraphQL */ `
   query ListEc2 {
     listEc2 {
       id
+      userId
+      vmType
       name
       state
     }

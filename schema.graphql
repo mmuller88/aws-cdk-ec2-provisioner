@@ -19,6 +19,8 @@ enum State {
 
 type Ec2 {
   id: ID!
+  userId: String!
+  vmType: Int!
   name: String!
   state: State!
 }
