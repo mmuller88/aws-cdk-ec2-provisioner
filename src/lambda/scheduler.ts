@@ -13,8 +13,9 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
   // exports.handler = async (event/*: lambda.DynamoDBStreamEvent*/) => {
   console.debug(`event: ${JSON.stringify(event)}`);
 
-  if (event.Records.length > 1) {
-    console.debug('event not valid! Only one record allowed!');
+  if (event.Records.length !== 1) {
+    console.debug('event not valid! Exactly one record allowed!');
+    return 'failed';
   }
 
   let newImage: Ec2;

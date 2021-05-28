@@ -9,5 +9,13 @@ export class EC2 {
   constructor() {
     this.describeInstances = describeInstancesFn;
   }
+}
 
+export class CloudFormation {
+
+  public describeInstances: jest.Mock<any, any>;
+
+  constructor() {
+    this.describeInstances = describeInstancesFn;
+  }
 }
