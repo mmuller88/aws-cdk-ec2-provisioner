@@ -33,6 +33,13 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
     StackName: `stack-${newImage.userId ?? 'noUserId'}-${newImage.vmType ?? 'noVmType'}`,
     TemplateBody: templateBody,
     Capabilities: ['CAPABILITY_IAM'],
+    Parameters: [{
+      ParameterKey: 'userIdParam',
+      ParameterValue: newImage.userId,
+    }, {
+      ParameterKey: 'vmTypeParam',
+      ParameterValue: newImage.vmType.toString(),
+    }],
   };
   try {
     const createStackResult = await cfn.createStack(createStackParams).promise();

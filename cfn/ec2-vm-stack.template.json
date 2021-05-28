@@ -22,11 +22,15 @@
           },
           {
             "Key": "UserId",
-            "Value": "noUserId"
+            "Value": {
+              "Ref": "userIdParam"
+            }
           },
           {
             "Key": "VmType",
-            "Value": "-1"
+            "Value": {
+              "Ref": "vmTypeParam"
+            }
           }
         ],
         "VpcId": "vpc-568dbd3d"
@@ -61,11 +65,15 @@
           },
           {
             "Key": "UserId",
-            "Value": "noUserId"
+            "Value": {
+              "Ref": "userIdParam"
+            }
           },
           {
             "Key": "VmType",
-            "Value": "-1"
+            "Value": {
+              "Ref": "vmTypeParam"
+            }
           }
         ]
       },
@@ -152,11 +160,15 @@
           },
           {
             "Key": "UserId",
-            "Value": "noUserId"
+            "Value": {
+              "Ref": "userIdParam"
+            }
           },
           {
             "Key": "VmType",
-            "Value": "-1"
+            "Value": {
+              "Ref": "vmTypeParam"
+            }
           }
         ],
         "UserData": {
@@ -185,6 +197,14 @@
     "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter": {
       "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
       "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+    },
+    "userIdParam": {
+      "Type": "String",
+      "Default": "noUserId"
+    },
+    "vmTypeParam": {
+      "Type": "String",
+      "Default": "noVmType"
     },
     "BootstrapVersion": {
       "Type": "AWS::SSM::Parameter::Value<String>",
