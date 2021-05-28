@@ -4,10 +4,10 @@ import * as iam from '@aws-cdk/aws-iam';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
 import * as cdk from '@aws-cdk/core';
-import * as statement from 'cdk-iam-floyd';
 // import * as db from '@aws-cdk/aws-dynamodb';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
 import { AppSyncTransformer } from 'cdk-appsync-transformer';
+import * as statement from 'cdk-iam-floyd';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const path = require('path');
 

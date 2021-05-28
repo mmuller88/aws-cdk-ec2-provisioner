@@ -44,7 +44,7 @@ export class SchedulerStack extends CustomStack {
     if (props.appSyncTransformer) {
       const streamArn = props.appSyncTransformer.addDynamoDBStream({
         modelTypeName: 'Ec2Config',
-        streamViewType: ddb.StreamViewType.NEW_IMAGE,
+        streamViewType: ddb.StreamViewType.NEW_AND_OLD_IMAGES,
       });
 
       cdkSchedulerLambda.addEventSourceMapping('test', {
