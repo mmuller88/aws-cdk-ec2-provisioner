@@ -49,7 +49,7 @@ export class SchedulerStack extends CustomStack {
 
       cdkSchedulerLambda.addEventSourceMapping('test', {
         eventSourceArn: streamArn,
-        batchSize: 5,
+        batchSize: 1,
         startingPosition: lambda.StartingPosition.TRIM_HORIZON,
         bisectBatchOnError: true,
         retryAttempts: 10,
