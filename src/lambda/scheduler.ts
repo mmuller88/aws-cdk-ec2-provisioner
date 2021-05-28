@@ -13,7 +13,7 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
 
   let res;
   try {
-    res = execSync("node_modules/aws-cdk/bin/cdk --app cdk.out deploy 'ec2-vm-stack' -c userId=martin -c vmType=3 --require-approval never");
+    res = execSync("node_modules/aws-cdk/bin/cdk deploy 'ec2-vm-stack' -c userId=martino -c vmType=2 --require-approval never");
   } catch (err) {
     console.debug(`err: ${err}`);
   }

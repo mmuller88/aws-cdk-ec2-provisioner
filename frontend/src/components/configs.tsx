@@ -35,7 +35,8 @@ export function Configs() {
   });
 
   const createNewEc2Config = async () => {
-    if (!startDate || !stopDate || !userId || vmType < 1) return
+    if (!startDate || !stopDate || !userId || vmType < 1) return;
+    if (data.listEc2Configs.items.length > 5) return;
 
     console.log(config);
 
