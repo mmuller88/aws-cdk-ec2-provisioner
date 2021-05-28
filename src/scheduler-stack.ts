@@ -74,7 +74,7 @@ export class SchedulerStack extends CustomStack {
     );
     cdkSchedulerLambda.addToRolePolicy(
       new statement.Ec2().allow().toDescribeImages().toCreateSecurityGroup().toDescribeSecurityGroups().toRevokeSecurityGroupEgress().toCreateTags()
-        .toAuthorizeSecurityGroupEgress().toRunInstances().toDescribeInstances(),
+        .toAuthorizeSecurityGroupEgress().toRunInstances().toDescribeInstances().toTerminateInstances(),
     );
   }
 }
