@@ -71,6 +71,13 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
       console.debug(`deleteStackParams: ${JSON.stringify(deleteStackParams)}`);
       const deleteStackResult = await cfn.deleteStack(deleteStackParams).promise();
       console.debug(`deleteStackResult: ${JSON.stringify(deleteStackResult)}`);
+
+      const waitForParams: AWS.CloudFormation.Types.DescribeStacksInput = {
+        StackName: deleteStackParams.StackName,
+      };
+      console.debug(`waitForParams: ${JSON.stringify(waitForParams)}`);
+      const waitForResult = await cfn.waitFor('stackDeleteComplete', waitForParams).promise();
+      console.debug(`waitForResult: ${JSON.stringify(waitForResult)}`);
       return 'deleted';
     }
   }
