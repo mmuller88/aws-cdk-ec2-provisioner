@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as ddb from '@aws-cdk/aws-dynamodb';
 import * as lambda from '@aws-cdk/aws-lambda';
+import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
 import * as logs from '@aws-cdk/aws-logs';
 import * as core from '@aws-cdk/core';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
@@ -22,10 +23,25 @@ export class SchedulerStack extends CustomStack {
       streamViewType: ddb.StreamViewType.NEW_IMAGE,
     });
 
-    const dockerfile = path.join(__dirname, '..');
+    // const dockerfile = path.join(__dirname, '..');
 
-    const cdkSchedulerLambda = new lambda.DockerImageFunction(this, 'scheduler', {
-      code: lambda.DockerImageCode.fromImageAsset(dockerfile),
+    // const cdkSchedulerLambda = new lambda.DockerImageFunction(this, 'scheduler', {
+    const cdkSchedulerLambda = new lambdajs.NodejsFunction(this, 'scheduler', {
+      entry: `${path.join(__dirname)}/lambda/scheduler.ts`,
+      bundling: {
+        commandHooks: {
+          afterBundling(_inputDir: string, _outputDir: string): string[] {
+            return [];
+          },
+          beforeInstall(inputDir: string, outputDir: string): string[] {
+            return [`cp ${inputDir}/cdk.out/ec2-vm-stack.template.json ${outputDir} 2>/dev/null`];
+          },
+          beforeBundling(_inputDir: string, _outputDir: string): string[] {
+            return [];
+          },
+        },
+      },
+      // code: lambda.DockerImageCode.fromImageAsset(dockerfile),
       logRetention: logs.RetentionDays.ONE_DAY,
       environment: {},
       timeout: core.Duration.minutes(15),

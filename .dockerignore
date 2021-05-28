@@ -1,7 +1,7 @@
-cdk.out
-appsync
-converage
-node_modules
-misc
-test-reports
-test
+# cdk.out
+# appsync
+# converage
+# node_modules
+# misc
+# test-reports
+# test

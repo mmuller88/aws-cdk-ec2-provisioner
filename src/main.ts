@@ -8,6 +8,20 @@ import { Ec2Stack } from './ec2/ec2-stack';
 
 const app = new core.App();
 
+const userId = app.node.tryGetContext('userId');
+const vmType = app.node.tryGetContext('vmType');
+// stack for deploying with lambda
+new Ec2Stack(app, 'ec2-vm-stack', {
+  stackName: `vm-${userId ?? 'noUserId'}-${vmType ?? 'noVmType'}`,
+  env: {
+    account: '981237193288',
+    region: 'eu-central-1',
+  },
+  userId: userId ?? 'noUserId',
+  vmType: vmType ?? -1,
+  stage: '',
+});
+
 new PipelineStack(app, 'ec2-provisioner-pipeline', {
   stackName: 'ec2-provisioner-pipeline',
   // Account and region where the pipeline will be build
@@ -125,20 +139,6 @@ new PipelineStack(app, 'ec2-pro-vm-pipeline', {
       jsonField: 'muller88-github-token',
     }),
   },
-});
-
-const userId = app.node.tryGetContext('userId');
-const vmType = app.node.tryGetContext('vmType');
-// stack for deploying with lambda
-new Ec2Stack(app, 'ec2-vm-stack', {
-  stackName: `vm-${userId ?? 'noUserId'}-${vmType ?? 'noVmType'}`,
-  env: {
-    account: '981237193288',
-    region: 'eu-central-1',
-  },
-  userId: userId ?? 'noUserId',
-  vmType: vmType ?? -1,
-  stage: '',
 });
 
 app.synth();
