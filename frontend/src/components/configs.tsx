@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import { Auth } from '@aws-amplify/auth';
 
-import { DeleteEc2ConfigDocument, DeleteEc2ConfigInput, useListEc2ConfigsQuery } from '../lib/api';
+import { DeleteEc2ConfigDocument, DeleteEc2ConfigInput, useListEc2ConfigsQuery, useListEc2Query } from '../lib/api';
 import { CreateEc2ConfigInput, CreateEc2ConfigDocument, Ec2Config } from '../lib/api';
 import { API } from '../lib/fetcher';
 
@@ -21,6 +21,10 @@ export function Configs() {
   const { data, isLoading, refetch } = useListEc2ConfigsQuery(null, {
     refetchOnWindowFocus: false
   });
+
+  const ec2Data = useListEc2Query(null, {
+    refetchOnWindowFocus: false
+  }).data;
 
   // useCreatePostMutation isn't working correctly right now
   const [createEc2Config] = useMutation(async (input: CreateEc2ConfigInput) => {
@@ -73,6 +77,7 @@ export function Configs() {
                   <h4>VmType: {config.vmType}</h4>
                   <h4>Start Date: {new Date(config.startDate).toLocaleString()}</h4>
                   <h4>Stop Date: {new Date(config.stopDate).toLocaleString()}</h4>
+                  <h4>Related vms: {ec2Data.listEc2.filter(e => e.userId === config.userId && e.vmType === config.vmType).map(e => e.id).join(', ')}</h4>
                   <button onClick={async () => {
                     const deleteResult = await deleteEc2Config({id: config.id});
                     if (deleteResult) {
