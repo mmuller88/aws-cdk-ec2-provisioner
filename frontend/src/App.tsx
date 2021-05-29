@@ -1,28 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, HashRouter, NavLink, Route, Switch } from 'react-router-dom';
+import { QueryResult } from 'react-query';
+import { HashRouter, NavLink, Route, Switch } from 'react-router-dom';
 import './App.css';
 
+import Amplify, { Auth } from 'aws-amplify';
 import { AuthState, onAuthUIStateChange, } from '@aws-amplify/ui-components';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 
-import { useListEc2ConfigsQuery, useListEc2Query } from './lib/api';
-
-
+import { useListEc2ConfigsQuery, useListEc2Query, ListEc2Query, ListEc2ConfigsQuery } from './lib/api';
 import { API } from './lib/fetcher';
-
-import Amplify, { Auth } from 'aws-amplify';
 
 import { Posts } from './components/posts';
 import { Todos } from './components/todos';
 import { Configs } from './components/configs';
-import { Chat, ChatProps } from './components/chat';
+import { Chat } from './components/chat';
 import { Vms } from './components/vms';
-import { AppContext } from './components/Ec2DetailsProvider';
 
 declare const window: any;
 
 Amplify.configure(window.ENV);
 Auth.configure(window.ENV);
+
+type ContextProps = {
+  ec2List: ListEc2Query,
+  configResult: QueryResult<ListEc2ConfigsQuery, any>
+};
+
+export const AppContext = React.createContext<Partial<ContextProps>>({});
 
 function App() {
 

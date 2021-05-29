@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { QueryResult, useMutation } from 'react-query';
 import { Auth } from '@aws-amplify/auth';
 
-import { DeleteEc2ConfigDocument, DeleteEc2ConfigInput, ListEc2ConfigsQuery, useListEc2ConfigsQuery, useListEc2Query } from '../lib/api';
+import { DeleteEc2ConfigDocument, DeleteEc2ConfigInput, ListEc2ConfigsQuery } from '../lib/api';
 import { CreateEc2ConfigInput, CreateEc2ConfigDocument, Ec2Config } from '../lib/api';
 import { API } from '../lib/fetcher';
 
@@ -10,9 +10,7 @@ import Datetime from 'react-datetime';
 import "react-datetime/css/react-datetime.css";
 
 import { Moment } from "moment";
-import * as moment from "moment";
-import { AppContext } from './Ec2DetailsProvider';
-import { RefetchOptions } from 'react-query/types/core/query';
+import { AppContext } from '../App';
 import { RouteComponentProps } from 'react-router-dom';
 
 const initialState = { startDate: '', stopDate: '', vmType: -1, userId: 'noUserId'};

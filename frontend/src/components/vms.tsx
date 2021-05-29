@@ -1,7 +1,5 @@
-import { debug } from 'console';
-import { RouteComponentProps, useParams } from 'react-router-dom';
-import { useListEc2Query } from '../lib/api';
-import { AppContext } from './Ec2DetailsProvider';
+import { RouteComponentProps } from 'react-router-dom';
+import { AppContext } from '../App';
 
 export interface RouteParams {
   id: string;
