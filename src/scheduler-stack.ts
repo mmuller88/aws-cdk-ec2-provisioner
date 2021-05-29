@@ -70,7 +70,8 @@ export class SchedulerStack extends CustomStack {
       new statement.S3().allow().toGetBucketLocation().toListBucket().toGetObject().toPutObject().toDeleteObject(),
     );
     cdkSchedulerLambda.addToRolePolicy(
-      new statement.Iam().allow().toPassRole().toCreateRole().toCreateInstanceProfile().toPutRolePolicy().toAddRoleToInstanceProfile(),
+      new statement.Iam().allow().toPassRole().toCreateRole().toCreateInstanceProfile().toPutRolePolicy().toAddRoleToInstanceProfile()
+        .toDeleteRolePolicy(),
     );
     cdkSchedulerLambda.addToRolePolicy(
       new statement.Ec2().allow().toDescribeImages().toCreateSecurityGroup().toDescribeSecurityGroups().toRevokeSecurityGroupEgress().toCreateTags()

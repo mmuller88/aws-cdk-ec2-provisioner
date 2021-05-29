@@ -55,12 +55,12 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
       console.debug(`updateStackResult: ${JSON.stringify(updateStackResult)}`);
     }
 
-    const waitForParams: AWS.CloudFormation.Types.DescribeStacksInput = {
-      StackName: createStackParams.StackName,
-    };
-    console.debug(`waitForParams: ${JSON.stringify(waitForParams)}`);
-    const waitForResult = await cfn.waitFor('stackCreateComplete', waitForParams).promise();
-    console.debug(`waitForResult: ${JSON.stringify(waitForResult)}`);
+    // const waitForParams: AWS.CloudFormation.Types.DescribeStacksInput = {
+    //   StackName: createStackParams.StackName,
+    // };
+    // console.debug(`waitForParams: ${JSON.stringify(waitForParams)}`);
+    // const waitForResult = await cfn.waitFor('stackCreateComplete', waitForParams).promise();
+    // console.debug(`waitForResult: ${JSON.stringify(waitForResult)}`);
     return 'success';
   } else {
     if (oldImage) {
@@ -72,12 +72,12 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
       const deleteStackResult = await cfn.deleteStack(deleteStackParams).promise();
       console.debug(`deleteStackResult: ${JSON.stringify(deleteStackResult)}`);
 
-      const waitForParams: AWS.CloudFormation.Types.DescribeStacksInput = {
-        StackName: deleteStackParams.StackName,
-      };
-      console.debug(`waitForParams: ${JSON.stringify(waitForParams)}`);
-      const waitForResult = await cfn.waitFor('stackDeleteComplete', waitForParams).promise();
-      console.debug(`waitForResult: ${JSON.stringify(waitForResult)}`);
+      // const waitForParams: AWS.CloudFormation.Types.DescribeStacksInput = {
+      //   StackName: deleteStackParams.StackName,
+      // };
+      // console.debug(`waitForParams: ${JSON.stringify(waitForParams)}`);
+      // const waitForResult = await cfn.waitFor('stackDeleteComplete', waitForParams).promise();
+      // console.debug(`waitForResult: ${JSON.stringify(waitForResult)}`);
       return 'deleted';
     }
   }
