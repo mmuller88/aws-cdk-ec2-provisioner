@@ -40,6 +40,7 @@ export async function handler(event: lambda.AppSyncResolverEvent<QueryEc2Args> |
       const describeInstances = await ec2.describeInstances().promise();
       console.debug(`describeInstances: ${JSON.stringify(describeInstances)}`);
       const lookupInstances = describeInstances.Reservations?.map(r => r.Instances?.[0]);//.filter(i => i?.Tags?.filter(t => t.Key === 'Owner' && t.Value === 'Hacklab') != null);
+      console.debug(`lookupInstances: ${JSON.stringify(lookupInstances)}`);
       const instances: Ec2[] = [];
       if (lookupInstances && lookupInstances.length === 1) {
         try {
