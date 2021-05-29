@@ -1,11 +1,18 @@
 import { useListEc2Query } from '../lib/api';
 
-export function Vms() {
+interface VmsProps {
+  id: string;
+}
+
+export function Vms({id}:VmsProps) {
 
   const { data, isLoading, refetch } = useListEc2Query(null, {
     refetchOnWindowFocus: false
   });
 
+  if(id){
+    data?.listEc2?.filter(e => e.id === id);
+  }
 
   if (isLoading) return <div>Loading...</div>;
 

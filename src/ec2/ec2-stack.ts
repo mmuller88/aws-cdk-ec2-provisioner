@@ -43,7 +43,7 @@ aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
     });
 
     const vmTypeParam = new cdk.CfnParameter(this, 'vmTypeParam', {
-      default: 'noVmType',
+      default: '-1',
     });
 
     cdk.Tags.of(instance).add('Owner', 'Hacklab');

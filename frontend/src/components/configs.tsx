@@ -77,7 +77,7 @@ export function Configs() {
                   <h4>VmType: {config.vmType}</h4>
                   <h4>Start Date: {new Date(config.startDate).toLocaleString()}</h4>
                   <h4>Stop Date: {new Date(config.stopDate).toLocaleString()}</h4>
-                  <h4>Related vms: {ec2Data.listEc2.filter(e => e.userId === config.userId && e.vmType === config.vmType).map(e => e.id).join(', ')}</h4>
+                  <h4>Related vms: {ec2Data?.listEc2.filter(e => e.userId === config.userId && e.vmType === config.vmType).map(e => e.id).join(', ')}</h4>
                   <button onClick={async () => {
                     const deleteResult = await deleteEc2Config({id: config.id});
                     if (deleteResult) {

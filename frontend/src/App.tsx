@@ -59,6 +59,7 @@ function App() {
           <Switch>
             <Route exact path="/" render={(props: any) => <Vms {...props}  />} />
             <Route path="/vms" render={(props: any) => <Vms {...props}  />} />
+            <Route path="/vms/:id" render={(props: any) => <Vms {...props}  />} />
             <Route path="/chat" render={(props: any) => <Chat username={username} {...props}  />} />
             <Route path="/configs" render={(props: any) => <Configs {...props}  />} />
             <Route path="/posts" render={(props: any) => <Posts {...props}  />} />
