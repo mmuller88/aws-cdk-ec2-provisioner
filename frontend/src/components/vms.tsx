@@ -1,33 +1,37 @@
 import { debug } from 'console';
 import { RouteComponentProps, useParams } from 'react-router-dom';
 import { useListEc2Query } from '../lib/api';
+import { AppContext } from './Ec2DetailsProvider';
 
 export interface RouteParams {
   id: string;
 }
 export function Vms({ match }: RouteComponentProps<RouteParams>) {
 
-  let { data, isLoading, refetch } = useListEc2Query(null, {
-    refetchOnWindowFocus: false
-  });
+  // let { data, isLoading, refetch } = useListEc2Query(null, {
+  //   refetchOnWindowFocus: false
+  // });
 
 
   const id = match.params.id;
   // let filteredData = data;
-  if(id && data){
-    // console.log('id:'+id);
-    data.listEc2 = data?.listEc2?.filter(e => e.id === id);
-  }
+  // if(id && data){
+  //   // console.log('id:'+id);
+  //   data.listEc2 = data?.listEc2?.filter(e => e.id === id);
+  // }
 
-  if (isLoading) return <div>Loading...</div>;
+  // if (isLoading) return <div>Loading...</div>;
 
   return (
+    <AppContext.Consumer>
+      {
+        ({ec2List}) => 
     <div>
       <div>
         <h2>VMs:</h2>
         {
-          data?.listEc2
-            ? data?.listEc2.map(ec2 => {
+          ec2List?.listEc2
+            ? ec2List?.listEc2?.filter(e => !id || (id && e.id === id)).map(ec2 => {
               return (
                 <div>
                   <h4>UserId: {ec2.userId}</h4>
@@ -44,5 +48,7 @@ export function Vms({ match }: RouteComponentProps<RouteParams>) {
       <br />
       <br />
     </div>
+     }
+     </AppContext.Consumer>
   );
 }

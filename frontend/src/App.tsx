@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, HashRouter, NavLink, Route, Switch } from 'react-router-dom';
 import './App.css';
 
 import { AuthState, onAuthUIStateChange, } from '@aws-amplify/ui-components';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+
+import { useListEc2Query } from './lib/api';
 
 
 import { API } from './lib/fetcher';
@@ -13,8 +15,9 @@ import Amplify, { Auth } from 'aws-amplify';
 import { Posts } from './components/posts';
 import { Todos } from './components/todos';
 import { Configs } from './components/configs';
-import { Chat } from './components/chat';
+import { Chat, ChatProps } from './components/chat';
 import { Vms } from './components/vms';
+import { AppContext } from './components/Ec2DetailsProvider';
 
 declare const window: any;
 
@@ -39,35 +42,43 @@ function App() {
   }, []);
 
   return (
+    <HashRouter>
     <div className="App">
       <nav className="Navbar">
         <h1 className="navbar-logo">Hacklab Demo</h1>
         <ul className="nav-menu">
-          <li> <a href="/vms">VMs</a></li>
-          <li> <a href="/chat">Chat</a></li>
-          <li> <a href="/configs">Configs</a></li>
-          <li> <a href="/posts">Posts</a></li>
-          <li> <a href="/todos">Todos</a></li>
+          <li><NavLink to="/vms">Vms</NavLink></li>
+          <li><NavLink to="/chat">Chat</NavLink></li>
+          <li><NavLink to="/configs">Configs</NavLink></li>
+          <li><NavLink to="/posts">Posts</NavLink></li>
+          <li><NavLink to="/todos">Todos</NavLink></li>
         </ul>
         <div>
           <span>signed in: {username}</span>
           <AmplifySignOut button-text="Logout"></AmplifySignOut>
         </div>
       </nav>
-      <div>
-        <Router>
-          <Switch>
-            <Route exact path="/" render={(props: any) => <Vms {...props}  />} />
-            <Route path="/vms/:id" render={(props: any) => <Vms {...props}  />} />
-            <Route path="/vms" render={(props: any) => <Vms {...props}  />} />
-            <Route path="/chat" render={(props: any) => <Chat username={username} {...props}  />} />
-            <Route path="/configs" render={(props: any) => <Configs {...props}  />} />
-            <Route path="/posts" render={(props: any) => <Posts {...props}  />} />
-            <Route path="/todos" render={(props: any) => <Todos {...props}  />} />
-          </Switch>
-        </Router>
-      </div>
+       
+        <div>
+            <Switch>
+              <AppContext.Provider value={ {
+                ec2List: useListEc2Query(null, {
+                    refetchOnWindowFocus: false
+                  }).data,
+                } }> 
+                <Route exact path="/" component={Vms} />
+                <Route path="/vms/:id" component={Vms} />
+                <Route path="/vms" component={Vms} />
+                <Route path="/configs" component={Configs} />
+              </AppContext.Provider>
+              <Route path="/chat" component={() => Chat({username})} />
+              <Route path="/posts" component={Posts} />
+              <Route path="/todos" component={Todos} />
+            </Switch>
+        </div>
+      
     </div>
+    </HashRouter>
   );
 }
 

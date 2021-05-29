@@ -11,7 +11,7 @@ import Observable from 'zen-observable';
 
 const initialState = { content: '' }
 
-interface ChatProps {
+export interface ChatProps {
   username: string;
 }
 
