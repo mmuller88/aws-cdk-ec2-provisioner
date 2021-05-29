@@ -27,8 +27,17 @@ INSTANCE_ID=$(curl -SsfH "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.2
 aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
     `);
 
+    const userIdParam = new cdk.CfnParameter(this, 'userIdParam', {
+      default: 'noUserId',
+    });
+
+    const vmTypeParam = new cdk.CfnParameter(this, 'vmTypeParam', {
+      default: '-1',
+    });
+
+
     const instance = new ec2.Instance(this, 'instance', {
-      instanceName: this.stackName,
+      instanceName: `vm-${userIdParam.value.toString() ?? 'noUserId'}-${vmTypeParam.value.toString() ?? '-1'}`,
       instanceType: new ec2.InstanceType('t2.micro'),
       vpc,
       keyName: 'ec2dev',
@@ -38,13 +47,6 @@ aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
       userData,
     });
 
-    const userIdParam = new cdk.CfnParameter(this, 'userIdParam', {
-      default: 'noUserId',
-    });
-
-    const vmTypeParam = new cdk.CfnParameter(this, 'vmTypeParam', {
-      default: '-1',
-    });
 
     cdk.Tags.of(instance).add('Owner', 'Hacklab');
     cdk.Tags.of(instance).add('UserId', userIdParam.value.toString());

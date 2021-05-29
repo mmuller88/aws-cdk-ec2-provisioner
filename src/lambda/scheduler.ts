@@ -35,7 +35,7 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
   if (newImage) {
     console.debug('Having NewImage so creating or updating');
     const createStackParams: AWS.CloudFormation.Types.CreateStackInput = {
-      StackName: `stack-${newImage.userId ?? 'noUserId'}-${newImage.vmType ?? 'noVmType'}`,
+      StackName: `stack-${newImage.userId ?? 'noUserId'}-${newImage.vmType ?? '-1'}`,
       TemplateBody: templateBody,
       Capabilities: ['CAPABILITY_IAM'],
       Parameters: [{

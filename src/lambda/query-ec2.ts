@@ -39,23 +39,24 @@ export async function handler(event: lambda.AppSyncResolverEvent<QueryEc2Args> |
     case 'listEc2':
       const describeInstances = await ec2.describeInstances().promise();
       console.debug(`describeInstances: ${JSON.stringify(describeInstances)}`);
-      const lookupInstances = describeInstances.Reservations?.[0].Instances?.filter(i => i.Tags?.filter(t => t.Key === 'Owner' && t.Value === 'Hacklab') != null);
+      const lookupInstances = describeInstances.Reservations?.map(r => r.Instances?.[0]);//.filter(i => i?.Tags?.filter(t => t.Key === 'Owner' && t.Value === 'Hacklab') != null);
       const instances: Ec2[] = [];
-      if (lookupInstances) {
+      if (lookupInstances && lookupInstances.length === 1) {
         try {
           for (const instance of lookupInstances) {
-            instances.push({
-              id: instance.InstanceId || 'noId',
-              name: instance.Tags?.filter(t => t.Key == 'Name')[0].Value || 'noName',
-              state: instance.State?.Name?.toUpperCase() || 'UNKOWN',
-              userId: instance.Tags?.filter(t => t.Key == 'UserId')[0].Value || 'noUserId',
-              vmType: Number(instance.Tags?.filter(t => t.Key == 'VmType')[0].Value) || -1,
-            });
+            if (instance) {
+              instances.push({
+                id: instance.InstanceId || 'noId',
+                name: instance.Tags?.filter(t => t.Key == 'Name')[0].Value || 'noName',
+                state: instance.State?.Name?.toUpperCase() || 'UNKOWN',
+                userId: instance.Tags?.filter(t => t.Key == 'UserId')[0].Value || 'noUserId',
+                vmType: Number(instance.Tags?.filter(t => t.Key == 'VmType')[0].Value) || -1,
+              });
+            }
           }
         } catch (error) {
           return { errorMessage: `parsing failed: ${JSON.stringify(error)}`, errorType: 'PARSING' };
         }
-
       }
       console.debug(`instances: ${JSON.stringify(instances)}`);
       return instances;
