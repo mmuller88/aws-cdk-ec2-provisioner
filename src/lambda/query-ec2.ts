@@ -41,11 +41,12 @@ export async function handler(event: lambda.AppSyncResolverEvent<QueryEc2Args> |
       console.debug(`describeInstances: ${JSON.stringify(describeInstances)}`);
       const lookupInstances = describeInstances.Reservations?.map(r => r.Instances?.[0]);//.filter(i => i?.Tags?.filter(t => t.Key === 'Owner' && t.Value === 'Hacklab') != null);
       console.debug(`lookupInstances: ${JSON.stringify(lookupInstances)}`);
-      const instances: Ec2[] = [];
-      if (lookupInstances && lookupInstances.length === 1) {
+      let instances: Ec2[] = [];
+      if (lookupInstances) {
         try {
           for (const instance of lookupInstances) {
             if (instance) {
+              console.debug(`instance: ${JSON.stringify(instance)}`);
               instances.push({
                 id: instance.InstanceId || 'noId',
                 name: instance.Tags?.filter(t => t.Key == 'Name')[0].Value || 'noName',
@@ -60,7 +61,7 @@ export async function handler(event: lambda.AppSyncResolverEvent<QueryEc2Args> |
         }
       }
       console.debug(`instances: ${JSON.stringify(instances)}`);
-      return instances;
+      return instances.length === 0 ? null : instances;
     default:
       const error: Error = { errorMessage: 'Unknown field, unable to resolve', errorType: 'MISSING' };
       console.debug(JSON.stringify(error));

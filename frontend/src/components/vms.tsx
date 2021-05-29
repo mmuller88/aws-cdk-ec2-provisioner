@@ -1,3 +1,4 @@
+import { debug } from 'console';
 import { useListEc2Query } from '../lib/api';
 
 interface VmsProps {
@@ -11,6 +12,7 @@ export function Vms({id}:VmsProps) {
   });
 
   if(id){
+    console.log('id:'+id);
     data?.listEc2?.filter(e => e.id === id);
   }
 
