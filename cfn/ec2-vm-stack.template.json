@@ -1,4 +1,23 @@
 {
+  "Parameters": {
+    "userIdParam": {
+      "Type": "String",
+      "Default": "noUserId"
+    },
+    "vmTypeParam": {
+      "Type": "String",
+      "Default": "-1"
+    },
+    "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter": {
+      "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+      "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+    },
+    "BootstrapVersion": {
+      "Type": "AWS::SSM::Parameter::Value<String>",
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store."
+    }
+  },
   "Resources": {
     "instanceInstanceSecurityGroup725C795D": {
       "Type": "AWS::EC2::SecurityGroup",
@@ -14,7 +33,21 @@
         "Tags": [
           {
             "Key": "Name",
-            "Value": "vm-noUserId-noVmType"
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "vm-",
+                  {
+                    "Ref": "userIdParam"
+                  },
+                  "-",
+                  {
+                    "Ref": "vmTypeParam"
+                  }
+                ]
+              ]
+            }
           },
           {
             "Key": "Owner",
@@ -57,7 +90,21 @@
         "Tags": [
           {
             "Key": "Name",
-            "Value": "vm-noUserId-noVmType"
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "vm-",
+                  {
+                    "Ref": "userIdParam"
+                  },
+                  "-",
+                  {
+                    "Ref": "vmTypeParam"
+                  }
+                ]
+              ]
+            }
           },
           {
             "Key": "Owner",
@@ -152,7 +199,21 @@
         "Tags": [
           {
             "Key": "Name",
-            "Value": "vm-noUserId-noVmType"
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "vm-",
+                  {
+                    "Ref": "userIdParam"
+                  },
+                  "-",
+                  {
+                    "Ref": "vmTypeParam"
+                  }
+                ]
+              ]
+            }
           },
           {
             "Key": "Owner",
@@ -191,25 +252,6 @@
       "Metadata": {
         "aws:cdk:path": "ec2-vm-stack/CDKMetadata/Default"
       }
-    }
-  },
-  "Parameters": {
-    "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter": {
-      "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
-      "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
-    },
-    "userIdParam": {
-      "Type": "String",
-      "Default": "noUserId"
-    },
-    "vmTypeParam": {
-      "Type": "String",
-      "Default": "noVmType"
-    },
-    "BootstrapVersion": {
-      "Type": "AWS::SSM::Parameter::Value<String>",
-      "Default": "/cdk-bootstrap/hnb659fds/version",
-      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store."
     }
   },
   "Rules": {

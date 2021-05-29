@@ -1,19 +1,22 @@
 import { debug } from 'console';
+import { RouteComponentProps, useParams } from 'react-router-dom';
 import { useListEc2Query } from '../lib/api';
 
-interface VmsProps {
+export interface RouteParams {
   id: string;
 }
+export function Vms({ match }: RouteComponentProps<RouteParams>) {
 
-export function Vms({id}:VmsProps) {
-
-  const { data, isLoading, refetch } = useListEc2Query(null, {
+  let { data, isLoading, refetch } = useListEc2Query(null, {
     refetchOnWindowFocus: false
   });
 
-  if(id){
-    console.log('id:'+id);
-    data?.listEc2?.filter(e => e.id === id);
+
+  const id = match.params.id;
+  // let filteredData = data;
+  if(id && data){
+    // console.log('id:'+id);
+    data.listEc2 = data?.listEc2?.filter(e => e.id === id);
   }
 
   if (isLoading) return <div>Loading...</div>;
@@ -28,7 +31,7 @@ export function Vms({id}:VmsProps) {
               return (
                 <div>
                   <h4>UserId: {ec2.userId}</h4>
-                  <h5>Id: {ec2.id}</h5>
+                  <h5>Id: <a href={"vms/"+ec2.id}>{ec2.id}</a></h5>
                   <h5>Name: {ec2.name}</h5>
                   <h5>VmType: {ec2.vmType}</h5>
                   <h5>State: {ec2.state}</h5>
