@@ -72,7 +72,7 @@ export class SchedulerStack extends CustomStack {
     cdkSchedulerLambda.addToRolePolicy(
       new statement.Iam().allow().toPassRole().toCreateRole().toCreateInstanceProfile().toPutRolePolicy().toAddRoleToInstanceProfile()
         .toDeleteRolePolicy().toRemoveRoleFromInstanceProfile().toDeleteInstanceProfile().toDeleteRole().toGetPolicy().toCreatePolicy().toGetRole()
-        .toListPolicyVersions().toAttachRolePolicy(),
+        .toListPolicyVersions().toAttachRolePolicy().toDetachRolePolicy(),
     );
     cdkSchedulerLambda.addToRolePolicy(
       new statement.Ec2().allow().toDescribeImages().toCreateSecurityGroup().toDescribeSecurityGroups().toRevokeSecurityGroupEgress().toCreateTags()
