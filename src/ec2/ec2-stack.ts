@@ -42,7 +42,7 @@ aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
       // description: 'This is a Key Pair'
       // exposePublicKey: true,
       storePublicKey: true,
-      removeKeySecretsAfterDays: 7,
+      removeKeySecretsAfterDays: 0,
     });
 
     const cfnKey = key.node.tryFindChild('EC2-Key-Pair-key')?.node.defaultChild as cdk.CfnCustomResource;
