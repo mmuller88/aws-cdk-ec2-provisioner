@@ -42,14 +42,24 @@ export function Vms({ match }: RouteComponentProps<RouteParams>) {
             ? ec2List?.listEc2?.filter(e => !id || (id && e.id === id)).map(ec2 => {
               return (
                 <div>
-                  <h5>Id: <a href={"#/vms/"+ec2.id}>{ec2.id}</a></h5>
+                  <h4>Id: <a href={"#/vms/"+ec2.id}>{ec2.id}</a></h4>
+                  <h5>UserId: {ec2.userId}</h5>
                   <h5>VmType: {ec2.vmType}</h5>
-                  <h4>UserId: {ec2.userId}</h4>
                   <h5>VM name: {ec2.name}</h5>
                   <h5>State: {ec2.state}</h5>
-                  <h5>PublicDnsName: {ec2.state !== State.Running ? 'VM not running so no public dns name!' : <a href={ec2.publicDnsName}>{ec2.publicDnsName}</a>}</h5>
-                  <h5>PrivateKey: <button onClick={()=>downloadPemFile(ec2.privateKey)}>vm.pem</button>{ec2.state === State.Running ? `1) download vm.pem \n2) chmod 0400 vm.pem \n3) ssh -i "vm.pem" ec2-user@${ec2.publicDnsName}` : ''}</h5>
+                  <h5>PublicDnsName: {ec2.state !== State.Running ? 'VM not running so no public dns name!' : <a href={'http://'+ec2.publicDnsName} target="_blank" rel="noreferrer">{ec2.publicDnsName}</a>}</h5>
+                  <h5>PrivateKey: <button onClick={()=>downloadPemFile(ec2.privateKey)}>vm.pem</button></h5>
+                    {
+                      ec2.state === State.Running ?  
+                        <div>
+                          <h6>1) download vm.pem</h6>
+                          <h6>2) chmod 0400 vm.pem</h6>
+                          <h6>3) ssh -i "vm.pem" ec2-user@{ec2.publicDnsName}</h6>
+                        </div>
+                      : ''
+                    }
                   <h5>Associated Config: {configResult?.data.listEc2Configs.items.filter(c => c.userId === ec2.userId && c.vmType === ec2.vmType).map(c => <a href={"#/configs/"+c.id}>{c.id}</a>)}</h5>
+                  <br/>
                 </div>
               )
             })
