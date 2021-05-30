@@ -45,7 +45,7 @@ TOKEN=$(curl -SsfX PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-m
 # Retrieve the instance Id of the current EC2 instance
 INSTANCE_ID=$(curl -SsfH "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
 
-aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
+# aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
     `);
 
     const userIdParam = new cdk.CfnParameter(this, 'userIdParam', {

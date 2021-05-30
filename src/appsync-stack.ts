@@ -121,6 +121,7 @@ export class AppSyncStack extends CustomStack {
     });
 
     queryEc2.addToRolePolicy(new statement.Ec2().allow().toDescribeInstances());
+    queryEc2.addToRolePolicy(new statement.Secretsmanager().allow().toGetSecretValue());
 
     this.appSyncTransformer.addLambdaDataSourceAndResolvers('queryEc2', 'queryEc2', queryEc2);
 
