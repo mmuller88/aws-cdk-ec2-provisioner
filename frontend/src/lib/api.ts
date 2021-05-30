@@ -86,8 +86,8 @@ export type Ec2 = {
   vmType: Scalars["Int"];
   name: Scalars["String"];
   state: State;
-  ip?: Maybe<Scalars["String"]>;
-  publicKey?: Maybe<Scalars["String"]>;
+  publicDnsName?: Maybe<Scalars["String"]>;
+  privateKey?: Maybe<Scalars["String"]>;
 };
 
 export type Ec2Config = {
@@ -775,7 +775,13 @@ export type ListEc2Query = { __typename?: "Query" } & {
       Maybe<
         { __typename?: "Ec2" } & Pick<
           Ec2,
-          "id" | "userId" | "vmType" | "name" | "state" | "ip" | "publicKey"
+          | "id"
+          | "userId"
+          | "vmType"
+          | "name"
+          | "state"
+          | "publicDnsName"
+          | "privateKey"
         >
       >
     >
@@ -1789,8 +1795,8 @@ export const ListEc2Document = `
     vmType
     name
     state
-    ip
-    publicKey
+    publicDnsName
+    privateKey
   }
 }
     `;

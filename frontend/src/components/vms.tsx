@@ -37,6 +37,8 @@ export function Vms({ match }: RouteComponentProps<RouteParams>) {
                   <h4>UserId: {ec2.userId}</h4>
                   <h5>Instance name: {ec2.name}</h5>
                   <h5>State: {ec2.state}</h5>
+                  <h5>PublicDnsName: {ec2.publicDnsName}</h5>
+                  <h5>PublicKey: {ec2.publicKey}</h5>
                   <h5>Associated Config: {configResult?.data.listEc2Configs.items.filter(c => c.userId === ec2.userId && c.vmType === ec2.vmType).map(c => <a href={"#/configs/"+c.id}>{c.id}</a>)}</h5>
                 </div>
               )

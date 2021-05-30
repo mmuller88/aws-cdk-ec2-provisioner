@@ -24,8 +24,8 @@ type Ec2 {
   vmType: Int!
   name: String!
   state: State!
-  ip: String
-  publicKey: String
+  publicDnsName: String
+  privateKey: String
 }
 
 type Query {

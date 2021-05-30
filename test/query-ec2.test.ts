@@ -45,7 +45,7 @@ test('simple listEc2', async () => {
     state: 'RUNNING',
     userId: 'ichsen',
     vmType: 21,
-    ip: 'noIp',
-    publicKey: 'noKey',
+    publicDnsName: 'noIp',
+    privateKey: 'noKey',
   }]);
 });

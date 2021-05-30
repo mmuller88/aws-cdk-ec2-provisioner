@@ -18,8 +18,8 @@ export type Ec2 = {
   state: string;
   userId: string;
   vmType: number;
-  ip: string;
-  publicKey: string;
+  publicDnsName: string;
+  privateKey: string;
 };
 
 // export interface ResolverEvent {
@@ -62,8 +62,8 @@ export async function handler(event: lambda.AppSyncResolverEvent<QueryEc2Args> |
                 state: instance.State?.Name?.toUpperCase() || 'UNKOWN',
                 userId,
                 vmType,
-                ip: instance.PublicIpAddress || 'noIp',
-                publicKey: getSecretValueResult.SecretString || 'noKey',
+                publicDnsName: instance.PublicDnsName || 'noIp',
+                privateKey: getSecretValueResult.SecretString || 'noKey',
               });
             }
           }
