@@ -21,6 +21,15 @@ export function Vms({ match }: RouteComponentProps<RouteParams>) {
 
   // if (isLoading) return <div>Loading...</div>;
 
+  const downloadPemFile = (privateKey: string) => {
+    const element = document.createElement("a");
+    const file = new Blob([privateKey], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = "vm.pem";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  }
+
   return (
     <AppContext.Consumer>
       {
@@ -39,7 +48,7 @@ export function Vms({ match }: RouteComponentProps<RouteParams>) {
                   <h5>VM name: {ec2.name}</h5>
                   <h5>State: {ec2.state}</h5>
                   <h5>PublicDnsName: {ec2.state !== State.Running ? 'VM not running so no public dns name!' : <a href={ec2.publicDnsName}>{ec2.publicDnsName}</a>}</h5>
-                  <h5>PrivateKey: {ec2.privateKey}</h5>
+                  <h5>PrivateKey: <button onClick={()=>downloadPemFile(ec2.privateKey)}>vm.pem</button>{ec2.state === State.Running ? `1) download vm.pem \n2) chmod 0400 vm.pem \n3) ssh -i "vm.pem" ec2-user@${ec2.publicDnsName}` : ''}</h5>
                   <h5>Associated Config: {configResult?.data.listEc2Configs.items.filter(c => c.userId === ec2.userId && c.vmType === ec2.vmType).map(c => <a href={"#/configs/"+c.id}>{c.id}</a>)}</h5>
                 </div>
               )

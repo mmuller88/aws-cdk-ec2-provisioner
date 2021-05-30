@@ -43,6 +43,7 @@ export class Ec2Stack extends CustomStack {
     });
 
     securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22));
+    securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80));
 
     const userData = ec2.UserData.forLinux();
     userData.addCommands(`
@@ -52,6 +53,13 @@ TOKEN=$(curl -SsfX PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-m
 INSTANCE_ID=$(curl -SsfH "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
 
 # aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
+
+#!/bin/bash
+yum update -y
+yum install -y httpd.x86_64
+systemctl start httpd.service
+systemctl enable httpd.service
+echo “Hello World from $(hostname -f)” > /var/www/html/index.html
     `);
 
     const userIdParam = new cdk.CfnParameter(this, 'userIdParam', {

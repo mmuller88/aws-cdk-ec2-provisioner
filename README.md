@@ -36,9 +36,10 @@ yarn dev
 # Connect to VM:
 
 1) Download key and save as vm.pem
-2) connect with terminal using vm.pem and public dns name like:
+2) give it the right permissions with chmod 0400 vm.pem
+3) connect with terminal using vm.pem and public dns name like:
 ```
-ssh -i "vm.pem" ec2-3-126-251-42.eu-central-1.compute.amazonaws.com 
+ssh -i "vm.pem" ec2-user@ec2-18-159-212-249.eu-central-1.compute.amazonaws.com 
 ```
 
 # Misc

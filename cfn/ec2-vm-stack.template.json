@@ -18,6 +18,13 @@
             "FromPort": 22,
             "IpProtocol": "tcp",
             "ToPort": 22
+          },
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "from 0.0.0.0/0:80",
+            "FromPort": 80,
+            "IpProtocol": "tcp",
+            "ToPort": 80
           }
         ],
         "VpcId": "vpc-568dbd3d"
@@ -454,7 +461,7 @@
           }
         ],
         "UserData": {
-          "Fn::Base64": "#!/bin/bash\n\n# Retrieve token for accessing EC2 instance metadata (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html)\nTOKEN=$(curl -SsfX PUT \"http://169.254.169.254/latest/api/token\" -H \"X-aws-ec2-metadata-token-ttl-seconds: 21600\")\n# Retrieve the instance Id of the current EC2 instance\nINSTANCE_ID=$(curl -SsfH \"X-aws-ec2-metadata-token: $TOKEN\" http://169.254.169.254/latest/meta-data/instance-id)\n\n# aws --region eu-central-1 ec2 stop-instances --instance-ids $INSTANCE_ID\n    "
+          "Fn::Base64": "#!/bin/bash\n\n# Retrieve token for accessing EC2 instance metadata (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html)\nTOKEN=$(curl -SsfX PUT \"http://169.254.169.254/latest/api/token\" -H \"X-aws-ec2-metadata-token-ttl-seconds: 21600\")\n# Retrieve the instance Id of the current EC2 instance\nINSTANCE_ID=$(curl -SsfH \"X-aws-ec2-metadata-token: $TOKEN\" http://169.254.169.254/latest/meta-data/instance-id)\n\n# aws --region eu-central-1 ec2 stop-instances --instance-ids $INSTANCE_ID\n\n#!/bin/bash\nyum update -y\nyum install -y httpd.x86_64\nsystemctl start httpd.service\nsystemctl enable httpd.service\necho “Hello World from $(hostname -f)” > /var/www/html/index.html\n    "
         }
       },
       "DependsOn": [
