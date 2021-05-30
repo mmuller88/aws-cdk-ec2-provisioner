@@ -59,7 +59,6 @@ export async function handler(event: lambda.AppSyncResolverEvent<QueryEc2Args> |
                 getSecretValueResult = await ssm.getSecretValue(getSecretValueParam).promise();
               } catch (error) {
                 console.debug(`Couldn't get the ssm secret with error: ${JSON.stringify(error)}. But ignoringt that!`);
-
               }
               console.debug(`getSecretValueResult: ${JSON.stringify(getSecretValueResult)}`);
               instances.push({
