@@ -38,6 +38,12 @@ export class Ec2Stack extends CustomStack {
       isDefault: true,
     });
 
+    const securityGroup = new ec2.SecurityGroup(this, 'sg', {
+      vpc: vpc,
+    });
+
+    securityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(22));
+
     const userData = ec2.UserData.forLinux();
     userData.addCommands(`
 # Retrieve token for accessing EC2 instance metadata (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html)
@@ -101,6 +107,7 @@ INSTANCE_ID=$(curl -SsfH "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.2
       instanceName: `vm-${identifier}`,
       instanceType: new ec2.InstanceType('t2.micro'),
       vpc,
+      securityGroup,
       keyName: key.keyPairName,
       machineImage: ec2.MachineImage.latestAmazonLinux({
         generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,

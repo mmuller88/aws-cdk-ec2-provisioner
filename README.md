@@ -33,6 +33,14 @@ yarn codegen
 yarn dev
 ```
 
+# Connect to VM:
+
+1) Download key and save as vm.pem
+2) connect with terminal using vm.pem and public dns name like:
+```
+ssh -i "vm.pem" ec2-3-126-251-42.eu-central-1.compute.amazonaws.com 
+```
+
 # Misc
 
 yes | yarn cdkDestroy '_' && yarn cdkDeploy '_' --require-approval never

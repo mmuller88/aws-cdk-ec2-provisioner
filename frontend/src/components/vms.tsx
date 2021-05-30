@@ -1,5 +1,6 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { AppContext } from '../App';
+import { State } from '../lib/api';
 
 export interface RouteParams {
   id: string;
@@ -35,10 +36,10 @@ export function Vms({ match }: RouteComponentProps<RouteParams>) {
                   <h5>Id: <a href={"#/vms/"+ec2.id}>{ec2.id}</a></h5>
                   <h5>VmType: {ec2.vmType}</h5>
                   <h4>UserId: {ec2.userId}</h4>
-                  <h5>Instance name: {ec2.name}</h5>
+                  <h5>VM name: {ec2.name}</h5>
                   <h5>State: {ec2.state}</h5>
-                  <h5>PublicDnsName: {ec2.publicDnsName}</h5>
-                  <h5>PublicKey: {ec2.publicKey}</h5>
+                  <h5>PublicDnsName: {ec2.state !== State.Running ? 'VM not running so no public dns name!' : <a href={ec2.publicDnsName}>{ec2.publicDnsName}</a>}</h5>
+                  <h5>PrivateKey: {ec2.privateKey}</h5>
                   <h5>Associated Config: {configResult?.data.listEc2Configs.items.filter(c => c.userId === ec2.userId && c.vmType === ec2.vmType).map(c => <a href={"#/configs/"+c.id}>{c.id}</a>)}</h5>
                 </div>
               )

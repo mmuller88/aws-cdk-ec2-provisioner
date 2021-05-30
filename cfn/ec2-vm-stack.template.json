@@ -1,24 +1,31 @@
 {
-  "Parameters": {
-    "userIdParam": {
-      "Type": "String",
-      "Default": "noUserId"
-    },
-    "vmTypeParam": {
-      "Type": "String",
-      "Default": "-2"
-    },
-    "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter": {
-      "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
-      "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
-    },
-    "BootstrapVersion": {
-      "Type": "AWS::SSM::Parameter::Value<String>",
-      "Default": "/cdk-bootstrap/hnb659fds/version",
-      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store."
-    }
-  },
   "Resources": {
+    "sg29196201": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "ec2-vm-stack/sg",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1"
+          }
+        ],
+        "SecurityGroupIngress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "from 0.0.0.0/0:22",
+            "FromPort": 22,
+            "IpProtocol": "tcp",
+            "ToPort": 22
+          }
+        ],
+        "VpcId": "vpc-568dbd3d"
+      },
+      "Metadata": {
+        "aws:cdk:path": "ec2-vm-stack/sg/Resource"
+      }
+    },
     "AKeyPairEC2KeyPairkeyF45715FC": {
       "Type": "Custom::EC2-Key-Pair",
       "Properties": {
@@ -281,59 +288,6 @@
         "aws:asset:property": "Code"
       }
     },
-    "instanceInstanceSecurityGroup725C795D": {
-      "Type": "AWS::EC2::SecurityGroup",
-      "Properties": {
-        "GroupDescription": "ec2-vm-stack/instance/InstanceSecurityGroup",
-        "SecurityGroupEgress": [
-          {
-            "CidrIp": "0.0.0.0/0",
-            "Description": "Allow all outbound traffic by default",
-            "IpProtocol": "-1"
-          }
-        ],
-        "Tags": [
-          {
-            "Key": "Name",
-            "Value": {
-              "Fn::Join": [
-                "",
-                [
-                  "vm-",
-                  {
-                    "Ref": "userIdParam"
-                  },
-                  "-",
-                  {
-                    "Ref": "vmTypeParam"
-                  }
-                ]
-              ]
-            }
-          },
-          {
-            "Key": "Owner",
-            "Value": "Hacklab"
-          },
-          {
-            "Key": "UserId",
-            "Value": {
-              "Ref": "userIdParam"
-            }
-          },
-          {
-            "Key": "VmType",
-            "Value": {
-              "Ref": "vmTypeParam"
-            }
-          }
-        ],
-        "VpcId": "vpc-568dbd3d"
-      },
-      "Metadata": {
-        "aws:cdk:path": "ec2-vm-stack/instance/InstanceSecurityGroup/Resource"
-      }
-    },
     "instanceInstanceRoleF436EE92": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -457,7 +411,7 @@
         "SecurityGroupIds": [
           {
             "Fn::GetAtt": [
-              "instanceInstanceSecurityGroup725C795D",
+              "sg29196201",
               "GroupId"
             ]
           }
@@ -514,11 +468,30 @@
     "CDKMetadata": {
       "Type": "AWS::CDK::Metadata",
       "Properties": {
-        "Analytics": "v2:deflate64:H4sIAAAAAAAAA2WOwU7DMBBEv6V3Z9sAgisoUhEHpCj9gmWzjdzGXuS1QZXlf6emCgVxmtHuzNO00G7uoV094qc2NB7XmSQw5F1EOpqBVVIgNt3e9xjQceRguqRR3O/fj39S5XjuTtZPphOvMSSKxVR6tuggv6LHicdeZkun2v17GGS+EKteQ1f3cmaiJ+6D7O3Mxczo3kaEvE2eohVfQ4svRm8brJsUvqcZphvIC8PsmFKw8fQcJL3X4r/DEi2lGC8jw0HXH+0dtA+wWR3U2iYkH61jGC76BWDp4fNRAQAA"
+        "Analytics": "v2:deflate64:H4sIAAAAAAAAA1WP0U7DMAxFv2XvqbcAgldQJdAeJlXlC0zqVdmaGMUJaIry7zRUZezpXvn6Htka9O4R9OYZv6Uxw3mbDQeC/B7RnFVPwikYUu3RdxjQUaSg2iSR3f/sz7+IUJy7o/WjatlLDMnEoio9k7mbwWRSsPHyFjh91u7tYD9X0C/U1Rdl0UE+oMeRho4nay41vx30PC23VL0uXd2K6wIf7TRTJ3QfA0J+Td5Ey74urb4ouW+wfiPw+1QpyvNAcJLtl34A/QS7zUmsbULy0TqCftEfAwkJi1EBAAA="
       },
       "Metadata": {
         "aws:cdk:path": "ec2-vm-stack/CDKMetadata/Default"
       }
+    }
+  },
+  "Parameters": {
+    "userIdParam": {
+      "Type": "String",
+      "Default": "noUserId"
+    },
+    "vmTypeParam": {
+      "Type": "String",
+      "Default": "-2"
+    },
+    "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter": {
+      "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+      "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+    },
+    "BootstrapVersion": {
+      "Type": "AWS::SSM::Parameter::Value<String>",
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store."
     }
   },
   "Rules": {
