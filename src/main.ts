@@ -16,7 +16,7 @@ new Ec2Stack(app, 'ec2-vm-stack', {
   stackName: `vm-${userId ?? 'noUserId'}-${vmType ?? 'noVmType'}`,
   env: {
     account: '981237193288',
-    region: 'us-east-1',
+    region: 'eu-central-1',
   },
   userId: userId ?? 'noUserId',
   vmType: vmType ?? -1,

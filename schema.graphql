@@ -25,6 +25,7 @@ type Ec2 {
   name: String!
   state: State!
   ip: String
+  publicKey: String
 }
 
 type Query {

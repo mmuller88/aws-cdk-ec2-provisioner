@@ -20,6 +20,8 @@ export const listEc2 = /* GraphQL */ `
       vmType
       name
       state
+      ip
+      publicKey
     }
   }
 `;

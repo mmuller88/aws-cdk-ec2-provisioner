@@ -4,6 +4,7 @@ import * as lambda from 'aws-lambda';
 import * as AWS from 'aws-sdk';
 // import { Ec2, State } from './../../frontend/src/lib/api';
 const ec2 = new AWS.EC2();
+const ssm = new AWS.SecretsManager();
 
 export interface QueryEc2Args {
 
@@ -17,6 +18,8 @@ export type Ec2 = {
   state: string;
   userId: string;
   vmType: number;
+  ip: string;
+  publicKey: string;
 };
 
 // export interface ResolverEvent {
@@ -47,13 +50,20 @@ export async function handler(event: lambda.AppSyncResolverEvent<QueryEc2Args> |
           for (const instance of lookupInstances) {
             if (instance) {
               console.debug(`instance: ${JSON.stringify(instance)}`);
+              const userId = instance.Tags?.filter(t => t.Key == 'UserId')[0].Value || 'noUserId';
+              const vmType = Number(instance.Tags?.filter(t => t.Key == 'VmType')[0].Value) || -1;
+              const getSecretValueParam: AWS.SecretsManager.Types.GetSecretValueRequest = { SecretId: `ec2-ssh-key/key-${userId}-${vmType}/private` };
+              console.debug(`getSecretValueParam: ${JSON.stringify(getSecretValueParam)}`);
+              const getSecretValueResult = await ssm.getSecretValue(getSecretValueParam).promise();
+              console.debug(`getSecretValueResult: ${JSON.stringify(getSecretValueResult)}`);
               instances.push({
                 id: instance.InstanceId || 'noId',
                 name: instance.Tags?.filter(t => t.Key == 'Name')[0].Value || 'noName',
                 state: instance.State?.Name?.toUpperCase() || 'UNKOWN',
-                userId: instance.Tags?.filter(t => t.Key == 'UserId')[0].Value || 'noUserId',
-                vmType: Number(instance.Tags?.filter(t => t.Key == 'VmType')[0].Value) || -1,
-                ip: instance.PublicIpAddress,
+                userId,
+                vmType,
+                ip: instance.PublicIpAddress || 'noIp',
+                publicKey: getSecretValueResult.SecretString || 'noKey',
               });
             }
           }

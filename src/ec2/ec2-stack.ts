@@ -33,14 +33,16 @@ aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
     });
 
     const vmTypeParam = new cdk.CfnParameter(this, 'vmTypeParam', {
-      default: '-1',
+      default: '-2',
     });
 
     const identifier = `${userIdParam.value.toString() ?? 'noUserId'}-${vmTypeParam.value.toString() ?? '-1'}`;
     const key = new KeyPair(this, 'A-Key-Pair', {
       name: 'key',
-      // description: 'This is a Key Pair',
+      // description: 'This is a Key Pair'
+      // exposePublicKey: true,
       storePublicKey: true,
+      removeKeySecretsAfterDays: 7,
     });
 
     const cfnKey = key.node.tryFindChild('EC2-Key-Pair-key')?.node.defaultChild as cdk.CfnCustomResource;
