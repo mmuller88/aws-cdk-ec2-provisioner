@@ -6,7 +6,7 @@
     },
     "vmTypeParam": {
       "Type": "String",
-      "Default": "-1"
+      "Default": "-2"
     },
     "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter": {
       "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
@@ -19,6 +19,226 @@
     }
   },
   "Resources": {
+    "AKeyPairEC2KeyPairkeyF45715FC": {
+      "Type": "Custom::EC2-Key-Pair",
+      "Properties": {
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "EC2KeyNameManagerLambdaBE629145",
+            "Arn"
+          ]
+        },
+        "Name": {
+          "Fn::Join": [
+            "",
+            [
+              "key-",
+              {
+                "Ref": "userIdParam"
+              },
+              "-",
+              {
+                "Ref": "vmTypeParam"
+              }
+            ]
+          ]
+        },
+        "Description": "",
+        "KmsPrivate": "alias/aws/secretsmanager",
+        "KmsPublic": "alias/aws/secretsmanager",
+        "StorePublicKey": true,
+        "ExposePublicKey": false,
+        "RemoveKeySecretsAfterDays": 7,
+        "SecretPrefix": "ec2-ssh-key/",
+        "StackName": "vm-noUserId-noVmType",
+        "Tags": {
+          "CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+        }
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "ec2-vm-stack/A-Key-Pair/EC2-Key-Pair-key/Default"
+      }
+    },
+    "EC2KeyPairManagerPolicyEBBC1576": {
+      "Type": "AWS::IAM::ManagedPolicy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "ec2:DescribeKeyPairs",
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": [
+                "ec2:CreateKeyPair",
+                "ec2:CreateTags"
+              ],
+              "Condition": {
+                "StringLike": {
+                  "aws:RequestTag/CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+                }
+              },
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":ec2:*:*:key-pair/*"
+                  ]
+                ]
+              }
+            },
+            {
+              "Action": [
+                "ec2:CreateTags",
+                "ec2:DeleteKeyPair",
+                "ec2:DeleteTags"
+              ],
+              "Condition": {
+                "StringLike": {
+                  "ec2:ResourceTag/CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+                }
+              },
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":ec2:*:*:key-pair/*"
+                  ]
+                ]
+              }
+            },
+            {
+              "Action": "secretsmanager:ListSecrets",
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": [
+                "secretsmanager:CreateSecret",
+                "secretsmanager:TagResource"
+              ],
+              "Condition": {
+                "StringLike": {
+                  "aws:RequestTag/CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+                }
+              },
+              "Effect": "Allow",
+              "Resource": "*"
+            },
+            {
+              "Action": [
+                "secretsmanager:DeleteResourcePolicy",
+                "secretsmanager:DeleteSecret",
+                "secretsmanager:DescribeSecret",
+                "secretsmanager:GetResourcePolicy",
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:ListSecretVersionIds",
+                "secretsmanager:PutResourcePolicy",
+                "secretsmanager:PutSecretValue",
+                "secretsmanager:RestoreSecret",
+                "secretsmanager:UntagResource",
+                "secretsmanager:UpdateSecret",
+                "secretsmanager:UpdateSecretVersionStage"
+              ],
+              "Condition": {
+                "StringLike": {
+                  "secretsmanager:ResourceTag/CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+                }
+              },
+              "Effect": "Allow",
+              "Resource": "*"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "Description": "Used by Lambda CFN-Resource-Custom-EC2-Key-Pair, which is a custom CFN resource, managing EC2 Key Pairs",
+        "ManagedPolicyName": "vm-noUserId-noVmType-CFN-Resource-Custom-EC2-Key-Pair",
+        "Path": "/"
+      },
+      "Metadata": {
+        "aws:cdk:path": "ec2-vm-stack/EC2-Key-Pair-Manager-Policy/Resource"
+      }
+    },
+    "EC2KeyPairManagerRoleB243C519": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "Description": "Used by Lambda CFN-Resource-Custom-EC2-Key-Pair, which is a custom CFN resource, managing EC2 Key Pairs",
+        "ManagedPolicyArns": [
+          {
+            "Ref": "EC2KeyPairManagerPolicyEBBC1576"
+          },
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ],
+        "RoleName": "vm-noUserId-noVmType-CFN-Resource-Custom-EC2-Key-Pair"
+      },
+      "Metadata": {
+        "aws:cdk:path": "ec2-vm-stack/EC2-Key-Pair-Manager-Role/Resource"
+      }
+    },
+    "EC2KeyNameManagerLambdaBE629145": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": "cdk-hnb659fds-assets-981237193288-eu-central-1",
+          "S3Key": "2026c46dd5ea09f3b1ded7d5ac3af90e3c5401fb9d7f98f9fdd109327e915748.zip"
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "EC2KeyPairManagerRoleB243C519",
+            "Arn"
+          ]
+        },
+        "Description": "Custom CFN resource: Manage EC2 Key Pairs",
+        "FunctionName": "vm-noUserId-noVmType-CFN-Resource-Custom-EC2-Key-Pair",
+        "Handler": "index.handler",
+        "Runtime": "nodejs14.x",
+        "Timeout": 180
+      },
+      "DependsOn": [
+        "EC2KeyPairManagerRoleB243C519"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "ec2-vm-stack/EC2-Key-Name-Manager-Lambda/Resource",
+        "aws:asset:path": "asset.2026c46dd5ea09f3b1ded7d5ac3af90e3c5401fb9d7f98f9fdd109327e915748.zip",
+        "aws:asset:property": "Code"
+      }
+    },
     "instanceInstanceSecurityGroup725C795D": {
       "Type": "AWS::EC2::SecurityGroup",
       "Properties": {
@@ -186,7 +406,12 @@
           "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
         },
         "InstanceType": "t2.micro",
-        "KeyName": "ec2dev",
+        "KeyName": {
+          "Fn::GetAtt": [
+            "AKeyPairEC2KeyPairkeyF45715FC",
+            "KeyPairName"
+          ]
+        },
         "SecurityGroupIds": [
           {
             "Fn::GetAtt": [
@@ -247,7 +472,7 @@
     "CDKMetadata": {
       "Type": "AWS::CDK::Metadata",
       "Properties": {
-        "Analytics": "v2:deflate64:H4sIAAAAAAAAA2WNzQqDMBCEn8V7XE0p7bXgofQm+gQhrhB/smWTtEjIu1ct9tLTLLPfzEiQ5QVkdlNvl+tuLKImRoitV3oUDToKrFFUva0Vqxk9sqjIOs9B+80+kCS2hoj6BPGx/pVdYy3qwMYvd6bw3Og/40CTMGqG2NC0j+1a02T0sm//roOvmXozYUpJWOoQBle85BnkFcpscMbkHKw3M0Lz1Q+/0ep86AAAAA=="
+        "Analytics": "v2:deflate64:H4sIAAAAAAAAA2WOwU7DMBBEv6V3Z9sAgisoUhEHpCj9gmWzjdzGXuS1QZXlf6emCgVxmtHuzNO00G7uoV094qc2NB7XmSQw5F1EOpqBVVIgNt3e9xjQceRguqRR3O/fj39S5XjuTtZPphOvMSSKxVR6tuggv6LHicdeZkun2v17GGS+EKteQ1f3cmaiJ+6D7O3Mxczo3kaEvE2eohVfQ4svRm8brJsUvqcZphvIC8PsmFKw8fQcJL3X4r/DEi2lGC8jw0HXH+0dtA+wWR3U2iYkH61jGC76BWDp4fNRAQAA"
       },
       "Metadata": {
         "aws:cdk:path": "ec2-vm-stack/CDKMetadata/Default"
