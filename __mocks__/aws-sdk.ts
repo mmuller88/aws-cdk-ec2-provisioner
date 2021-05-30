@@ -12,6 +12,17 @@ export class EC2 {
   }
 }
 
+export const getSecretValueResponse = jest.fn().mockReturnValue(Promise.resolve(true));
+const getSecretValueFn = jest.fn().mockImplementation(() => ({ promise: getSecretValueResponse }));
+export class SecretsManager {
+
+  public getSecretValue: jest.Mock<any, any>;
+
+  constructor() {
+    this.getSecretValue = getSecretValueFn;
+  }
+}
+
 export const createStackResponse = jest.fn().mockReturnValue(Promise.resolve(true));
 const createStackFn = jest.fn().mockImplementation(() => ({ promise: createStackResponse }));
 export const updateStackResponse = jest.fn().mockReturnValue(Promise.resolve(true));

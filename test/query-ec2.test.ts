@@ -23,6 +23,8 @@ test('simple listEc2', async () => {
           Tags: [
             { Key: 'Owner', Value: 'Hacklab' },
             { Key: 'Name', Value: 'doiiing' },
+            { Key: 'UserId', Value: 'ichsen' },
+            { Key: 'VmType', Value: '21' },
           ],
           State: {
             Name: 'running',
@@ -41,5 +43,9 @@ test('simple listEc2', async () => {
     id: 'i-123',
     name: 'doiiing',
     state: 'RUNNING',
+    userId: 'ichsen',
+    vmType: 21,
+    ip: 'noIp',
+    publicKey: 'noKey',
   }]);
 });
