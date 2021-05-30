@@ -51,6 +51,7 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
       const createStackResult = await cfn.createStack(createStackParams).promise();
       console.debug(`createStackResult: ${JSON.stringify(createStackResult)}`);
     } catch (error) {
+      console.debug(`Creating failed with this error: ${JSON.stringify(error)}`);
       const updateStackResult = await cfn.updateStack(createStackParams).promise();
       console.debug(`updateStackResult: ${JSON.stringify(updateStackResult)}`);
     }
