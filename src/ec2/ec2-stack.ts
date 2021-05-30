@@ -7,12 +7,32 @@ import * as statement from 'cdk-iam-floyd';
 
 export interface Ec2StackProps extends cdk.StackProps {
   readonly stage: string;
-  readonly userId: string;
-  readonly vmType: number;
+  // readonly userId: string;
+  // readonly vmType: number;
 }
 export class Ec2Stack extends CustomStack {
   constructor(scope: cdk.Construct, id: string, props: Ec2StackProps) {
+    // const newProps = {
+    //   ...props,
+    //   stackName: {
+    //     'Fn::Join': ['',
+    //       [
+    //         'key-',
+    //         {
+    //           Ref: 'userIdParam',
+    //         },
+    //         '-',
+    //         {
+    //           Ref: 'vmTypeParam',
+    //         },
+    //       ]],
+    //   },
+    // };
     super(scope, id, props);
+
+    // const ah = this as cdk.CfnResource;
+    // console.log(this);
+    // ah.addOverride('Name', 'allah');
 
     const vpc = ec2.Vpc.fromLookup(this, 'VPC', {
       isDefault: true,
@@ -43,6 +63,7 @@ aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
       // exposePublicKey: true,
       storePublicKey: true,
       removeKeySecretsAfterDays: 0,
+      resourcePrefix: identifier,
     });
 
     const cfnKey = key.node.tryFindChild('EC2-Key-Pair-key')?.node.defaultChild as cdk.CfnCustomResource;
@@ -60,6 +81,22 @@ aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
         ]],
     });
 
+    // const cfnPolicy = key.node.tryFindChild('EC2-Key-Pair-Manager-Policy')?.node.defaultChild as cdk.CfnCustomResource;
+    // cfnPolicy.addPropertyOverride('Name', {
+    //   'Fn::Join': ['',
+    //     [
+    //       'key-',
+    //       {
+    //         Ref: 'userIdParam',
+    //       },
+    //       '-',
+    //       {
+    //         Ref: 'vmTypeParam',
+    //       },
+    //     ]],
+    // });
+
+
     const instance = new ec2.Instance(this, 'instance', {
       instanceName: `vm-${identifier}`,
       instanceType: new ec2.InstanceType('t2.micro'),
@@ -72,6 +109,7 @@ aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
     });
 
     cdk.Tags.of(instance).add('Owner', 'Hacklab');
+    // cdk.Tags.of(instance).add('Name', `vmm-${identifier}`);
     cdk.Tags.of(instance).add('UserId', userIdParam.value.toString());
     cdk.Tags.of(instance).add('VmType', vmTypeParam.value.toString());
 

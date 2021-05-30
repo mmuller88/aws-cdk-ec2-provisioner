@@ -9,17 +9,12 @@ import { SchedulerStack } from './scheduler-stack';
 
 const app = new core.App();
 
-const userId = app.node.tryGetContext('userId');
-const vmType = app.node.tryGetContext('vmType');
-// stack for deploying with lambda
 new Ec2Stack(app, 'ec2-vm-stack', {
-  stackName: `vm-${userId ?? 'noUserId'}-${vmType ?? 'noVmType'}`,
+  // stackName: `vm-${userId ?? 'noUserId'}-${vmType ?? 'noVmType'}`,
   env: {
     account: '981237193288',
     region: 'eu-central-1',
   },
-  userId: userId ?? 'noUserId',
-  vmType: vmType ?? -1,
   stage: '',
 });
 
@@ -119,8 +114,8 @@ new PipelineStack(app, 'ec2-pro-vm-pipeline', {
     const stack = new Ec2Stack(scope, `ec2-vm-stack-${stageAccount.stage}`, {
       stackName: `ec2-vm-stack-${stageAccount.stage}`,
       stage: stageAccount.stage,
-      userId: 'testUser',
-      vmType: 0,
+      // userId: 'testUser',
+      // vmType: 0,
     });
 
     return stack;

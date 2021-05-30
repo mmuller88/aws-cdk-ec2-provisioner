@@ -48,9 +48,9 @@
         "KmsPublic": "alias/aws/secretsmanager",
         "StorePublicKey": true,
         "ExposePublicKey": false,
-        "RemoveKeySecretsAfterDays": 7,
+        "RemoveKeySecretsAfterDays": 0,
         "SecretPrefix": "ec2-ssh-key/",
-        "StackName": "vm-noUserId-noVmType",
+        "StackName": "ec2-vm-stack",
         "Tags": {
           "CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
         }
@@ -165,7 +165,21 @@
           "Version": "2012-10-17"
         },
         "Description": "Used by Lambda CFN-Resource-Custom-EC2-Key-Pair, which is a custom CFN resource, managing EC2 Key Pairs",
-        "ManagedPolicyName": "vm-noUserId-noVmType-CFN-Resource-Custom-EC2-Key-Pair",
+        "ManagedPolicyName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "userIdParam"
+              },
+              "-",
+              {
+                "Ref": "vmTypeParam"
+              },
+              "-CFN-Resource-Custom-EC2-Key-Pair"
+            ]
+          ]
+        },
         "Path": "/"
       },
       "Metadata": {
@@ -205,7 +219,21 @@
             ]
           }
         ],
-        "RoleName": "vm-noUserId-noVmType-CFN-Resource-Custom-EC2-Key-Pair"
+        "RoleName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "userIdParam"
+              },
+              "-",
+              {
+                "Ref": "vmTypeParam"
+              },
+              "-CFN-Resource-Custom-EC2-Key-Pair"
+            ]
+          ]
+        }
       },
       "Metadata": {
         "aws:cdk:path": "ec2-vm-stack/EC2-Key-Pair-Manager-Role/Resource"
@@ -225,7 +253,21 @@
           ]
         },
         "Description": "Custom CFN resource: Manage EC2 Key Pairs",
-        "FunctionName": "vm-noUserId-noVmType-CFN-Resource-Custom-EC2-Key-Pair",
+        "FunctionName": {
+          "Fn::Join": [
+            "",
+            [
+              {
+                "Ref": "userIdParam"
+              },
+              "-",
+              {
+                "Ref": "vmTypeParam"
+              },
+              "-CFN-Resource-Custom-EC2-Key-Pair"
+            ]
+          ]
+        },
         "Handler": "index.handler",
         "Runtime": "nodejs14.x",
         "Timeout": 180
