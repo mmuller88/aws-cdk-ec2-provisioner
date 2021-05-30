@@ -37,7 +37,7 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
     const createStackParams: AWS.CloudFormation.Types.CreateStackInput = {
       StackName: `stack-${newImage.userId ?? 'noUserId'}-${newImage.vmType ?? '-1'}`,
       TemplateBody: templateBody,
-      Capabilities: ['CAPABILITY_IAM'],
+      Capabilities: ['CAPABILITY_IAM', 'CAPABILITY_NAMED_IAM'],
       Parameters: [{
         ParameterKey: 'userIdParam',
         ParameterValue: newImage.userId,
