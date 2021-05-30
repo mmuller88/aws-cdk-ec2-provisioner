@@ -79,7 +79,7 @@ export class SchedulerStack extends CustomStack {
         .toAuthorizeSecurityGroupEgress().toRunInstances().toDescribeInstances().toTerminateInstances().toDeleteSecurityGroup().toDeleteKeyPair(),
     );
     cdkSchedulerLambda.addToRolePolicy(
-      new statement.Lambda().allow().toGetFunction().toCreateFunction().toDeleteFunction(),
+      new statement.Lambda().allow().toGetFunction().toCreateFunction().toDeleteFunction().toInvokeFunction(),
     );
   }
 }
