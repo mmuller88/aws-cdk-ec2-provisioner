@@ -53,6 +53,7 @@ export async function handler(event: lambda.AppSyncResolverEvent<QueryEc2Args> |
                 state: instance.State?.Name?.toUpperCase() || 'UNKOWN',
                 userId: instance.Tags?.filter(t => t.Key == 'UserId')[0].Value || 'noUserId',
                 vmType: Number(instance.Tags?.filter(t => t.Key == 'VmType')[0].Value) || -1,
+                ip: instance.PublicIpAddress,
               });
             }
           }

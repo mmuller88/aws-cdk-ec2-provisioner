@@ -2407,6 +2407,21 @@ cdk-assets@1.106.1:
     glob "^7.1.7"
     yargs "^16.2.0"
 
+cdk-ec2-key-pair@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/cdk-ec2-key-pair/-/cdk-ec2-key-pair-2.2.0.tgz#7cd2fbe4d976223f2caa9e65d5bc1b5e52f37119"
+  integrity sha512-mL5kXP8pKfrmpVioz96n1NncH0A4UCO3NvgGYqjv22LVLfAKEs7ps/CWrpOx9trPPEGcZpWa5OGi83goMNJWHQ==
+  dependencies:
+    cdk-iam-floyd "^0.112.1"
+
+cdk-iam-floyd@^0.112.1:
+  version "0.112.1"
+  resolved "https://registry.yarnpkg.com/cdk-iam-floyd/-/cdk-iam-floyd-0.112.1.tgz#eae1f0ea2a4700c1baf804326c0e3c057387c101"
+  integrity sha512-5ZAalseI0recnkTz9pRF/ZuzuKEZ4xFHDgNrl3LS/kJdqEmMRPEzbqMxW77QHzTVO4NTbFZ7HsAZ/PyjtdTMUw==
+  dependencies:
+    "@udondan/common-substrings" "^3.0.2"
+    regex-parser "^2.2.11"
+
 cdk-iam-floyd@^0.190.0:
   version "0.190.0"
   resolved "https://registry.npmjs.org/cdk-iam-floyd/-/cdk-iam-floyd-0.190.0.tgz"

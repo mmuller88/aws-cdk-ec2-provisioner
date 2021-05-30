@@ -2,6 +2,7 @@ import * as ec2 from '@aws-cdk/aws-ec2';
 // import * as iam from '@aws-cdk/aws-iam';
 import * as cdk from '@aws-cdk/core';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
+import { KeyPair } from 'cdk-ec2-key-pair';
 import * as statement from 'cdk-iam-floyd';
 
 export interface Ec2StackProps extends cdk.StackProps {
@@ -35,18 +36,38 @@ aws --region ${this.region} ec2 stop-instances --instance-ids $INSTANCE_ID
       default: '-1',
     });
 
+    const identifier = `${userIdParam.value.toString() ?? 'noUserId'}-${vmTypeParam.value.toString() ?? '-1'}`;
+    const key = new KeyPair(this, 'A-Key-Pair', {
+      name: 'key',
+      // description: 'This is a Key Pair',
+      storePublicKey: true,
+    });
+
+    const cfnKey = key.node.tryFindChild('EC2-Key-Pair-key')?.node.defaultChild as cdk.CfnCustomResource;
+    cfnKey.addPropertyOverride('Name', {
+      'Fn::Join': ['',
+        [
+          'key-',
+          {
+            Ref: 'userIdParam',
+          },
+          '-',
+          {
+            Ref: 'vmTypeParam',
+          },
+        ]],
+    });
 
     const instance = new ec2.Instance(this, 'instance', {
-      instanceName: `vm-${userIdParam.value.toString() ?? 'noUserId'}-${vmTypeParam.value.toString() ?? '-1'}`,
+      instanceName: `vm-${identifier}`,
       instanceType: new ec2.InstanceType('t2.micro'),
       vpc,
-      keyName: 'ec2dev',
+      keyName: key.keyPairName,
       machineImage: ec2.MachineImage.latestAmazonLinux({
         generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
       }),
       userData,
     });
-
 
     cdk.Tags.of(instance).add('Owner', 'Hacklab');
     cdk.Tags.of(instance).add('UserId', userIdParam.value.toString());

@@ -8,6 +8,7 @@ const deps = [
   'aws-cdk-staging-pipeline',
   'cdk-appsync-transformer',
   'cdk-iam-floyd',
+  'cdk-ec2-key-pair',
 ];
 
 const project = new AwsCdkTypeScriptApp({

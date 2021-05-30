@@ -43,6 +43,10 @@
       "type": "build"
     },
     {
+      "name": "cdk-ec2-key-pair",
+      "type": "build"
+    },
+    {
       "name": "cdk-iam-floyd",
       "type": "build"
     },
@@ -211,6 +215,10 @@
     },
     {
       "name": "cdk-appsync-transformer",
+      "type": "runtime"
+    },
+    {
+      "name": "cdk-ec2-key-pair",
       "type": "runtime"
     },
     {
