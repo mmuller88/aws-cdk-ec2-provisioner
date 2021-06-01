@@ -1,9 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-// import { readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import * as lambda from 'aws-lambda';
 
 import * as AWS from 'aws-sdk';
-const ec2Stack = '../../cfn/ec2-vm-stack.template.json';
 import { Ec2 } from './query-ec2';
 
 const cfn = new AWS.CloudFormation();
@@ -30,14 +29,14 @@ export async function handler(event: lambda.DynamoDBStreamEvent) {
     console.debug('no OldImage existing');
   }
 
-  // const templateBody = readFileSync('./ec2-vm-stack.template.json', 'utf-8');
-  // console.debug(`templateBody: ${JSON.stringify(templateBody)}`);
+  const templateBody = readFileSync('./ec2-vm-stack.template.json', 'utf-8');
+  console.debug(`templateBody: ${JSON.stringify(templateBody)}`);
 
   if (newImage) {
     console.debug('Having NewImage so creating or updating');
     const createStackParams: AWS.CloudFormation.Types.CreateStackInput = {
       StackName: `stack-${newImage.userId ?? 'noUserId'}-${newImage.vmType ?? '-1'}`,
-      TemplateBody: ec2Stack,
+      TemplateBody: templateBody,
       Capabilities: ['CAPABILITY_IAM', 'CAPABILITY_NAMED_IAM'],
       Parameters: [{
         ParameterKey: 'userIdParam',
