@@ -7,6 +7,16 @@ import { handler } from '../src/lambda/scheduler';
 AWS.DynamoDB.Converter;
 const cloudwatch = new AWS.CloudWatch();
 
+const expectedMetricData = {
+  Dimensions: [
+    {
+      Name: 'UNIQUE_PAGES',
+      Value: 'URLS',
+    },
+  ],
+  Unit: 'None',
+  Value: 1.0,
+};
 describe('all', () => {
   test('create / update cfn successfully', async () => {
     let response = await handler(event);
@@ -34,6 +44,7 @@ describe('all', () => {
     expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
       Namespace: 'Scheduler',
       MetricData: [{
+        ...expectedMetricData,
         MetricName: 'CreateUpdateFailed',
       }],
     });
@@ -47,6 +58,7 @@ describe('all', () => {
     expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
       Namespace: 'Scheduler',
       MetricData: [{
+        ...expectedMetricData,
         MetricName: 'CreateUpdateFailed',
       }],
     });
@@ -59,6 +71,7 @@ describe('all', () => {
     expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
       Namespace: 'Scheduler',
       MetricData: [{
+        ...expectedMetricData,
         MetricName: 'DeleteFailed',
       }],
     });
@@ -70,6 +83,7 @@ describe('all', () => {
     expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
       Namespace: 'Scheduler',
       MetricData: [{
+        ...expectedMetricData,
         MetricName: 'UnknownFailed',
       }],
     });
@@ -81,6 +95,7 @@ describe('all', () => {
     expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
       Namespace: 'Scheduler',
       MetricData: [{
+        ...expectedMetricData,
         MetricName: 'EventFailed',
       }],
     });
@@ -92,6 +107,7 @@ describe('all', () => {
     expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
       Namespace: 'Scheduler',
       MetricData: [{
+        ...expectedMetricData,
         MetricName: 'EventFailed',
       }],
     });
@@ -103,6 +119,7 @@ describe('all', () => {
     expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
       Namespace: 'Scheduler',
       MetricData: [{
+        ...expectedMetricData,
         MetricName: 'EventFailed',
       }],
     });

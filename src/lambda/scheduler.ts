@@ -150,6 +150,12 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any) {
     Namespace: 'Scheduler',
     MetricData: [{
       MetricName: 'UnknownFailed',
+      Dimensions: [
+        {
+          Name: 'UNIQUE_PAGES',
+          Value: 'URLS',
+        },
+      ],
       Unit: 'None',
       Value: 1.0,
     }],
