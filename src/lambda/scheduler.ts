@@ -23,7 +23,7 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any) {
             Value: 'URLS',
           },
         ],
-        Timestamp: new Date(),
+        // Timestamp: new Date(),
         Unit: 'Count',
         Value: 1.0,
       }],

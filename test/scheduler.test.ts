@@ -14,7 +14,7 @@ const expectedMetricData = {
       Value: 'URLS',
     },
   ],
-  Unit: 'None',
+  Unit: 'Count',
   Value: 1.0,
 };
 describe('all', () => {
