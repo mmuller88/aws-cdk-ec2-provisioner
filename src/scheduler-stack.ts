@@ -22,20 +22,19 @@ export class SchedulerStack extends CustomStack {
     // const cdkSchedulerLambda = new lambda.DockerImageFunction(this, 'scheduler', {
     const cdkSchedulerLambda = new lambdajs.NodejsFunction(this, 'scheduler', {
       entry: `${path.join(__dirname)}/lambda/scheduler.ts`,
-      bundling: {
-        commandHooks: {
-          afterBundling(inputDir: string, outputDir: string): string[] {
-            return [`cp ${inputDir}/cfn/ec2-vm-stack.template.json ${outputDir} 2>/dev/null`];
-          },
-          beforeInstall(_inputDir: string, _outputDir: string): string[] {
-            return [];
-          },
-          beforeBundling(_inputDir: string, _outputDir: string): string[] {
-            return [];
-          },
-        },
-      },
-      // code: lambda.DockerImageCode.fromImageAsset(dockerfile),
+      // bundling: {
+      //   commandHooks: {
+      //     afterBundling(inputDir: string, outputDir: string): string[] {
+      //       return [`cp ${inputDir}/cfn/ec2-vm-stack.template.json ${outputDir} 2>/dev/null`];
+      //     },
+      //     beforeInstall(_inputDir: string, _outputDir: string): string[] {
+      //       return [];
+      //     },
+      //     beforeBundling(_inputDir: string, _outputDir: string): string[] {
+      //       return [];
+      //     },
+      //   },
+      // },
       logRetention: logs.RetentionDays.ONE_DAY,
       environment: {},
       timeout: core.Duration.minutes(15),
