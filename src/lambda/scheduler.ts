@@ -23,10 +23,12 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any) {
             Value: 'URLS',
           },
         ],
-        Unit: 'None',
+        Timestamp: new Date(),
+        Unit: 'Count',
         Value: 1.0,
       }],
     };
+    console.debug(`putMetricDataParam: ${JSON.stringify(putMetricDataParam)}`);
     const putMetricDataResult = await cw.putMetricData(putMetricDataParam).promise();
     console.debug(`putMetricDataResult: ${JSON.stringify(putMetricDataResult)}`);
     return 'EventFailed';
@@ -84,10 +86,11 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any) {
                   Value: 'URLS',
                 },
               ],
-              Unit: 'None',
+              Unit: 'Count',
               Value: 1.0,
             }],
           };
+          console.debug(`putMetricDataParam: ${JSON.stringify(putMetricDataParam)}`);
           const putMetricDataResult = await cw.putMetricData(putMetricDataParam).promise();
           console.debug(`putMetricDataResult: ${JSON.stringify(putMetricDataResult)}`);
           return 'CreateUpdateFailed';
@@ -123,10 +126,11 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any) {
                   Value: 'URLS',
                 },
               ],
-              Unit: 'None',
+              Unit: 'Count',
               Value: 1.0,
             }],
           };
+          console.debug(`putMetricDataParam: ${JSON.stringify(putMetricDataParam)}`);
           const putMetricDataResult = await cw.putMetricData(putMetricDataParam).promise();
           console.debug(`putMetricDataResult: ${JSON.stringify(putMetricDataResult)}`);
           return 'DeleteFailed';
@@ -156,10 +160,11 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any) {
           Value: 'URLS',
         },
       ],
-      Unit: 'None',
+      Unit: 'Count',
       Value: 1.0,
     }],
   };
+  console.debug(`putMetricDataParam: ${JSON.stringify(putMetricDataParam)}`);
   const putMetricDataResult = await cw.putMetricData(putMetricDataParam).promise();
   console.debug(`putMetricDataResult: ${JSON.stringify(putMetricDataResult)}`);
   return 'UnknownFailed';

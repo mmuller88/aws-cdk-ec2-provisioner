@@ -13,9 +13,11 @@ export class CloudWatchStack extends CustomStack {
     const createUpdateMetric = new cw.Metric({
       namespace: 'Scheduler',
       metricName: 'CreateUpdateFailed',
+      unit: cw.Unit.COUNT,
+      statistic: 'SampleCount',
     });
 
-    new cw.Alarm(this, 'Alarm1', {
+    new cw.Alarm(this, 'createUpdateAlarm', {
       metric: createUpdateMetric,
       threshold: 1,
       evaluationPeriods: 1,
@@ -25,9 +27,11 @@ export class CloudWatchStack extends CustomStack {
     const deleteMetric = new cw.Metric({
       namespace: 'Scheduler',
       metricName: 'DeleteFailed',
+      unit: cw.Unit.COUNT,
+      statistic: 'SampleCount',
     });
 
-    new cw.Alarm(this, 'Alarm2', {
+    new cw.Alarm(this, 'deleteMetricAlarm', {
       metric: deleteMetric,
       threshold: 1,
       evaluationPeriods: 1,
@@ -37,9 +41,11 @@ export class CloudWatchStack extends CustomStack {
     const eventMetric = new cw.Metric({
       namespace: 'Scheduler',
       metricName: 'EventFailed',
+      unit: cw.Unit.COUNT,
+      statistic: 'SampleCount',
     });
 
-    new cw.Alarm(this, 'Alarm3', {
+    new cw.Alarm(this, 'eventMetricAlarm', {
       metric: eventMetric,
       threshold: 1,
       evaluationPeriods: 1,
@@ -49,9 +55,11 @@ export class CloudWatchStack extends CustomStack {
     const unknownMetric = new cw.Metric({
       namespace: 'Scheduler',
       metricName: 'UnknownFailed',
+      unit: cw.Unit.COUNT,
+      statistic: 'SampleCount',
     });
 
-    new cw.Alarm(this, 'Alarm4', {
+    new cw.Alarm(this, 'unknownMetricAlarm', {
       metric: unknownMetric,
       threshold: 1,
       evaluationPeriods: 1,
