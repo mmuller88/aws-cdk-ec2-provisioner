@@ -5,6 +5,10 @@
       "type": "build"
     },
     {
+      "name": "@types/deep-diff",
+      "type": "build"
+    },
+    {
       "name": "@types/jest",
       "type": "build"
     },
@@ -128,6 +132,11 @@
       "type": "runtime"
     },
     {
+      "name": "@aws-cdk/aws-cloudwatch",
+      "version": "1.106.1",
+      "type": "runtime"
+    },
+    {
       "name": "@aws-cdk/aws-codepipeline-actions",
       "version": "1.106.1",
       "type": "runtime"
@@ -199,6 +208,10 @@
     },
     {
       "name": "@types/aws-lambda",
+      "type": "runtime"
+    },
+    {
+      "name": "@types/deep-diff",
       "type": "runtime"
     },
     {

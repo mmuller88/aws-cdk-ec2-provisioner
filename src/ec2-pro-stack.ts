@@ -1,6 +1,7 @@
 import * as core from '@aws-cdk/core';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
 import { AppSyncStack } from './appsync-stack';
+import { CloudWatchStack } from './cloudwatch-stack';
 import { SchedulerStack } from './scheduler-stack';
 import { StaticSite } from './static-site';
 
@@ -31,7 +32,12 @@ export class Ec2ProStack extends CustomStack {
       appSyncTransformer: appsync.appSyncTransformer,
     });
 
-    this.cfnOutputs = { ...appsync.cfnOutputs, ...staticsite.cfnOutputs, ...scheduler.cfnOutputs };
+    const cloudwatch = new CloudWatchStack(scope, `ec2-pro-cloudwatch-stack-${props.stage}`, {
+      stackName: `ec2-pro-cloudwatch-stack-${props.stage}`,
+      stage: props.stage,
+    });
+
+    this.cfnOutputs = { ...appsync.cfnOutputs, ...staticsite.cfnOutputs, ...scheduler.cfnOutputs, ...cloudwatch.cfnOutputs };
 
   }
 }

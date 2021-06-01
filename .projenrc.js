@@ -1,4 +1,4 @@
-const { web, AwsCdkTypeScriptApp, NodePackageManager} = require('projen');
+const { web, AwsCdkTypeScriptApp, NodePackageManager } = require('projen');
 
 const deps = [
   '@types/aws-lambda',
@@ -7,6 +7,7 @@ const deps = [
   'esbuild@^0',
   'aws-cdk-staging-pipeline',
   'cdk-appsync-transformer',
+  '@types/deep-diff',
   'cdk-iam-floyd',
   'cdk-ec2-key-pair',
 ];
@@ -34,6 +35,7 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-lambda',
     '@aws-cdk/aws-logs',
     '@aws-cdk/aws-ec2',
+    '@aws-cdk/aws-cloudwatch',
   ],
   deps,
   devDeps: deps,

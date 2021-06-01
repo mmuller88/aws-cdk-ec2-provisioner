@@ -12,6 +12,17 @@ export class EC2 {
   }
 }
 
+export const putMetricDataResponse = jest.fn().mockReturnValue(Promise.resolve(true));
+const putMetricDataFn = jest.fn().mockImplementation(() => ({ promise: putMetricDataResponse }));
+export class CloudWatch {
+
+  public putMetricData: jest.Mock<any, any>;
+
+  constructor() {
+    this.putMetricData = putMetricDataFn;
+  }
+}
+
 export const getSecretValueResponse = jest.fn().mockReturnValue(Promise.resolve(true));
 const getSecretValueFn = jest.fn().mockImplementation(() => ({ promise: getSecretValueResponse }));
 export class SecretsManager {

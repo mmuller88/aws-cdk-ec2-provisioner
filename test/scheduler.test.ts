@@ -5,11 +5,11 @@ import * as AWS from '../__mocks__/aws-sdk';
 import { handler } from '../src/lambda/scheduler';
 
 AWS.DynamoDB.Converter;
-// const ec2 = new AWS.EC2();
+const cloudwatch = new AWS.CloudWatch();
 
 describe('all', () => {
-  test('create / update cfn when new Image', async () => {
-    let response = await handler({ Records: [{ dynamodb: { NewImage: event.Records[0]!.dynamodb!.NewImage! } }] });
+  test('create / update cfn successfully', async () => {
+    let response = await handler(event);
     expect(response).toEqual('success');
     response = await handler({
       Records: [{
@@ -27,24 +27,86 @@ describe('all', () => {
     expect(response).toEqual('deleted');
   });
 
+  test('creation failed', async () => {
+    AWS.createStackResponse.mockRejectedValue(new Error('To much CFN stacks!'));
+    AWS.updateStackResponse.mockRejectedValue(new Error('No Stack with that Name!'));
+    let response = await handler(event);
+    expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
+      Namespace: 'Scheduler',
+      MetricData: [{
+        MetricName: 'CreateUpdateFailed',
+      }],
+    });
+    expect(response).toEqual('CreateUpdateFailed');
+  });
+
+  test('update failed', async () => {
+    AWS.createStackResponse.mockRejectedValue(new Error('Stack already exist'));
+    AWS.updateStackResponse.mockRejectedValue(new Error('Can not update!'));
+    let response = await handler(event);
+    expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
+      Namespace: 'Scheduler',
+      MetricData: [{
+        MetricName: 'CreateUpdateFailed',
+      }],
+    });
+    expect(response).toEqual('CreateUpdateFailed');
+  });
+
+  test('delete failed', async () => {
+    AWS.deleteStackResponse.mockRejectedValue(new Error('Could not delete Stack'));
+    let response = await handler({ Records: [{ dynamodb: { OldImage: event.Records[0]!.dynamodb!.NewImage! } }] });
+    expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
+      Namespace: 'Scheduler',
+      MetricData: [{
+        MetricName: 'DeleteFailed',
+      }],
+    });
+    expect(response).toEqual('DeleteFailed');
+  });
+
   test('fail when no new Image and no old Image', async () => {
     let response = await handler({ Records: [{ dynamodb: { SizeBytes: 2 } }] });
-    expect(response).toEqual('failed');
+    expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
+      Namespace: 'Scheduler',
+      MetricData: [{
+        MetricName: 'UnknownFailed',
+      }],
+    });
+    expect(response).toEqual('UnknownFailed');
   });
 
   test('to much records', async () => {
     const response = await handler({ Records: [event.Records[0], event.Records[0]] });
-    expect(response).toEqual('failed');
+    expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
+      Namespace: 'Scheduler',
+      MetricData: [{
+        MetricName: 'EventFailed',
+      }],
+    });
+    expect(response).toEqual('EventFailed');
   });
 
   test('to less records', async () => {
     const response = await handler({ Records: [] });
-    expect(response).toEqual('failed');
+    expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
+      Namespace: 'Scheduler',
+      MetricData: [{
+        MetricName: 'EventFailed',
+      }],
+    });
+    expect(response).toEqual('EventFailed');
   });
 
   test('no dynamodb object found', async () => {
     const response = await handler({ Records: [{ awsRegion: 'klaro' }] });
-    expect(response).toEqual('failed');
+    expect(cloudwatch.putMetricData).toHaveBeenCalledWith({
+      Namespace: 'Scheduler',
+      MetricData: [{
+        MetricName: 'EventFailed',
+      }],
+    });
+    expect(response).toEqual('EventFailed');
   });
 });
 
