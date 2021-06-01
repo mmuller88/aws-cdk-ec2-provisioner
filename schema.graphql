@@ -1,6 +1,6 @@
 type Ec2Config
   @model
-  @auth(rules: [{ allow: owner }, { allow: public, provider: iam }]) {
+  @auth(rules: [{ allow: owner }, { allow: private }, { allow: public }]) {
   id: ID!
   startDate: AWSDateTime!
   stopDate: AWSDateTime!

@@ -39,8 +39,8 @@ export const onDeleteHistoryEntry = /* GraphQL */ `
   }
 `;
 export const onCreateEc2Config = /* GraphQL */ `
-  subscription OnCreateEc2Config($owner: String) {
-    onCreateEc2Config(owner: $owner) {
+  subscription OnCreateEc2Config {
+    onCreateEc2Config {
       id
       startDate
       stopDate
@@ -64,8 +64,8 @@ export const onCreateEc2Config = /* GraphQL */ `
   }
 `;
 export const onUpdateEc2Config = /* GraphQL */ `
-  subscription OnUpdateEc2Config($owner: String) {
-    onUpdateEc2Config(owner: $owner) {
+  subscription OnUpdateEc2Config {
+    onUpdateEc2Config {
       id
       startDate
       stopDate
@@ -89,8 +89,8 @@ export const onUpdateEc2Config = /* GraphQL */ `
   }
 `;
 export const onDeleteEc2Config = /* GraphQL */ `
-  subscription OnDeleteEc2Config($owner: String) {
-    onDeleteEc2Config(owner: $owner) {
+  subscription OnDeleteEc2Config {
+    onDeleteEc2Config {
       id
       startDate
       stopDate

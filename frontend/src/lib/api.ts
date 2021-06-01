@@ -426,18 +426,6 @@ export type Subscription = {
   onDeleteMessage?: Maybe<Message>;
 };
 
-export type SubscriptionOnCreateEc2ConfigArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnUpdateEc2ConfigArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
-export type SubscriptionOnDeleteEc2ConfigArgs = {
-  owner?: Maybe<Scalars["String"]>;
-};
-
 export type SubscriptionOnCreatePostArgs = {
   owner?: Maybe<Scalars["String"]>;
 };
@@ -1085,7 +1073,7 @@ export type OnDeleteHistoryEntrySubscription = {
 };
 
 export type OnCreateEc2ConfigSubscriptionVariables = Exact<{
-  owner?: Maybe<Scalars["String"]>;
+  [key: string]: never;
 }>;
 
 export type OnCreateEc2ConfigSubscription = { __typename?: "Subscription" } & {
@@ -1128,7 +1116,7 @@ export type OnCreateEc2ConfigSubscription = { __typename?: "Subscription" } & {
 };
 
 export type OnUpdateEc2ConfigSubscriptionVariables = Exact<{
-  owner?: Maybe<Scalars["String"]>;
+  [key: string]: never;
 }>;
 
 export type OnUpdateEc2ConfigSubscription = { __typename?: "Subscription" } & {
@@ -1171,7 +1159,7 @@ export type OnUpdateEc2ConfigSubscription = { __typename?: "Subscription" } & {
 };
 
 export type OnDeleteEc2ConfigSubscriptionVariables = Exact<{
-  owner?: Maybe<Scalars["String"]>;
+  [key: string]: never;
 }>;
 
 export type OnDeleteEc2ConfigSubscription = { __typename?: "Subscription" } & {
@@ -2118,8 +2106,8 @@ export const OnDeleteHistoryEntryDocument = `
 }
     `;
 export const OnCreateEc2ConfigDocument = `
-    subscription OnCreateEc2Config($owner: String) {
-  onCreateEc2Config(owner: $owner) {
+    subscription OnCreateEc2Config {
+  onCreateEc2Config {
     id
     startDate
     stopDate
@@ -2143,8 +2131,8 @@ export const OnCreateEc2ConfigDocument = `
 }
     `;
 export const OnUpdateEc2ConfigDocument = `
-    subscription OnUpdateEc2Config($owner: String) {
-  onUpdateEc2Config(owner: $owner) {
+    subscription OnUpdateEc2Config {
+  onUpdateEc2Config {
     id
     startDate
     stopDate
@@ -2168,8 +2156,8 @@ export const OnUpdateEc2ConfigDocument = `
 }
     `;
 export const OnDeleteEc2ConfigDocument = `
-    subscription OnDeleteEc2Config($owner: String) {
-  onDeleteEc2Config(owner: $owner) {
+    subscription OnDeleteEc2Config {
+  onDeleteEc2Config {
     id
     startDate
     stopDate
