@@ -17,6 +17,7 @@
 appsync
 cdk.out/
 dist
+frontend/build
 junit.xml
 tsconfig.tsbuildinfo
 !/lib

@@ -22,6 +22,7 @@ appsync
 build/Release
 cdk.out/
 coverage
+frontend/build
 jspm_packages/
 junit.xml
 lerna-debug.log*
