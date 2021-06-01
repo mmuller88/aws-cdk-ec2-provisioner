@@ -47,16 +47,16 @@ export function Vms({ match }: RouteComponentProps<RouteParams>) {
                   <h5>VmType: {ec2.vmType}</h5>
                   <h5>VM name: {ec2.name}</h5>
                   <h5>State: {ec2.state}</h5>
-                  <h5>PublicDnsName: {ec2.state !== State.Running ? 'VM not running so no public dns name!' : <a href={'http://'+ec2.publicDnsName} target="_blank" rel="noreferrer">{ec2.publicDnsName}</a>}</h5>
-                  <h5>PrivateKey: <button onClick={()=>downloadPemFile(ec2.privateKey)}>vm.pem</button></h5>
                     {
                       ec2.state === State.Running ?  
                         <div>
+                          <h5>PublicDnsName: <a href={'http://'+ec2.publicDnsName} target="_blank" rel="noreferrer">{ec2.publicDnsName}</a></h5>
+                          <h5>PrivateKey: <button onClick={()=>downloadPemFile(ec2.privateKey)}>vm.pem</button></h5>
                           <h6>1) download vm.pem</h6>
                           <h6>2) chmod 0400 vm.pem</h6>
                           <h6>3) ssh -i "vm.pem" ec2-user@{ec2.publicDnsName}</h6>
                         </div>
-                      : ''
+                      : 'VM not in RUNNING state so no connection possible!'
                     }
                   <h5>Associated Config: {configResult?.data.listEc2Configs.items.filter(c => c.userId === ec2.userId && c.vmType === ec2.vmType).map(c => <a href={"#/configs/"+c.id}>{c.id}</a>)}</h5>
                   <br/>

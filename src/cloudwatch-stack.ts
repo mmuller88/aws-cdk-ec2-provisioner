@@ -18,7 +18,7 @@ export class CloudWatchStack extends CustomStack {
     new cw.Alarm(this, 'Alarm1', {
       metric: createUpdateMetric,
       threshold: 1,
-      evaluationPeriods: 3,
+      evaluationPeriods: 1,
       // datapointsToAlarm: 2,
     });
 
@@ -30,7 +30,7 @@ export class CloudWatchStack extends CustomStack {
     new cw.Alarm(this, 'Alarm2', {
       metric: deleteMetric,
       threshold: 1,
-      evaluationPeriods: 3,
+      evaluationPeriods: 1,
       // datapointsToAlarm: 2,
     });
 
@@ -42,7 +42,7 @@ export class CloudWatchStack extends CustomStack {
     new cw.Alarm(this, 'Alarm3', {
       metric: eventMetric,
       threshold: 1,
-      evaluationPeriods: 3,
+      evaluationPeriods: 1,
       // datapointsToAlarm: 2,
     });
 
@@ -54,7 +54,7 @@ export class CloudWatchStack extends CustomStack {
     new cw.Alarm(this, 'Alarm4', {
       metric: unknownMetric,
       threshold: 1,
-      evaluationPeriods: 3,
+      evaluationPeriods: 1,
       // datapointsToAlarm: 2,
     });
 

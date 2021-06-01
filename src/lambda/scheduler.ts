@@ -17,6 +17,14 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any) {
       Namespace: 'Scheduler',
       MetricData: [{
         MetricName: 'EventFailed',
+        Dimensions: [
+          {
+            Name: 'UNIQUE_PAGES',
+            Value: 'URLS',
+          },
+        ],
+        Unit: 'None',
+        Value: 1.0,
       }],
     };
     const putMetricDataResult = await cw.putMetricData(putMetricDataParam).promise();
@@ -70,6 +78,14 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any) {
             Namespace: 'Scheduler',
             MetricData: [{
               MetricName: 'CreateUpdateFailed',
+              Dimensions: [
+                {
+                  Name: 'UNIQUE_PAGES',
+                  Value: 'URLS',
+                },
+              ],
+              Unit: 'None',
+              Value: 1.0,
             }],
           };
           const putMetricDataResult = await cw.putMetricData(putMetricDataParam).promise();
@@ -101,6 +117,14 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any) {
             Namespace: 'Scheduler',
             MetricData: [{
               MetricName: 'DeleteFailed',
+              Dimensions: [
+                {
+                  Name: 'UNIQUE_PAGES',
+                  Value: 'URLS',
+                },
+              ],
+              Unit: 'None',
+              Value: 1.0,
             }],
           };
           const putMetricDataResult = await cw.putMetricData(putMetricDataParam).promise();
@@ -126,6 +150,8 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any) {
     Namespace: 'Scheduler',
     MetricData: [{
       MetricName: 'UnknownFailed',
+      Unit: 'None',
+      Value: 1.0,
     }],
   };
   const putMetricDataResult = await cw.putMetricData(putMetricDataParam).promise();
