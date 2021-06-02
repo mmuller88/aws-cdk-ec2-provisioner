@@ -1,5 +1,4 @@
 import * as path from 'path';
-import * as cloudwatch from '@aws-cdk/aws-cloudwatch';
 import * as ddb from '@aws-cdk/aws-dynamodb';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
@@ -21,7 +20,7 @@ export class SchedulerStack extends CustomStack {
 
     // const cdkSchedulerLambda = new lambda.DockerImageFunction(this, 'scheduler', {
     const cdkSchedulerLambda = new lambdajs.NodejsFunction(this, 'scheduler', {
-      // functionName: 'scheduler',
+      functionName: 'scheduler',
       entry: `${path.join(__dirname)}/lambda/scheduler.ts`,
       bundling: {
         commandHooks: {
@@ -40,34 +39,6 @@ export class SchedulerStack extends CustomStack {
       environment: {},
       timeout: cdk.Duration.minutes(15),
     });
-
-    // 👇 define a metric for lambda errors
-    const functionErrors = cdkSchedulerLambda.metricErrors({
-      period: cdk.Duration.minutes(1),
-    });
-    // 👇 define a metric for lambda invocations
-    // const functionInvocation = cdkSchedulerLambda.metricInvocations({
-    //   period: cdk.Duration.minutes(1),
-    // });
-
-    // 👇 create an Alarm using the Alarm construct
-    new cloudwatch.Alarm(this, 'lambda-errors-alarm', {
-      metric: functionErrors,
-      threshold: 1,
-      comparisonOperator:
-        cloudwatch.ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
-      evaluationPeriods: 1,
-      alarmDescription:
-        'Alarm if the SUM of Errors is greater than or equal to the threshold (1) for 1 evaluation period',
-    });
-
-    // // 👇 create an Alarm directly on the Metric
-    // functionInvocation.createAlarm(this, 'lambda-invocation-alarm', {
-    //   threshold: 1,
-    //   evaluationPeriods: 1,
-    //   alarmDescription:
-    //     'Alarm if the SUM of Lambda invocations is greater than or equal to the  threshold (1) for 1 evaluation period',
-    // });
 
     if (props.appSyncTransformer) {
       const streamArn = props.appSyncTransformer.addDynamoDBStream({
