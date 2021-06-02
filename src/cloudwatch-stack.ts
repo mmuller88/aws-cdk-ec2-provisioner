@@ -10,15 +10,15 @@ export class CloudWatchStack extends CustomStack {
   constructor(scope: core.Construct, id: string, props: CloudWatchStackProps) {
     super(scope, id, props);
 
-    const createUpdateMetric = new cw.Metric({
-      namespace: 'AWS/Lambda',
+    const schedulerMetric = new cw.Metric({
+      namespace: 'AWS/Lambda/scheduler',
       metricName: 'Errors',
       unit: cw.Unit.COUNT,
       statistic: 'Sum',
     });
 
-    new cw.Alarm(this, 'SchedulerAlarm', {
-      metric: createUpdateMetric,
+    new cw.Alarm(this, 'Ec2ProScheduler', {
+      metric: schedulerMetric,
       threshold: 1,
       evaluationPeriods: 1,
       // datapointsToAlarm: 2,

@@ -21,6 +21,7 @@ export class SchedulerStack extends CustomStack {
 
     // const cdkSchedulerLambda = new lambda.DockerImageFunction(this, 'scheduler', {
     const cdkSchedulerLambda = new lambdajs.NodejsFunction(this, 'scheduler', {
+      functionName: 'scheduler',
       entry: `${path.join(__dirname)}/lambda/scheduler.ts`,
       bundling: {
         commandHooks: {
