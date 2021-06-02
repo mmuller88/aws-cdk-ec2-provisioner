@@ -11,60 +11,60 @@ export class CloudWatchStack extends CustomStack {
     super(scope, id, props);
 
     const createUpdateMetric = new cw.Metric({
-      namespace: 'Scheduler',
-      metricName: 'CreateUpdateFailed',
+      namespace: 'AWS/Lambda',
+      metricName: 'Errors',
       unit: cw.Unit.COUNT,
-      statistic: 'SampleCount',
+      statistic: 'Sum',
     });
 
-    new cw.Alarm(this, 'createUpdateAlarm', {
+    new cw.Alarm(this, 'SchedulerAlarm', {
       metric: createUpdateMetric,
       threshold: 1,
       evaluationPeriods: 1,
       // datapointsToAlarm: 2,
     });
 
-    const deleteMetric = new cw.Metric({
-      namespace: 'Scheduler',
-      metricName: 'DeleteFailed',
-      unit: cw.Unit.COUNT,
-      statistic: 'SampleCount',
-    });
+    // const deleteMetric = new cw.Metric({
+    //   namespace: 'Scheduler',
+    //   metricName: 'DeleteFailed',
+    //   unit: cw.Unit.COUNT,
+    //   statistic: 'SampleCount',
+    // });
 
-    new cw.Alarm(this, 'deleteMetricAlarm', {
-      metric: deleteMetric,
-      threshold: 1,
-      evaluationPeriods: 1,
-      // datapointsToAlarm: 2,
-    });
+    // new cw.Alarm(this, 'deleteMetricAlarm', {
+    //   metric: deleteMetric,
+    //   threshold: 1,
+    //   evaluationPeriods: 1,
+    //   // datapointsToAlarm: 2,
+    // });
 
-    const eventMetric = new cw.Metric({
-      namespace: 'Scheduler',
-      metricName: 'EventFailed',
-      unit: cw.Unit.COUNT,
-      statistic: 'SampleCount',
-    });
+    // const eventMetric = new cw.Metric({
+    //   namespace: 'Scheduler',
+    //   metricName: 'EventFailed',
+    //   unit: cw.Unit.COUNT,
+    //   statistic: 'SampleCount',
+    // });
 
-    new cw.Alarm(this, 'eventMetricAlarm', {
-      metric: eventMetric,
-      threshold: 1,
-      evaluationPeriods: 1,
-      // datapointsToAlarm: 2,
-    });
+    // new cw.Alarm(this, 'eventMetricAlarm', {
+    //   metric: eventMetric,
+    //   threshold: 1,
+    //   evaluationPeriods: 1,
+    //   // datapointsToAlarm: 2,
+    // });
 
-    const unknownMetric = new cw.Metric({
-      namespace: 'Scheduler',
-      metricName: 'UnknownFailed',
-      unit: cw.Unit.COUNT,
-      statistic: 'SampleCount',
-    });
+    // const unknownMetric = new cw.Metric({
+    //   namespace: 'Scheduler',
+    //   metricName: 'UnknownFailed',
+    //   unit: cw.Unit.COUNT,
+    //   statistic: 'SampleCount',
+    // });
 
-    new cw.Alarm(this, 'unknownMetricAlarm', {
-      metric: unknownMetric,
-      threshold: 1,
-      evaluationPeriods: 1,
-      // datapointsToAlarm: 2,
-    });
+    // new cw.Alarm(this, 'unknownMetricAlarm', {
+    //   metric: unknownMetric,
+    //   threshold: 1,
+    //   evaluationPeriods: 1,
+    //   // datapointsToAlarm: 2,
+    // });
 
   }
 }
