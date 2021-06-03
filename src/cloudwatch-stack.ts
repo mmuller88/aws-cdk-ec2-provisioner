@@ -1,7 +1,10 @@
+import * as path from 'path';
 import * as cloudwatch from '@aws-cdk/aws-cloudwatch';
 import * as lambda from '@aws-cdk/aws-lambda';
+import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
 import * as cdk from '@aws-cdk/core';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
+import { DiscordBotConstruct } from 'discord-bot-cdk-construct';
 
 export interface CloudWatchStackProps extends cdk.StackProps {
   readonly stage: string;
@@ -33,13 +36,16 @@ export class CloudWatchStack extends CustomStack {
         'Alarm if the SUM of Errors is greater than or equal to the threshold (1) for 1 evaluation period',
     });
 
-    // // 👇 create an Alarm directly on the Metric
-    // functionInvocation.createAlarm(this, 'lambda-invocation-alarm', {
-    //   threshold: 1,
-    //   evaluationPeriods: 1,
-    //   alarmDescription:
-    //     'Alarm if the SUM of Lambda invocations is greater than or equal to the  threshold (1) for 1 evaluation period',
-    // });
+    const discordCommandsLambda = new lambdajs.NodejsFunction(this, 'discord-commands-lambda', {
+      runtime: lambda.Runtime.NODEJS_14_X,
+      entry: path.join(__dirname, '../functions/DiscordCommands.ts'),
+      handler: 'handler',
+      timeout: cdk.Duration.seconds(60),
+    });
+
+    new DiscordBotConstruct(this, 'discord-bot-endpoint', {
+      commandsLambdaFunction: discordCommandsLambda,
+    });
 
   }
 }

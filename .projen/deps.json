@@ -43,6 +43,10 @@
       "type": "build"
     },
     {
+      "name": "axios",
+      "type": "build"
+    },
+    {
       "name": "cdk-appsync-transformer",
       "type": "build"
     },
@@ -52,6 +56,10 @@
     },
     {
       "name": "cdk-iam-floyd",
+      "type": "build"
+    },
+    {
+      "name": "discord-bot-cdk-construct",
       "type": "build"
     },
     {
@@ -227,6 +235,10 @@
       "type": "runtime"
     },
     {
+      "name": "axios",
+      "type": "runtime"
+    },
+    {
       "name": "cdk-appsync-transformer",
       "type": "runtime"
     },
@@ -236,6 +248,10 @@
     },
     {
       "name": "cdk-iam-floyd",
+      "type": "runtime"
+    },
+    {
+      "name": "discord-bot-cdk-construct",
       "type": "runtime"
     },
     {
