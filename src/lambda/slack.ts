@@ -1,42 +1,32 @@
 import * as axios from 'axios';
 
-/**
- * Send a basic text message into Slack.
- *
- * @param {*} message
- * @param {*} [channel=process.env.SLACK_CHANNEL]
- * @returns
- */
-function sendText(message: string, channel = process.env.SLACK_CHANNEL) {
-  return new Promise((resolve, reject) => {
-    const data = {
-      text: message,
-    };
-    postToChannel(data, channel)
-      .then(res => resolve(res))
-      .catch(err => reject(err));
-  });
-}
+// curl -X POST --data-urlencode "payload={\"channel\": \"#hacklab\", \"username\": \"webhookbot\", \"text\": \"This is posted to #hacklab and comes from a bot named webhookbot.\", \"icon_emoji\": \":ghost:\"}" https://hooks.slack.com/services/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
 
-/**
- * Post the Slack data to a channel.
- *
- * @param {Object} data
- * @param {String} [channel=process.env.SLACK_CHANNEL]
- * @returns
- */
-async function postToChannel(data: any, channel = process.env.SLACK_CHANNEL) {
-  const axiosResult = await axios.default
-    .post(channel || '', data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  return axiosResult.data;
+export interface SlackMessage {
+  channel?: string;
+  /**
+   * Name of the bot appearing in the message
+   */
+  username?: string;
+  text: string;
+  /**
+   * e.g. :ghost:
+   */
+  icon_emoji?: string;
 }
 
 export async function handler(event: any) {
   console.debug(`event: ${JSON.stringify(event)}`);
 
-  await sendText('LHello World :)');
+  const webhook = process.env.SLACK_WEBHOOK || '';
+  const slackMessage: SlackMessage = {
+    text: 'ahoi von dort',
+  };
+  const axiosResult = await axios.default
+    .post(webhook, slackMessage, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  return axiosResult.data;
 }
