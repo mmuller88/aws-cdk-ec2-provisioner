@@ -10,7 +10,6 @@ const deps = [
   '@types/deep-diff',
   'cdk-iam-floyd',
   'cdk-ec2-key-pair',
-  'discord-bot-cdk-construct',
   'axios',
 ];
 

@@ -4,7 +4,6 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
 import * as cdk from '@aws-cdk/core';
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
-import { DiscordBotConstruct } from 'discord-bot-cdk-construct';
 
 export interface CloudWatchStackProps extends cdk.StackProps {
   readonly stage: string;
@@ -36,7 +35,7 @@ export class CloudWatchStack extends CustomStack {
         'Alarm if the SUM of Errors is greater than or equal to the threshold (1) for 1 evaluation period',
     });
 
-    const discordCommandsLambda = new lambdajs.NodejsFunction(this, 'discord-commands-lambda', {
+    new lambdajs.NodejsFunction(this, 'slack-lambda', {
       // bundling: {
       //   nodeModules: [
       //     'axios',
@@ -44,13 +43,12 @@ export class CloudWatchStack extends CustomStack {
       //   ],
       // },
       // runtime: lambda.Runtime.NODEJS_14_X,
-      entry: path.join(__dirname, '../src/lambda/discord.ts'),
+      entry: path.join(__dirname, '../src/lambda/slack.ts'),
       // handler: 'handler',
       timeout: cdk.Duration.seconds(60),
-    });
-
-    new DiscordBotConstruct(this, 'discord-bot-endpoint', {
-      commandsLambdaFunction: discordCommandsLambda,
+      environment: {
+        SLACK_CHANNEL: 'https://hooks.slack.com/services/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',
+      },
     });
 
   }
