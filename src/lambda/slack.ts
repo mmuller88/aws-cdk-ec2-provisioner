@@ -8,6 +8,10 @@ export interface SlackMessage {
    * Name of the bot appearing in the message
    */
   username?: string;
+
+  /**
+   * For adding links use <https://alert-system.com/alerts/1234|Click here>
+   */
   text: string;
   /**
    * e.g. :ghost:
