@@ -1,4 +1,4 @@
-const { web, AwsCdkTypeScriptApp, NodePackageManager } = require('projen');
+const { web, AwsCdkTypeScriptApp, NodePackageManager, NodeProject } = require('projen');
 
 const deps = [
   '@types/aws-lambda',
@@ -20,7 +20,7 @@ const project = new AwsCdkTypeScriptApp({
   name: 'aws-cdk-ec2-provisioner',
   // packageManager: NodePackageManager.NPM,
   defaultReleaseBranch: 'main',
-  cdkVersion: '1.106.1',
+  cdkVersion: '1.107.0',
   cdkVersionPinning: true,
   cdkDependencies: [
     '@aws-cdk/aws-iam',

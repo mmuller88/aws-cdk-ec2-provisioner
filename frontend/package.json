@@ -2,8 +2,6 @@
   "name": "aws-cdk-todolist-ui-frontend",
   "scripts": {
     "clobber": "npx projen clobber",
-    "bump": "npx projen bump",
-    "unbump": "npx projen unbump",
     "compile": "npx projen compile",
     "test:compile": "npx projen test:compile",
     "test": "npx projen test",
@@ -38,8 +36,7 @@
     "aws-sdk": "^2",
     "graphql": "^15.5.0",
     "npm-check-updates": "^11",
-    "projen": "^0.18.12",
-    "standard-version": "^9",
+    "projen": "^0.22.0",
     "typescript": "^4.0.3"
   },
   "dependencies": {

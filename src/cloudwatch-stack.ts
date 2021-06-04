@@ -37,9 +37,15 @@ export class CloudWatchStack extends CustomStack {
     });
 
     const discordCommandsLambda = new lambdajs.NodejsFunction(this, 'discord-commands-lambda', {
-      runtime: lambda.Runtime.NODEJS_14_X,
-      entry: path.join(__dirname, '../functions/DiscordCommands.ts'),
-      handler: 'handler',
+      // bundling: {
+      //   nodeModules: [
+      //     'axios',
+      //     'esbuild',
+      //   ],
+      // },
+      // runtime: lambda.Runtime.NODEJS_14_X,
+      entry: path.join(__dirname, '../src/lambda/discord.ts'),
+      // handler: 'handler',
       timeout: cdk.Duration.seconds(60),
     });
 

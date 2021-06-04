@@ -75,12 +75,7 @@
     },
     {
       "name": "projen",
-      "version": "^0.18.12",
-      "type": "build"
-    },
-    {
-      "name": "standard-version",
-      "version": "^9",
+      "version": "^0.22.0",
       "type": "build"
     },
     {

@@ -10,8 +10,6 @@
 .eslintcache
 .nyc_output
 .yarn-integrity
-/.changelog.tmp.md
-/.version.tmp.json
 /build
 /dist
 /lib
@@ -31,7 +29,6 @@ yarn-error.log*
 !/.projen/deps.json
 !/.projen/tasks.json
 !/.projenrc.js
-!/.versionrc.json
 !/LICENSE
 !/package.json
 !/react-app-env.d.ts

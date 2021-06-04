@@ -1,9 +1,7 @@
-import { Context, Callback } from 'aws-lambda';
 import axios from 'axios';
 import { DiscordEventRequest, DiscordResponseData, getDiscordSecrets } from 'discord-bot-cdk-construct';
 
-export async function handler(event: DiscordEventRequest, context: Context,
-  callback: Callback): Promise<string> {
+export async function handler(event: DiscordEventRequest): Promise<string> {
   const response = {
     tts: false,
     content: 'Hello world!',
