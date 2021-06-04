@@ -59,10 +59,6 @@
       "type": "build"
     },
     {
-      "name": "discord-bot-cdk-construct",
-      "type": "build"
-    },
-    {
       "name": "esbuild",
       "version": "^0",
       "type": "build"
@@ -109,6 +105,10 @@
     {
       "name": "projen",
       "version": "^0.22.0",
+      "type": "build"
+    },
+    {
+      "name": "qs",
       "type": "build"
     },
     {
@@ -246,12 +246,12 @@
       "type": "runtime"
     },
     {
-      "name": "discord-bot-cdk-construct",
+      "name": "esbuild",
+      "version": "^0",
       "type": "runtime"
     },
     {
-      "name": "esbuild",
-      "version": "^0",
+      "name": "qs",
       "type": "runtime"
     }
   ],

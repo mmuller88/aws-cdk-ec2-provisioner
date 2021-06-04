@@ -11,6 +11,7 @@ const deps = [
   'cdk-iam-floyd',
   'cdk-ec2-key-pair',
   'axios',
+  'qs',
 ];
 
 const project = new AwsCdkTypeScriptApp({

@@ -47,7 +47,7 @@ export class CloudWatchStack extends CustomStack {
       // handler: 'handler',
       timeout: cdk.Duration.seconds(60),
       environment: {
-        SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
+        SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
       },
     });
 
