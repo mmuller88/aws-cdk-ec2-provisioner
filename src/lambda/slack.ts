@@ -37,7 +37,8 @@ export async function handler(event: lambda.SNSEvent) {
   for (const record of event.Records) {
     const slackMessage: SlackMessage = {
       username: 'naala',
-      text: JSON.stringify({ ...JSON.parse(record.Sns.Message), Link: process.env.LINK || undefined }),
+      text: typeof record.Sns.Message === 'object' ? JSON.stringify(record.Sns.Message) : record.Sns.Message +
+        `\n\nLink: ${process.env.LINK || undefined})`,
     };
     console.debug(`slackMessage: ${JSON.stringify(slackMessage)}`);
 

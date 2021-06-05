@@ -8,8 +8,9 @@ import { Ec2 } from './query-ec2';
 const cfn = new AWS.CloudFormation();
 // const cw = new AWS.CloudWatch();
 
-export async function handler(event: lambda.DynamoDBStreamEvent | any, context: lambda.Context) {
+export async function handler(event: lambda.DynamoDBStreamEvent | any, context: lambda.Context | any) {
   console.debug(`event: ${JSON.stringify(event)}`);
+  console.debug(`context: ${JSON.stringify(context)}`);
   const accountId = context.invokedFunctionArn.split(':')[4];
   console.debug(`accountId: ${accountId}`);
 

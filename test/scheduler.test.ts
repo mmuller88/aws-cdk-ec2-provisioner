@@ -19,7 +19,7 @@ AWS.DynamoDB.Converter;
 // };
 describe('all', () => {
   test('create / update cfn successfully', async () => {
-    let response = await handler(event);
+    let response = await handler(event, context);
     expect(response).toEqual('success');
     response = await handler({
       Records: [{
@@ -28,12 +28,12 @@ describe('all', () => {
           OldImage: event.Records[0]!.dynamodb!.NewImage!,
         },
       }],
-    });
+    }, context);
     expect(response).toEqual('success');
   });
 
   test('delete cfn when no new Image but old Image', async () => {
-    let response = await handler({ Records: [{ dynamodb: { OldImage: event.Records[0]!.dynamodb!.NewImage! } }] });
+    let response = await handler({ Records: [{ dynamodb: { OldImage: event.Records[0]!.dynamodb!.NewImage! } }] }, context);
     expect(response).toEqual('deleted');
   });
 
@@ -126,6 +126,10 @@ describe('all', () => {
   //   expect(response).toEqual('EventFailed');
   // });
 });
+
+let context: lambda.Context | any = {
+  invokedFunctionArn: 'arn:aws:lambda:eu-central-1:981237193288:function:scheduler',
+};
 
 let event: lambda.DynamoDBStreamEvent = {
   Records: [
