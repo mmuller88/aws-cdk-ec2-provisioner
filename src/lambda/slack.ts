@@ -23,6 +23,7 @@ export async function handler(event: lambda.SNSEvent) {
     }
     if (!filterMatch) {
       console.debug(`Event does not contain filter terms: ${JSON.stringify(filter)} . So will ignore this message for Slack!`);
+      return 'done';
     }
 
   }

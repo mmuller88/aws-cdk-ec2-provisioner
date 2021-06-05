@@ -26,7 +26,8 @@ export class CloudWatchStack extends CustomStack {
       topicName: 'stackTopic',
     });
 
-    const slackWebhook = 'https://hooks.slack.com/services/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';
+    const slackWebhookToken = 'K7jRoppBpPUgT8aVWdYUipWz';
+    const slackWebhook = 'https://hooks.slack.com/services/T023K9D3X0W/B023XP6RG4E/' + slackWebhookToken;
 
     [scheduler, queryEc2].map((lam, i) => {
       const lambdaError = lam.metricErrors({
@@ -68,6 +69,7 @@ export class CloudWatchStack extends CustomStack {
         LINK: 'https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks',
         // event message needs to contain one of the following
         FILTER: JSON.stringify(['ROLLBACK_COMPLETE', 'PhysicalResourceId=\'arn:aws:cloudformation', 'DELETE_FAILED', 'CREATE_FAILED']),
+        // FILTER_WITH_ERROR: JSON.stringify(['ROLLBACK_COMPLETE', 'DELETE_FAILED', 'CREATE_FAILED']),
       },
     });
     cfnAlertToSlack.addEventSource(new eventsource.SnsEventSource(stackTopic));
