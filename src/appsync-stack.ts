@@ -116,6 +116,7 @@ export class AppSyncStack extends CustomStack {
     });
 
     const queryEc2 = new lambdajs.NodejsFunction(this, 'queryEc2LambdaJs', {
+      functionName: 'query-ec2',
       runtime: lambda.Runtime.NODEJS_12_X,
       entry: `${path.join(__dirname)}/lambda/query-ec2.ts`,
     });

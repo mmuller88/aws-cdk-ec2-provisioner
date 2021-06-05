@@ -27,9 +27,11 @@ export async function handler(event: lambda.SNSEvent) {
 
   event.Records.map(async record => {
     const slackMessage: SlackMessage = {
-      username: 'naala',
+      // username: 'naala',
       text: record.Sns.Message,
     };
+    console.debug(`slackMessage: ${JSON.stringify(slackMessage)}`);
+
     const axiosResult = await axios.default
       .post(webhook, slackMessage, {
         headers: {

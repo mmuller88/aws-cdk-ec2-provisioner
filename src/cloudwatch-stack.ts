@@ -17,41 +17,39 @@ export class CloudWatchStack extends CustomStack {
   constructor(scope: cdk.Construct, id: string, props: CloudWatchStackProps) {
     super(scope, id, props);
 
+    const scheduler = lambda.Function.fromFunctionArn(this, 'cdkSchedulerLambda', `arn:aws:lambda:${this.region}:${this.account}:function:scheduler`);
 
-    const cdkSchedulerLambda = lambda.Function.fromFunctionArn(this, 'cdkSchedulerLambda', `arn:aws:lambda:${this.region}:${this.account}:function:scheduler`);
-    // 👇 define a metric for lambda errors
-    const functionErrors = cdkSchedulerLambda.metricErrors({
-      period: cdk.Duration.minutes(1),
-    });
-    // 👇 define a metric for lambda invocations
-    // const functionInvocation = cdkSchedulerLambda.metricInvocations({
-    //   period: cdk.Duration.minutes(1),
-    // });
+    const queryEc2 = lambda.Function.fromFunctionArn(this, 'cdkSchedulerLambda', `arn:aws:lambda:${this.region}:${this.account}:function:query-ec2`);
 
     const topic = new sns.Topic(this, 'AlarmTopic');
 
-    // 👇 create an Alarm using the Alarm construct
-    const alarm = new cloudwatch.Alarm(this, 'lambda-errors-alarm', {
-      metric: functionErrors,
-      threshold: 1,
-      comparisonOperator:
-        cloudwatch.ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
-      evaluationPeriods: 1,
-      alarmDescription:
-        'Alarm if the SUM of Errors is greater than or equal to the threshold (1) for 1 evaluation period',
+    [scheduler, queryEc2].map((lam, i) => {
+      const lambdaError = lam.metricErrors({
+        period: cdk.Duration.minutes(1),
+      });
+
+      // 👇 create an Alarm using the Alarm construct
+      const alarm = new cloudwatch.Alarm(this, 'lambda-error-' + i, {
+        metric: lambdaError,
+        threshold: 1,
+        comparisonOperator:
+          cloudwatch.ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
+        evaluationPeriods: 1,
+        alarmDescription:
+          'Alarm if the SUM of Errors is greater than or equal to the threshold (1) for 1 evaluation period',
+      });
+
+      alarm.addAlarmAction(new cw_actions.SnsAction(topic));
+
+      const slackLambda = new lambdajs.NodejsFunction(this, 'slack-lambda' + i, {
+        entry: path.join(__dirname, '../src/lambda/slack.ts'),
+        timeout: cdk.Duration.seconds(60),
+        environment: {
+          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
+        },
+      });
+
+      slackLambda.addEventSource(new eventsource.SnsEventSource(topic));
     });
-
-    alarm.addAlarmAction(new cw_actions.SnsAction(topic));
-
-    const slackLambda = new lambdajs.NodejsFunction(this, 'slack-lambda', {
-      entry: path.join(__dirname, '../src/lambda/slack.ts'),
-      timeout: cdk.Duration.seconds(60),
-      environment: {
-        SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
-      },
-    });
-
-    slackLambda.addEventSource(new eventsource.SnsEventSource(topic));
-
   }
 }

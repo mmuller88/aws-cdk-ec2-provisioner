@@ -46,34 +46,30 @@ export async function handler(event: lambda.AppSyncResolverEvent<QueryEc2Args> |
       console.debug(`lookupInstances: ${JSON.stringify(lookupInstances)}`);
       let instances: Ec2[] = [];
       if (lookupInstances) {
-        try {
-          for (const instance of lookupInstances) {
-            if (instance) {
-              console.debug(`instance: ${JSON.stringify(instance)}`);
-              const userId = instance.Tags?.filter(t => t.Key == 'UserId')[0].Value || 'noUserId';
-              const vmType = Number(instance.Tags?.filter(t => t.Key == 'VmType')[0].Value) || -1;
-              const getSecretValueParam: AWS.SecretsManager.Types.GetSecretValueRequest = { SecretId: `ec2-ssh-key/key-${userId}-${vmType}/private` };
-              console.debug(`getSecretValueParam: ${JSON.stringify(getSecretValueParam)}`);
-              let getSecretValueResult;
-              try {
-                getSecretValueResult = await ssm.getSecretValue(getSecretValueParam).promise();
-              } catch (error) {
-                console.debug(`Couldn't get the ssm secret with error: ${JSON.stringify(error)}. But ignoringt that!`);
-              }
-              console.debug(`getSecretValueResult: ${JSON.stringify(getSecretValueResult)}`);
-              instances.push({
-                id: instance.InstanceId || 'noId',
-                name: instance.Tags?.filter(t => t.Key == 'Name')[0].Value || 'noName',
-                state: instance.State?.Name?.toUpperCase() || 'UNKOWN',
-                userId,
-                vmType,
-                publicDnsName: instance.PublicDnsName || 'noIp',
-                privateKey: getSecretValueResult?.SecretString || 'noKey',
-              });
+        for (const instance of lookupInstances) {
+          if (instance) {
+            console.debug(`instance: ${JSON.stringify(instance)}`);
+            const userId = instance.Tags?.filter(t => t.Key == 'UserId')[0].Value || 'noUserId';
+            const vmType = Number(instance.Tags?.filter(t => t.Key == 'VmType')[0].Value) || -1;
+            const getSecretValueParam: AWS.SecretsManager.Types.GetSecretValueRequest = { SecretId: `ec2-ssh-key/key-${userId}-${vmType}/private` };
+            console.debug(`getSecretValueParam: ${JSON.stringify(getSecretValueParam)}`);
+            let getSecretValueResult;
+            try {
+              getSecretValueResult = await ssm.getSecretValue(getSecretValueParam).promise();
+            } catch (error) {
+              console.debug(`Couldn't get the ssm secret with error: ${JSON.stringify(error)}. But ignoringt that!`);
             }
+            console.debug(`getSecretValueResult: ${JSON.stringify(getSecretValueResult)}`);
+            instances.push({
+              id: instance.InstanceId || 'noId',
+              name: instance.Tags?.filter(t => t.Key == 'Name')[0].Value || 'noName',
+              state: instance.State?.Name?.toUpperCase() || 'UNKOWN',
+              userId,
+              vmType,
+              publicDnsName: instance.PublicDnsName || 'noIp',
+              privateKey: getSecretValueResult?.SecretString || 'noKey',
+            });
           }
-        } catch (error) {
-          return { errorMessage: `parsing failed: ${JSON.stringify(error)}`, errorType: 'PARSING' };
         }
       }
       console.debug(`instances: ${JSON.stringify(instances)}`);
