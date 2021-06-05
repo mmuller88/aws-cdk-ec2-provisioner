@@ -2,7 +2,7 @@ type Ec2Config
   @model
   @auth(rules: [{ allow: owner }, { allow: private }, { allow: public }]) {
   id: ID!
-  terminateDate: AWSTimestamp! @ttl
+  terminateTimestamp: AWSTimestamp! @ttl
   userId: String!
   vmType: Int!
   history: [HistoryEntry] @connection(keyName: "byEc2Config", fields: ["id"])

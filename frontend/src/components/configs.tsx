@@ -12,14 +12,14 @@ import { API } from '../lib/fetcher';
 import { AppContext } from '../App';
 import { RouteComponentProps } from 'react-router-dom';
 
-const initialState = { vmType: -1, userId: 'noUserId'};
+const initialState = { vmType: -1, userId: 'noUserId', minutes: 10};
 
 export interface RouteParams {
   id: string;
 }
 export function Configs({ match }: RouteComponentProps<RouteParams>) {
   const [config, setConfig] = useState(initialState);
-  const { vmType, userId} = config;
+  const { vmType, userId, minutes} = config;
 
   // const { data, isLoading, refetch } = useListEc2ConfigsQuery(null, {
   //   refetchOnWindowFocus: false
@@ -44,16 +44,15 @@ export function Configs({ match }: RouteComponentProps<RouteParams>) {
   });
 
   const createNewEc2Config = async (configResult: QueryResult<ListEc2ConfigsQuery, any>) => {
-    if (!userId || vmType < 1) return;
+    if (!userId || vmType < 1 || !minutes) return;
     if (configResult.data.listEc2Configs.items.length > 5) return;
 
     console.log(config);
 
-    //const userData = await Auth.currentAuthenticatedUser();
-
     const input: CreateEc2ConfigInput = {
-      ...config,
-      terminateDate: new Date(new Date().getTime() + 5 * 60000),
+      vmType: config.vmType,
+      userId: config.userId,
+      terminateTimestamp: Date.now() + minutes * 60000,
       // startDate: startDate2.toISOString(),
       //userId: userData.userId,
     };
@@ -85,6 +84,8 @@ export function Configs({ match }: RouteComponentProps<RouteParams>) {
                         <h5>Id: {config.id}</h5>
                         <h4>UserId: {config.userId}</h4>
                         <h4>VmType: {config.vmType}</h4>
+                        <h4>Created At: {config.createdAt}</h4>
+                        <h4>Terminating / Terminated At: {new Date(config.terminateDate).toString()}</h4>
                         <h4>Associated vms: {ec2List?.listEc2?.filter(e => e.userId === config.userId && e.vmType === config.vmType).map(e => <a href={"#/vms/"+e.id}>{e.id}</a>)}</h4>
                         <button onClick={async () => {
                           const deleteResult = await deleteEc2Config({id: config.id});
@@ -109,6 +110,10 @@ export function Configs({ match }: RouteComponentProps<RouteParams>) {
               <div>
                 VmType:
                 <input onChange={onChange} name="vmType" placeholder="1" />
+              </div>
+              <div>
+                Minutes:
+                <input onChange={onChange} name="minutes" placeholder="10" />
               </div>
               {/* <div>
                 StartDate:
