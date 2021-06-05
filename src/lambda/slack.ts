@@ -48,7 +48,7 @@ export async function handler(event: lambda.SNSEvent) {
       });
     console.debug(`axiosResult: ${JSON.stringify(axiosResult)}`);
 
-  });
+  };
 
   return 'done';
 }

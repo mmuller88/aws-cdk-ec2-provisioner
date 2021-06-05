@@ -47,7 +47,7 @@ export class CloudWatchStack extends CustomStack {
         entry: path.join(__dirname, '../src/lambda/slack.ts'),
         timeout: cdk.Duration.seconds(60),
         environment: {
-          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
+          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
         },
       });
 
