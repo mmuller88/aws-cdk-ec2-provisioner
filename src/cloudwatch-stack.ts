@@ -30,6 +30,7 @@ export class CloudWatchStack extends CustomStack {
 
       // 👇 create an Alarm using the Alarm construct
       const alarm = new cloudwatch.Alarm(this, 'lambda-error-' + i, {
+        alarmName: lam.functionName,
         metric: lambdaError,
         threshold: 1,
         comparisonOperator:
