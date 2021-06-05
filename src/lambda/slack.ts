@@ -25,14 +25,16 @@ export async function handler(event: lambda.SNSEvent) {
 
   const webhook = process.env.SLACK_WEBHOOK || '';
 
-  // const axiosResultt = await axios.default
-  //   .post(webhook, { text: 'slack-lambda gecallt' }, {
-  //     headers: {
-  //       'Content-type': 'application/json',
-  //     },
-  //   });
-  // console.debug('axiosResult:');
-  // console.debug(axiosResultt);
+  const filter: string[] = JSON.parse(process.env.FILTER || '');
+  if (filter) {
+    console.debug(`filter: ${JSON.stringify(filter)}`);
+    for (const term of filter) {
+      if (JSON.stringify(event).indexOf(term) === -1) {
+        console.debug(`Event does not contain filter term: ${JSON.stringify(term)} . So will ignore this message for Slack!`);
+        return;
+      }
+    }
+  }
 
   for (const record of event.Records) {
     const slackMessage: SlackMessage = {

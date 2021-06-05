@@ -26,6 +26,8 @@ export class CloudWatchStack extends CustomStack {
       topicName: 'stackTopic',
     });
 
+    const slackWebhook = 'https://hooks.slack.com/services/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';
+
     [scheduler, queryEc2].map((lam, i) => {
       const lambdaError = lam.metricErrors({
         period: cdk.Duration.minutes(1),
@@ -46,17 +48,27 @@ export class CloudWatchStack extends CustomStack {
       alarm.addAlarmAction(new cw_actions.SnsAction(alarmTopic));
 
       // https://eu-central-1.console.aws.amazon.com/cloudwatch/home?region=eu-central-1#alarmsV2:alarm/scheduler?~(alarmStateFilter~'ALARM)
-      const slackLambda = new lambdajs.NodejsFunction(this, 'slack-lambda' + i, {
+      const lambdaAlertToSlack = new lambdajs.NodejsFunction(this, 'slack-lambda' + i, {
         entry: path.join(__dirname, '../src/lambda/slack.ts'),
         timeout: cdk.Duration.seconds(60),
         environment: {
-          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
+          SLACK_WEBHOOK: slackWebhook,
           LINK: 'https://eu-central-1.console.aws.amazon.com/cloudwatch/home?region=eu-central-1#alarmsV2:?~(alarmStateFilter~\'ALARM)',
         },
       });
 
-      slackLambda.addEventSource(new eventsource.SnsEventSource(alarmTopic));
-      slackLambda.addEventSource(new eventsource.SnsEventSource(stackTopic));
+      lambdaAlertToSlack.addEventSource(new eventsource.SnsEventSource(alarmTopic));
     });
+
+    const cfnAlertToSlack = new lambdajs.NodejsFunction(this, 'cfnAlertToSlack', {
+      entry: path.join(__dirname, '../src/lambda/slack.ts'),
+      timeout: cdk.Duration.seconds(60),
+      environment: {
+        SLACK_WEBHOOK: slackWebhook,
+        LINK: 'https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks',
+        FILTER: JSON.stringify(['ROLLBACK_IN_PROGRESS', 'CREATE_COMPLETE']),
+      },
+    });
+    cfnAlertToSlack.addEventSource(new eventsource.SnsEventSource(stackTopic));
   }
 }
