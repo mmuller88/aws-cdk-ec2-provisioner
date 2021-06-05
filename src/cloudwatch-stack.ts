@@ -17,9 +17,9 @@ export class CloudWatchStack extends CustomStack {
   constructor(scope: cdk.Construct, id: string, props: CloudWatchStackProps) {
     super(scope, id, props);
 
-    const scheduler = lambda.Function.fromFunctionArn(this, 'cdkSchedulerLambda', `arn:aws:lambda:${this.region}:${this.account}:function:scheduler`);
+    const scheduler = lambda.Function.fromFunctionArn(this, 'schedulerLambda', `arn:aws:lambda:${this.region}:${this.account}:function:scheduler`);
 
-    const queryEc2 = lambda.Function.fromFunctionArn(this, 'cdkSchedulerLambda', `arn:aws:lambda:${this.region}:${this.account}:function:query-ec2`);
+    const queryEc2 = lambda.Function.fromFunctionArn(this, 'queryec2Lambda', `arn:aws:lambda:${this.region}:${this.account}:function:query-ec2`);
 
     const topic = new sns.Topic(this, 'AlarmTopic');
 
