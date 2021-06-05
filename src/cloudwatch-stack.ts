@@ -42,11 +42,12 @@ export class CloudWatchStack extends CustomStack {
 
       alarm.addAlarmAction(new cw_actions.SnsAction(topic));
 
+      // https://eu-central-1.console.aws.amazon.com/cloudwatch/home?region=eu-central-1#alarmsV2:alarm/scheduler?~(alarmStateFilter~'ALARM)
       const slackLambda = new lambdajs.NodejsFunction(this, 'slack-lambda' + i, {
         entry: path.join(__dirname, '../src/lambda/slack.ts'),
         timeout: cdk.Duration.seconds(60),
         environment: {
-          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
+          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
         },
       });
 

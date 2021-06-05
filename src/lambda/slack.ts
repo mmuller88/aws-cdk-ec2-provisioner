@@ -33,7 +33,7 @@ export async function handler(event: lambda.SNSEvent) {
     });
   console.debug(`axiosResult: ${JSON.stringify(axiosResultt)}`);
 
-  await event.Records.map(async record => {
+  for (const record of event.Records) {
     const slackMessage: SlackMessage = {
       // username: 'naala',
       text: record.Sns.Message,
