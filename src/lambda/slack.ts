@@ -4,20 +4,7 @@ import * as axios from 'axios';
 // curl -X POST --data-urlencode "payload={\"channel\": \"#hacklab\", \"username\": \"webhookbot\", \"text\": \"This is posted to #hacklab and comes from a bot named webhookbot.\", \"icon_emoji\": \":ghost:\"}" https://hooks.slack.com/services/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
 
 export interface SlackMessage {
-  channel?: string;
-  /**
-   * Name of the bot appearing in the message
-   */
-  username?: string;
-
-  /**
-   * For adding links use <https://alert-system.com/alerts/1234|Click here>
-   */
   text: string;
-  /**
-   * e.g. :ghost:
-   */
-  icon_emoji?: string;
 }
 
 export async function handler(event: lambda.SNSEvent) {
@@ -27,18 +14,21 @@ export async function handler(event: lambda.SNSEvent) {
 
   const filter: string[] = JSON.parse(process.env.FILTER || '');
   if (filter) {
-    console.debug(`filter: ${JSON.stringify(filter)}`);
+    console.debug(`filter defined: ${JSON.stringify(filter)}`);
+    let filterMatch = false;
     for (const term of filter) {
-      if (JSON.stringify(event).indexOf(term) === -1) {
-        console.debug(`Event does not contain filter term: ${JSON.stringify(term)} . So will ignore this message for Slack!`);
-        return;
+      if (JSON.stringify(event).indexOf(term) > -1) {
+        filterMatch = true;
       }
     }
+    if (!filterMatch) {
+      console.debug(`Event does not contain filter terms: ${JSON.stringify(filter)} . So will ignore this message for Slack!`);
+    }
+
   }
 
   for (const record of event.Records) {
     const slackMessage: SlackMessage = {
-      username: 'naala',
       text: typeof record.Sns.Message === 'object' ? JSON.stringify(record.Sns.Message) : record.Sns.Message +
         `\n\nLink: ${process.env.LINK || undefined})`,
     };
