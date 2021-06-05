@@ -42,6 +42,7 @@ export const createEc2Config = /* GraphQL */ `
   mutation CreateEc2Config($input: CreateEc2ConfigInput!) {
     createEc2Config(input: $input) {
       id
+      terminateDate
       userId
       vmType
       history {
@@ -65,6 +66,7 @@ export const updateEc2Config = /* GraphQL */ `
   mutation UpdateEc2Config($input: UpdateEc2ConfigInput!) {
     updateEc2Config(input: $input) {
       id
+      terminateDate
       userId
       vmType
       history {
@@ -88,6 +90,7 @@ export const deleteEc2Config = /* GraphQL */ `
   mutation DeleteEc2Config($input: DeleteEc2ConfigInput!) {
     deleteEc2Config(input: $input) {
       id
+      terminateDate
       userId
       vmType
       history {

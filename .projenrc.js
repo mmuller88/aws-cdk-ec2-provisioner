@@ -40,6 +40,7 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-cloudwatch-actions',
     '@aws-cdk/aws-sns',
     '@aws-cdk/aws-sqs',
+    '@aws-cdk/aws-events',
     '@aws-cdk/aws-lambda-event-sources',
   ],
   deps,

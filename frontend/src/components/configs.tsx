@@ -51,8 +51,9 @@ export function Configs({ match }: RouteComponentProps<RouteParams>) {
 
     //const userData = await Auth.currentAuthenticatedUser();
 
-    const input = {
+    const input: CreateEc2ConfigInput = {
       ...config,
+      terminateDate: new Date(new Date().getTime() + 5 * 60000),
       // startDate: startDate2.toISOString(),
       //userId: userData.userId,
     };

@@ -60,6 +60,7 @@ export const getEc2Config = /* GraphQL */ `
   query GetEc2Config($id: ID!) {
     getEc2Config(id: $id) {
       id
+      terminateDate
       userId
       vmType
       history {
@@ -88,6 +89,7 @@ export const listEc2Configs = /* GraphQL */ `
     listEc2Configs(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        terminateDate
         userId
         vmType
         history {

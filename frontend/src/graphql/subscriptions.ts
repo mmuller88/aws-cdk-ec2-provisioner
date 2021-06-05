@@ -42,6 +42,7 @@ export const onCreateEc2Config = /* GraphQL */ `
   subscription OnCreateEc2Config {
     onCreateEc2Config {
       id
+      terminateDate
       userId
       vmType
       history {
@@ -65,6 +66,7 @@ export const onUpdateEc2Config = /* GraphQL */ `
   subscription OnUpdateEc2Config {
     onUpdateEc2Config {
       id
+      terminateDate
       userId
       vmType
       history {
@@ -88,6 +90,7 @@ export const onDeleteEc2Config = /* GraphQL */ `
   subscription OnDeleteEc2Config {
     onDeleteEc2Config {
       id
+      terminateDate
       userId
       vmType
       history {
