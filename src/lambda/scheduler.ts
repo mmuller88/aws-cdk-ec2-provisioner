@@ -8,8 +8,10 @@ import { Ec2 } from './query-ec2';
 const cfn = new AWS.CloudFormation();
 // const cw = new AWS.CloudWatch();
 
-export async function handler(event: lambda.DynamoDBStreamEvent | any) {
+export async function handler(event: lambda.DynamoDBStreamEvent | any, context: lambda.Context) {
   console.debug(`event: ${JSON.stringify(event)}`);
+  const accountId = context.invokedFunctionArn.split(':')[4];
+  console.debug(`accountId: ${accountId}`);
 
   if (!event.Records || event.Records.length !== 1 || !event.Records[0].dynamodb) {
     console.debug('event object not valid!');
@@ -59,6 +61,7 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any) {
       StackName: `stack-${newImage.userId ?? 'noUserId'}-${newImage.vmType ?? '-1'}`,
       TemplateBody: templateBody,
       Capabilities: ['CAPABILITY_IAM', 'CAPABILITY_NAMED_IAM'],
+      NotificationARNs: [`arn:aws:sns:${process.env.AWS_REGION}:${accountId}:stackTopic`],
       Parameters: [{
         ParameterKey: 'userIdParam',
         ParameterValue: newImage.userId,

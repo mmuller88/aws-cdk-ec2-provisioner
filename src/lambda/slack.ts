@@ -31,7 +31,8 @@ export async function handler(event: lambda.SNSEvent) {
         'Content-type': 'application/json',
       },
     });
-  console.debug(`axiosResult: ${JSON.stringify(axiosResultt)}`);
+  console.debug('axiosResult:');
+  console.debug(axiosResultt);
 
   for (const record of event.Records) {
     const slackMessage: SlackMessage = {
@@ -41,13 +42,13 @@ export async function handler(event: lambda.SNSEvent) {
     console.debug(`slackMessage: ${JSON.stringify(slackMessage)}`);
 
     const axiosResult = await axios.default
-      .post(webhook, slackMessage, {
+      .post(webhook, JSON.stringify(slackMessage), {
         headers: {
           'Content-type': 'application/json',
         },
       });
-    console.debug(`axiosResult: ${JSON.stringify(axiosResult)}`);
-
+    console.debug('axiosResult:');
+    console.debug(axiosResult);
   };
 
   return 'done';

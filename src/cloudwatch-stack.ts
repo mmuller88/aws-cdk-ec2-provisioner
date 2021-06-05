@@ -21,7 +21,10 @@ export class CloudWatchStack extends CustomStack {
 
     const queryEc2 = lambda.Function.fromFunctionArn(this, 'queryec2Lambda', `arn:aws:lambda:${this.region}:${this.account}:function:query-ec2`);
 
-    const topic = new sns.Topic(this, 'AlarmTopic');
+    const alarmTopic = new sns.Topic(this, 'AlarmTopic');
+    new sns.Topic(this, 'StackTopic', {
+      topicName: 'stackTopic',
+    });
 
     [scheduler, queryEc2].map((lam, i) => {
       const lambdaError = lam.metricErrors({
@@ -40,18 +43,18 @@ export class CloudWatchStack extends CustomStack {
           'Alarm if the SUM of Errors is greater than or equal to the threshold (1) for 1 evaluation period',
       });
 
-      alarm.addAlarmAction(new cw_actions.SnsAction(topic));
+      alarm.addAlarmAction(new cw_actions.SnsAction(alarmTopic));
 
       // https://eu-central-1.console.aws.amazon.com/cloudwatch/home?region=eu-central-1#alarmsV2:alarm/scheduler?~(alarmStateFilter~'ALARM)
       const slackLambda = new lambdajs.NodejsFunction(this, 'slack-lambda' + i, {
         entry: path.join(__dirname, '../src/lambda/slack.ts'),
         timeout: cdk.Duration.seconds(60),
         environment: {
-          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
+          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
         },
       });
 
-      slackLambda.addEventSource(new eventsource.SnsEventSource(topic));
+      slackLambda.addEventSource(new eventsource.SnsEventSource(alarmTopic));
     });
   }
 }
