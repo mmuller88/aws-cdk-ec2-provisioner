@@ -147,6 +147,19 @@
     "@aws-cdk/core" "1.107.0"
     constructs "^3.3.69"
 
+"@aws-cdk/aws-cloudwatch-actions@1.107.0":
+  version "1.107.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-cloudwatch-actions/-/aws-cloudwatch-actions-1.107.0.tgz#07c3a1324f0ee15ce903e3849990e320fff0dc52"
+  integrity sha512-rkGWRmsDHlddXaOB903CXwxl8ILx7p2B21zJewVvk/wt9IQ4rbtczrAxFjjgi5491DfsXmQHKcbIJ0/xE6SfsA==
+  dependencies:
+    "@aws-cdk/aws-applicationautoscaling" "1.107.0"
+    "@aws-cdk/aws-autoscaling" "1.107.0"
+    "@aws-cdk/aws-cloudwatch" "1.107.0"
+    "@aws-cdk/aws-iam" "1.107.0"
+    "@aws-cdk/aws-sns" "1.107.0"
+    "@aws-cdk/core" "1.107.0"
+    constructs "^3.3.69"
+
 "@aws-cdk/aws-cloudwatch@1.107.0":
   version "1.107.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-cloudwatch/-/aws-cloudwatch-1.107.0.tgz#c75addf146edca6d01a74c839de19b6b08dc5e1f"
@@ -491,6 +504,27 @@
     "@aws-cdk/cx-api" "1.107.0"
     constructs "^3.3.69"
 
+"@aws-cdk/aws-lambda-event-sources@1.107.0":
+  version "1.107.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-lambda-event-sources/-/aws-lambda-event-sources-1.107.0.tgz#564fe50fde7787640c0b2e53a6b5c7a27e5e04b3"
+  integrity sha512-Hyrms0s6s22hDJnu4V1S8PgtBa6ai5IcXPOWzHWaM52txsuol56GDLVycd3Li+Y5WPW4xYZ476n9iIc11fChtQ==
+  dependencies:
+    "@aws-cdk/aws-apigateway" "1.107.0"
+    "@aws-cdk/aws-dynamodb" "1.107.0"
+    "@aws-cdk/aws-ec2" "1.107.0"
+    "@aws-cdk/aws-events" "1.107.0"
+    "@aws-cdk/aws-iam" "1.107.0"
+    "@aws-cdk/aws-kinesis" "1.107.0"
+    "@aws-cdk/aws-lambda" "1.107.0"
+    "@aws-cdk/aws-s3" "1.107.0"
+    "@aws-cdk/aws-s3-notifications" "1.107.0"
+    "@aws-cdk/aws-secretsmanager" "1.107.0"
+    "@aws-cdk/aws-sns" "1.107.0"
+    "@aws-cdk/aws-sns-subscriptions" "1.107.0"
+    "@aws-cdk/aws-sqs" "1.107.0"
+    "@aws-cdk/core" "1.107.0"
+    constructs "^3.3.69"
+
 "@aws-cdk/aws-lambda-nodejs@1.107.0":
   version "1.107.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-lambda-nodejs/-/aws-lambda-nodejs-1.107.0.tgz#2616722a55862ff5a5c131a2f94b751e0f77cae9"
@@ -611,6 +645,19 @@
     "@aws-cdk/aws-s3-assets" "1.107.0"
     "@aws-cdk/core" "1.107.0"
     "@aws-cdk/lambda-layer-awscli" "1.107.0"
+    constructs "^3.3.69"
+
+"@aws-cdk/aws-s3-notifications@1.107.0":
+  version "1.107.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-s3-notifications/-/aws-s3-notifications-1.107.0.tgz#980304682675f02d5f5ac7a3f05388b2632391ad"
+  integrity sha512-0W9ANUj7Z5I8ZeQq8PLsAosItZSCGjentN6+rm8o9Ao5IVH60VwJUfbuvnLaz4dcRIurt8QK3B5qHieIKvZzpA==
+  dependencies:
+    "@aws-cdk/aws-iam" "1.107.0"
+    "@aws-cdk/aws-lambda" "1.107.0"
+    "@aws-cdk/aws-s3" "1.107.0"
+    "@aws-cdk/aws-sns" "1.107.0"
+    "@aws-cdk/aws-sqs" "1.107.0"
+    "@aws-cdk/core" "1.107.0"
     constructs "^3.3.69"
 
 "@aws-cdk/aws-s3@1.107.0":

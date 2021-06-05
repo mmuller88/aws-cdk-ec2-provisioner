@@ -1,8 +1,12 @@
 import * as path from 'path';
 import * as cloudwatch from '@aws-cdk/aws-cloudwatch';
+import * as cw_actions from '@aws-cdk/aws-cloudwatch-actions';
 import * as lambda from '@aws-cdk/aws-lambda';
+import * as eventsource from '@aws-cdk/aws-lambda-event-sources';
 import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
+import * as sns from '@aws-cdk/aws-sns';
 import * as cdk from '@aws-cdk/core';
+
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
 
 export interface CloudWatchStackProps extends cdk.StackProps {
@@ -24,8 +28,10 @@ export class CloudWatchStack extends CustomStack {
     //   period: cdk.Duration.minutes(1),
     // });
 
+    const topic = new sns.Topic(this, 'AlarmTopic');
+
     // 👇 create an Alarm using the Alarm construct
-    new cloudwatch.Alarm(this, 'lambda-errors-alarm', {
+    const alarm = new cloudwatch.Alarm(this, 'lambda-errors-alarm', {
       metric: functionErrors,
       threshold: 1,
       comparisonOperator:
@@ -35,21 +41,17 @@ export class CloudWatchStack extends CustomStack {
         'Alarm if the SUM of Errors is greater than or equal to the threshold (1) for 1 evaluation period',
     });
 
-    new lambdajs.NodejsFunction(this, 'slack-lambda', {
-      // bundling: {
-      //   nodeModules: [
-      //     'axios',
-      //     'esbuild',
-      //   ],
-      // },
-      // runtime: lambda.Runtime.NODEJS_14_X,
+    alarm.addAlarmAction(new cw_actions.SnsAction(topic));
+
+    const slackLambda = new lambdajs.NodejsFunction(this, 'slack-lambda', {
       entry: path.join(__dirname, '../src/lambda/slack.ts'),
-      // handler: 'handler',
       timeout: cdk.Duration.seconds(60),
       environment: {
-        SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
+        SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
       },
     });
+
+    slackLambda.addEventSource(new eventsource.SnsEventSource(topic));
 
   }
 }
