@@ -67,7 +67,7 @@ export class CloudWatchStack extends CustomStack {
         SLACK_WEBHOOK: slackWebhook,
         LINK: 'https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks',
         // event message needs to contain one of the following
-        FILTER: JSON.stringify(['ROLLBACK_IN_PROGRESS', 'ROLLBACK_COMPLETE', 'CREATE_COMPLETE', 'DELETE_FAILED', 'CREATE_FAILED']),
+        FILTER: JSON.stringify(['ROLLBACK_IN_PROGRESS', 'ROLLBACK_COMPLETE', 'PhysicalResourceId=\'arn:aws:cloudformation', 'DELETE_FAILED', 'CREATE_FAILED']),
       },
     });
     cfnAlertToSlack.addEventSource(new eventsource.SnsEventSource(stackTopic));
