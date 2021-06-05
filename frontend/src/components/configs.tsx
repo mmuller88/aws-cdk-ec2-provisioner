@@ -87,7 +87,7 @@ export function Configs({ match }: RouteComponentProps<RouteParams>) {
                         <h4>VmType: {config.vmType}</h4>
                         <h4>Start Date: {new Date(config.startDate).toLocaleString()}</h4>
                         <h4>Stop Date: {new Date(config.stopDate).toLocaleString()}</h4>
-                        <h4>Associated vms: {ec2List?.listEc2.filter(e => e.userId === config.userId && e.vmType === config.vmType).map(e => <a href={"#/vms/"+e.id}>{e.id}</a>)}</h4>
+                        <h4>Associated vms: {ec2List?.listEc2?.filter(e => e.userId === config.userId && e.vmType === config.vmType).map(e => <a href={"#/vms/"+e.id}>{e.id}</a>)}</h4>
                         <button onClick={async () => {
                           const deleteResult = await deleteEc2Config({id: config.id});
                           if (deleteResult) {

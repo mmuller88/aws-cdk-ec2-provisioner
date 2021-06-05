@@ -22,7 +22,7 @@ export class CloudWatchStack extends CustomStack {
     const queryEc2 = lambda.Function.fromFunctionArn(this, 'queryec2Lambda', `arn:aws:lambda:${this.region}:${this.account}:function:query-ec2`);
 
     const alarmTopic = new sns.Topic(this, 'AlarmTopic');
-    new sns.Topic(this, 'StackTopic', {
+    const stackTopic = new sns.Topic(this, 'StackTopic', {
       topicName: 'stackTopic',
     });
 
@@ -56,6 +56,7 @@ export class CloudWatchStack extends CustomStack {
       });
 
       slackLambda.addEventSource(new eventsource.SnsEventSource(alarmTopic));
+      slackLambda.addEventSource(new eventsource.SnsEventSource(stackTopic));
     });
   }
 }
