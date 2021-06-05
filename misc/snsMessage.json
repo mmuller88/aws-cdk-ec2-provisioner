@@ -1,0 +1,24 @@
+{
+  "AlarmName":"scheduler",
+  "AlarmDescription":"Alarm if the SUM of Errors is greater than or equal to the threshold (1) for 1 evaluation period",
+  "AWSAccountId":"981237193288",
+  "NewStateValue":"ALARM",
+  "NewStateReason":"Threshold Crossed: 1 out of the last 1 datapoints [1.0 (05/06/21 12:29:00)] was greater than or equal to the threshold (1.0) (minimum 1 datapoint for OK -> ALARM transition).",
+  "StateChangeTime":"2021-06-05T12:30:02.128+0000",
+  "Region":"EU (Frankfurt)",
+  "AlarmArn":"arn:aws:cloudwatch:eu-central-1:981237193288:alarm:scheduler",
+  "OldStateValue":"INSUFFICIENT_DATA",
+  "Trigger":{
+    "MetricName":"Errors",
+    "Namespace":"AWS/Lambda",
+    "StatisticType":"Statistic",
+    "Statistic":"SUM","Unit":null,
+    "Dimensions":[{"value":"scheduler","name":"FunctionName"}],
+    "Period":60,
+    "EvaluationPeriods":1,
+    "ComparisonOperator":"GreaterThanOrEqualToThreshold",
+    "Threshold":1.0,
+    "TreatMissingData":"",
+    "EvaluateLowSampleCountPercentile":""
+  }
+}

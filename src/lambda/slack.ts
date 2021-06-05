@@ -25,19 +25,19 @@ export async function handler(event: lambda.SNSEvent) {
 
   const webhook = process.env.SLACK_WEBHOOK || '';
 
-  const axiosResultt = await axios.default
-    .post(webhook, { text: 'slack-lambda gecallt' }, {
-      headers: {
-        'Content-type': 'application/json',
-      },
-    });
-  console.debug('axiosResult:');
-  console.debug(axiosResultt);
+  // const axiosResultt = await axios.default
+  //   .post(webhook, { text: 'slack-lambda gecallt' }, {
+  //     headers: {
+  //       'Content-type': 'application/json',
+  //     },
+  //   });
+  // console.debug('axiosResult:');
+  // console.debug(axiosResultt);
 
   for (const record of event.Records) {
     const slackMessage: SlackMessage = {
-      // username: 'naala',
-      text: record.Sns.Message,
+      username: 'naala',
+      text: JSON.stringify({ ...JSON.parse(record.Sns.Message), Link: process.env.LINK || undefined }),
     };
     console.debug(`slackMessage: ${JSON.stringify(slackMessage)}`);
 
