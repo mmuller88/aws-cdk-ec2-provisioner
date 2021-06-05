@@ -13,25 +13,26 @@ export async function handler(event: lambda.SNSEvent) {
   const webhook = process.env.SLACK_WEBHOOK || '';
 
   const filter: string[] = JSON.parse(process.env.FILTER || '');
-  if (filter) {
-    console.debug(`filter defined: ${JSON.stringify(filter)}`);
-    let filterMatch = false;
-    for (const term of filter) {
-      if (JSON.stringify(event).indexOf(term) > -1) {
-        filterMatch = true;
-      }
-    }
-    if (!filterMatch) {
-      console.debug(`Event does not contain filter terms: ${JSON.stringify(filter)} . So will ignore this message for Slack!`);
-      return 'done';
-    }
-
-  }
 
   for (const record of event.Records) {
+
+    if (filter) {
+      console.debug(`filter defined: ${JSON.stringify(filter)}`);
+      let filterMatch = false;
+      for (const term of filter) {
+        if (JSON.stringify(record).indexOf(term) > -1) {
+          filterMatch = true;
+        }
+      }
+      if (!filterMatch) {
+        console.debug(`Event does not contain filter terms: ${JSON.stringify(filter)} . Skipping!`);
+        break;
+      }
+    }
+
     const slackMessage: SlackMessage = {
       text: typeof record.Sns.Message === 'object' ? JSON.stringify(record.Sns.Message) : record.Sns.Message +
-        `\n\nLink: ${process.env.LINK || undefined})`,
+        `\n\nLink: ${process.env.LINK || undefined}`,
     };
     console.debug(`slackMessage: ${JSON.stringify(slackMessage)}`);
 

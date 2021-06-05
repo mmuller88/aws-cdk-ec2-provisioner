@@ -1,0 +1,22 @@
+{
+    "Records": [
+      {
+          "EventSource": "aws:sns",
+          "EventVersion": "1.0",
+          "EventSubscriptionArn": "arn:aws:sns:eu-central-1:981237193288:stackTopic:300107c9-4def-4a76-adea-892cd21a541e",
+          "Sns": {
+              "Type": "Notification",
+              "MessageId": "d01fdd7b-4328-52f0-aee2-844eefd4e615",
+              "TopicArn": "arn:aws:sns:eu-central-1:981237193288:stackTopic",
+              "Subject": "AWS CloudFormation Notification",
+              "Message": "StackId='arn:aws:cloudformation:eu-central-1:981237193288:stack/stack-mm-1/4b490540-c61d-11eb-816d-0a9090ae2c2a'\nTimestamp='2021-06-05T16:47:56.683Z'\nEventId='c76a5d40-c61d-11eb-8509-0a2cc88da084'\nLogicalResourceId='stack-mm-1'\nNamespace='981237193288'\nPhysicalResourceId='arn:aws:cloudformation:eu-central-1:981237193288:stack/stack-mm-1/4b490540-c61d-11eb-816d-0a9090ae2c2a'\nPrincipalId='AROA6I5SLLJELQMRGUXDH:scheduler'\nResourceProperties='null'\nResourceStatus='CREATE_COMPLETE'\nResourceStatusReason=''\nResourceType='AWS::CloudFormation::Stack'\nStackName='stack-mm-1'\nClientRequestToken='null'\n",
+              "Timestamp": "2021-06-05T16:47:56.725Z",
+              "SignatureVersion": "1",
+              "Signature": "eNXN3vgIJ2mchTO7zegpO1DyRLwzvj8wL1lZ3KrqRTCxB45G4uUxU2n8WpDxO07A037GHwMwGAq6KgKWfs43HtF9f2QYoInk0/7/LVHig8A5dV+0h49ZHMvNTuUQYC8StUudzwYWvCkmYvk+J561bN57EF9CwPo2fKsP15etAYjhVCJ6x7uyMpuJWgtZtcWRTbwe+ONInvUDPVKlPlnKQx3D9eq0Rsb4Q1b5XIrvZcF7x0qa9dO6/431J5P6So7HnT4QdTZwhtWAJMUf1z7g2jZiiKWLhrB2Rr0XEFLgi+wGzeJdoBr4Vu/Yogw90xUtBvxkM+V/Wll5BTk/5filHA==",
+              "SigningCertUrl": "https://sns.eu-central-1.amazonaws.com/SimpleNotificationService-010a507c1833636cd94bdb98bd93083a.pem",
+              "UnsubscribeUrl": "https://sns.eu-central-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:eu-central-1:981237193288:stackTopic:300107c9-4def-4a76-adea-892cd21a541e",
+              "MessageAttributes": {}
+          }
+      }
+  ]
+}

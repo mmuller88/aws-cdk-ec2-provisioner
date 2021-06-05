@@ -5,6 +5,7 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import * as eventsource from '@aws-cdk/aws-lambda-event-sources';
 import * as lambdajs from '@aws-cdk/aws-lambda-nodejs';
 import * as sns from '@aws-cdk/aws-sns';
+import * as sqs from '@aws-cdk/aws-sqs';
 import * as cdk from '@aws-cdk/core';
 
 import { CustomStack } from 'aws-cdk-staging-pipeline/lib/custom-stack';
@@ -22,8 +23,8 @@ export class CloudWatchStack extends CustomStack {
     const queryEc2 = lambda.Function.fromFunctionArn(this, 'queryec2Lambda', `arn:aws:lambda:${this.region}:${this.account}:function:query-ec2`);
 
     const alarmTopic = new sns.Topic(this, 'AlarmTopic');
-    const stackTopic = new sns.Topic(this, 'StackTopic', {
-      topicName: 'stackTopic',
+    const stackQueue = new sqs.Queue(this, 'StackQueue', {
+      queueName: 'stackQueue',
     });
 
     const slackWebhookToken = 'K7jRoppBpPUgT8aVWdYUipWz';
@@ -72,6 +73,8 @@ export class CloudWatchStack extends CustomStack {
         // FILTER_WITH_ERROR: JSON.stringify(['ROLLBACK_COMPLETE', 'DELETE_FAILED', 'CREATE_FAILED']),
       },
     });
-    cfnAlertToSlack.addEventSource(new eventsource.SnsEventSource(stackTopic));
+    cfnAlertToSlack.addEventSource(new eventsource.SqsEventSource(stackQueue, {
+      // maxBatchingWindow: 5,
+    }));
   }
 }

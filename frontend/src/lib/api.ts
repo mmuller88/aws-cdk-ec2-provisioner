@@ -35,8 +35,6 @@ export type Scalars = {
 
 export type CreateEc2ConfigInput = {
   id?: Maybe<Scalars["ID"]>;
-  startDate: Scalars["AWSDateTime"];
-  stopDate: Scalars["AWSDateTime"];
   userId: Scalars["String"];
   vmType: Scalars["Int"];
 };
@@ -93,8 +91,6 @@ export type Ec2 = {
 export type Ec2Config = {
   __typename?: "Ec2Config";
   id: Scalars["ID"];
-  startDate: Scalars["AWSDateTime"];
-  stopDate: Scalars["AWSDateTime"];
   userId: Scalars["String"];
   vmType: Scalars["Int"];
   history?: Maybe<ModelHistoryEntryConnection>;
@@ -144,8 +140,6 @@ export type ModelEc2ConfigConnection = {
 
 export type ModelEc2ConfigFilterInput = {
   id?: Maybe<ModelIdFilterInput>;
-  startDate?: Maybe<ModelStringFilterInput>;
-  stopDate?: Maybe<ModelStringFilterInput>;
   userId?: Maybe<ModelStringFilterInput>;
   vmType?: Maybe<ModelIntFilterInput>;
   and?: Maybe<Array<Maybe<ModelEc2ConfigFilterInput>>>;
@@ -448,8 +442,6 @@ export type Todo = {
 
 export type UpdateEc2ConfigInput = {
   id: Scalars["ID"];
-  startDate?: Maybe<Scalars["AWSDateTime"]>;
-  stopDate?: Maybe<Scalars["AWSDateTime"]>;
   userId?: Maybe<Scalars["String"]>;
   vmType?: Maybe<Scalars["Int"]>;
 };
@@ -523,14 +515,7 @@ export type CreateEc2ConfigMutation = { __typename?: "Mutation" } & {
   createEc2Config?: Maybe<
     { __typename?: "Ec2Config" } & Pick<
       Ec2Config,
-      | "id"
-      | "startDate"
-      | "stopDate"
-      | "userId"
-      | "vmType"
-      | "createdAt"
-      | "updatedAt"
-      | "owner"
+      "id" | "userId" | "vmType" | "createdAt" | "updatedAt" | "owner"
     > & {
         history?: Maybe<
           { __typename?: "ModelHistoryEntryConnection" } & Pick<
@@ -566,14 +551,7 @@ export type UpdateEc2ConfigMutation = { __typename?: "Mutation" } & {
   updateEc2Config?: Maybe<
     { __typename?: "Ec2Config" } & Pick<
       Ec2Config,
-      | "id"
-      | "startDate"
-      | "stopDate"
-      | "userId"
-      | "vmType"
-      | "createdAt"
-      | "updatedAt"
-      | "owner"
+      "id" | "userId" | "vmType" | "createdAt" | "updatedAt" | "owner"
     > & {
         history?: Maybe<
           { __typename?: "ModelHistoryEntryConnection" } & Pick<
@@ -609,14 +587,7 @@ export type DeleteEc2ConfigMutation = { __typename?: "Mutation" } & {
   deleteEc2Config?: Maybe<
     { __typename?: "Ec2Config" } & Pick<
       Ec2Config,
-      | "id"
-      | "startDate"
-      | "stopDate"
-      | "userId"
-      | "vmType"
-      | "createdAt"
-      | "updatedAt"
-      | "owner"
+      "id" | "userId" | "vmType" | "createdAt" | "updatedAt" | "owner"
     > & {
         history?: Maybe<
           { __typename?: "ModelHistoryEntryConnection" } & Pick<
@@ -828,14 +799,7 @@ export type GetEc2ConfigQuery = { __typename?: "Query" } & {
   getEc2Config?: Maybe<
     { __typename?: "Ec2Config" } & Pick<
       Ec2Config,
-      | "id"
-      | "startDate"
-      | "stopDate"
-      | "userId"
-      | "vmType"
-      | "createdAt"
-      | "updatedAt"
-      | "owner"
+      "id" | "userId" | "vmType" | "createdAt" | "updatedAt" | "owner"
     > & {
         history?: Maybe<
           { __typename?: "ModelHistoryEntryConnection" } & Pick<
@@ -880,14 +844,7 @@ export type ListEc2ConfigsQuery = { __typename?: "Query" } & {
             Maybe<
               { __typename?: "Ec2Config" } & Pick<
                 Ec2Config,
-                | "id"
-                | "startDate"
-                | "stopDate"
-                | "userId"
-                | "vmType"
-                | "createdAt"
-                | "updatedAt"
-                | "owner"
+                "id" | "userId" | "vmType" | "createdAt" | "updatedAt" | "owner"
               > & {
                   history?: Maybe<
                     { __typename?: "ModelHistoryEntryConnection" } & Pick<
@@ -1080,14 +1037,7 @@ export type OnCreateEc2ConfigSubscription = { __typename?: "Subscription" } & {
   onCreateEc2Config?: Maybe<
     { __typename?: "Ec2Config" } & Pick<
       Ec2Config,
-      | "id"
-      | "startDate"
-      | "stopDate"
-      | "userId"
-      | "vmType"
-      | "createdAt"
-      | "updatedAt"
-      | "owner"
+      "id" | "userId" | "vmType" | "createdAt" | "updatedAt" | "owner"
     > & {
         history?: Maybe<
           { __typename?: "ModelHistoryEntryConnection" } & Pick<
@@ -1123,14 +1073,7 @@ export type OnUpdateEc2ConfigSubscription = { __typename?: "Subscription" } & {
   onUpdateEc2Config?: Maybe<
     { __typename?: "Ec2Config" } & Pick<
       Ec2Config,
-      | "id"
-      | "startDate"
-      | "stopDate"
-      | "userId"
-      | "vmType"
-      | "createdAt"
-      | "updatedAt"
-      | "owner"
+      "id" | "userId" | "vmType" | "createdAt" | "updatedAt" | "owner"
     > & {
         history?: Maybe<
           { __typename?: "ModelHistoryEntryConnection" } & Pick<
@@ -1166,14 +1109,7 @@ export type OnDeleteEc2ConfigSubscription = { __typename?: "Subscription" } & {
   onDeleteEc2Config?: Maybe<
     { __typename?: "Ec2Config" } & Pick<
       Ec2Config,
-      | "id"
-      | "startDate"
-      | "stopDate"
-      | "userId"
-      | "vmType"
-      | "createdAt"
-      | "updatedAt"
-      | "owner"
+      "id" | "userId" | "vmType" | "createdAt" | "updatedAt" | "owner"
     > & {
         history?: Maybe<
           { __typename?: "ModelHistoryEntryConnection" } & Pick<
@@ -1409,8 +1345,6 @@ export const CreateEc2ConfigDocument = `
     mutation CreateEc2Config($input: CreateEc2ConfigInput!) {
   createEc2Config(input: $input) {
     id
-    startDate
-    stopDate
     userId
     vmType
     history {
@@ -1458,8 +1392,6 @@ export const UpdateEc2ConfigDocument = `
     mutation UpdateEc2Config($input: UpdateEc2ConfigInput!) {
   updateEc2Config(input: $input) {
     id
-    startDate
-    stopDate
     userId
     vmType
     history {
@@ -1507,8 +1439,6 @@ export const DeleteEc2ConfigDocument = `
     mutation DeleteEc2Config($input: DeleteEc2ConfigInput!) {
   deleteEc2Config(input: $input) {
     id
-    startDate
-    stopDate
     userId
     vmType
     history {
@@ -1861,8 +1791,6 @@ export const GetEc2ConfigDocument = `
     query GetEc2Config($id: ID!) {
   getEc2Config(id: $id) {
     id
-    startDate
-    stopDate
     userId
     vmType
     history {
@@ -1902,8 +1830,6 @@ export const ListEc2ConfigsDocument = `
   listEc2Configs(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      startDate
-      stopDate
       userId
       vmType
       history {
@@ -2109,8 +2035,6 @@ export const OnCreateEc2ConfigDocument = `
     subscription OnCreateEc2Config {
   onCreateEc2Config {
     id
-    startDate
-    stopDate
     userId
     vmType
     history {
@@ -2134,8 +2058,6 @@ export const OnUpdateEc2ConfigDocument = `
     subscription OnUpdateEc2Config {
   onUpdateEc2Config {
     id
-    startDate
-    stopDate
     userId
     vmType
     history {
@@ -2159,8 +2081,6 @@ export const OnDeleteEc2ConfigDocument = `
     subscription OnDeleteEc2Config {
   onDeleteEc2Config {
     id
-    startDate
-    stopDate
     userId
     vmType
     history {

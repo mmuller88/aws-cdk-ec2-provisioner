@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
 import { QueryResult, useMutation } from 'react-query';
-import { Auth } from '@aws-amplify/auth';
 
 import { DeleteEc2ConfigDocument, DeleteEc2ConfigInput, ListEc2ConfigsQuery } from '../lib/api';
 import { CreateEc2ConfigInput, CreateEc2ConfigDocument, Ec2Config } from '../lib/api';
 import { API } from '../lib/fetcher';
 
-import Datetime from 'react-datetime';
-import "react-datetime/css/react-datetime.css";
+// import Datetime from 'react-datetime';
+// import "react-datetime/css/react-datetime.css";
+// import { Moment } from "moment";
 
-import { Moment } from "moment";
 import { AppContext } from '../App';
 import { RouteComponentProps } from 'react-router-dom';
 
-const initialState = { startDate: '', stopDate: '', vmType: -1, userId: 'noUserId'};
+const initialState = { vmType: -1, userId: 'noUserId'};
 
 export interface RouteParams {
   id: string;
 }
 export function Configs({ match }: RouteComponentProps<RouteParams>) {
   const [config, setConfig] = useState(initialState);
-  const { startDate, stopDate, vmType, userId} = config;
+  const { vmType, userId} = config;
 
   // const { data, isLoading, refetch } = useListEc2ConfigsQuery(null, {
   //   refetchOnWindowFocus: false
@@ -45,7 +44,7 @@ export function Configs({ match }: RouteComponentProps<RouteParams>) {
   });
 
   const createNewEc2Config = async (configResult: QueryResult<ListEc2ConfigsQuery, any>) => {
-    if (!startDate || !stopDate || !userId || vmType < 1) return;
+    if (!userId || vmType < 1) return;
     if (configResult.data.listEc2Configs.items.length > 5) return;
 
     console.log(config);
@@ -85,8 +84,6 @@ export function Configs({ match }: RouteComponentProps<RouteParams>) {
                         <h5>Id: {config.id}</h5>
                         <h4>UserId: {config.userId}</h4>
                         <h4>VmType: {config.vmType}</h4>
-                        <h4>Start Date: {new Date(config.startDate).toLocaleString()}</h4>
-                        <h4>Stop Date: {new Date(config.stopDate).toLocaleString()}</h4>
                         <h4>Associated vms: {ec2List?.listEc2?.filter(e => e.userId === config.userId && e.vmType === config.vmType).map(e => <a href={"#/vms/"+e.id}>{e.id}</a>)}</h4>
                         <button onClick={async () => {
                           const deleteResult = await deleteEc2Config({id: config.id});
@@ -112,20 +109,13 @@ export function Configs({ match }: RouteComponentProps<RouteParams>) {
                 VmType:
                 <input onChange={onChange} name="vmType" placeholder="1" />
               </div>
-              <div>
+              {/* <div>
                 StartDate:
                 <Datetime
                   onChange={ (date: string | Moment) => setConfig(() => ({ ...config, startDate: (date as Moment).toISOString() }))}
                   // value={new Date(new Date().setHours(new Date().getHours() + 1))}
                 />
-              </div>
-              <div>
-                StopDate:
-                <Datetime
-                  onChange={ (date: string | Moment) => setConfig(() => ({ ...config, stopDate: (date as Moment).toISOString() }))}
-                  // value={new Date(new Date().setHours(new Date().getHours() + 1))}
-                />
-              </div>
+              </div> */}
               <div> 
                 <button onClick={() => createNewEc2Config(configResult)}>Create VM Config</button>
               </div>
