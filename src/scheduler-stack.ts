@@ -84,5 +84,8 @@ export class SchedulerStack extends CustomStack {
     cdkSchedulerLambda.addToRolePolicy(
       new statement.Cloudwatch().allow().toPutMetricData(),
     );
+    cdkSchedulerLambda.addToRolePolicy(
+      new statement.Sns().allow().toPublish(),
+    );
   }
 }

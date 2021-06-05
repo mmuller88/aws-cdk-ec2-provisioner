@@ -50,7 +50,7 @@ export class CloudWatchStack extends CustomStack {
         entry: path.join(__dirname, '../src/lambda/slack.ts'),
         timeout: cdk.Duration.seconds(60),
         environment: {
-          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
+          SLACK_WEBHOOK: 'https://hooks.slack.com/services/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',
           LINK: 'https://eu-central-1.console.aws.amazon.com/cloudwatch/home?region=eu-central-1#alarmsV2:?~(alarmStateFilter~\'ALARM)',
         },
       });
