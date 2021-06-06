@@ -64,7 +64,7 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any, context: 
       StackName: `stack-${newImage.userId ?? 'noUserId'}-${newImage.vmType ?? '-1'}`,
       TemplateBody: templateBody,
       Capabilities: ['CAPABILITY_IAM', 'CAPABILITY_NAMED_IAM'],
-      NotificationARNs: [`arn:aws:sns:${process.env.AWS_REGION}:${accountId}:${queueName}`],
+      NotificationARNs: [`arn:aws:sqs:${process.env.AWS_REGION}:${accountId}:${queueName}`],
       Parameters: [{
         ParameterKey: 'userIdParam',
         ParameterValue: newImage.userId,
