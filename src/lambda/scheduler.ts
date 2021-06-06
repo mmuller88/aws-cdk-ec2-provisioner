@@ -4,6 +4,7 @@ import * as lambda from 'aws-lambda';
 
 import * as AWS from 'aws-sdk';
 import { Ec2 } from './query-ec2';
+import { stackTopicName } from '../cloudwatch-stack';
 
 const cfn = new AWS.CloudFormation();
 // const cw = new AWS.CloudWatch();
@@ -62,7 +63,7 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any, context: 
       StackName: `stack-${newImage.userId ?? 'noUserId'}-${newImage.vmType ?? '-1'}`,
       TemplateBody: templateBody,
       Capabilities: ['CAPABILITY_IAM', 'CAPABILITY_NAMED_IAM'],
-      NotificationARNs: [`arn:aws:sns:${process.env.AWS_REGION}:${accountId}:stackTopic`],
+      NotificationARNs: [`arn:aws:sns:${process.env.AWS_REGION}:${accountId}:${stackTopicName}`],
       Parameters: [{
         ParameterKey: 'userIdParam',
         ParameterValue: newImage.userId,

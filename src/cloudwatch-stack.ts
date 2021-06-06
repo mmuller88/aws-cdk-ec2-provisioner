@@ -13,6 +13,8 @@ export interface CloudWatchStackProps extends cdk.StackProps {
   readonly stage: string;
 }
 
+export const stackTopicName = 'stackTopic';
+
 export class CloudWatchStack extends CustomStack {
   constructor(scope: cdk.Construct, id: string, props: CloudWatchStackProps) {
     super(scope, id, props);
@@ -21,9 +23,9 @@ export class CloudWatchStack extends CustomStack {
 
     const queryEc2 = lambda.Function.fromFunctionArn(this, 'queryec2Lambda', `arn:aws:lambda:${this.region}:${this.account}:function:query-ec2`);
 
-    const alarmTopic = new sns.Topic(this, 'AlarmTopic');
-    const stackTopic = new sns.Topic(this, 'StackTopic', {
-      topicName: 'StackTopic',
+    const alarmTopic = new sns.Topic(this, 'alarmTopic');
+    const stackTopic = new sns.Topic(this, 'stackTopic', {
+      topicName: stackTopicName,
     });
 
     const slackWebhookToken = 'K7jRoppBpPUgT8aVWdYUipWz';
