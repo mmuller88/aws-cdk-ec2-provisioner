@@ -12,7 +12,7 @@ export async function handler(event: lambda.SNSEvent) {
 
   const webhook = process.env.SLACK_WEBHOOK || '';
 
-  const filter: string[] = JSON.parse(process.env.FILTER || '');
+  const filter: string[] = process.env.FILTER ? JSON.parse(process.env.FILTER || '{}') : undefined;
 
   for (const record of event.Records) {
 

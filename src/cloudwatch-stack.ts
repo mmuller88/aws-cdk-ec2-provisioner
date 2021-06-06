@@ -50,7 +50,7 @@ export class CloudWatchStack extends CustomStack {
       alarm.addAlarmAction(new cw_actions.SnsAction(alarmTopic));
 
       // https://eu-central-1.console.aws.amazon.com/cloudwatch/home?region=eu-central-1#alarmsV2:alarm/scheduler?~(alarmStateFilter~'ALARM)
-      const lambdaAlertToSlack = new lambdajs.NodejsFunction(this, 'slack-lambda' + i, {
+      const lambdaAlertToSlack = new lambdajs.NodejsFunction(this, 'slack-lambda-' + lam.functionName, {
         entry: path.join(__dirname, '../src/lambda/slack.ts'),
         // timeout: cdk.Duration.seconds(60),
         environment: {

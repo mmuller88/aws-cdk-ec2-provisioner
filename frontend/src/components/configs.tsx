@@ -52,7 +52,8 @@ export function Configs({ match }: RouteComponentProps<RouteParams>) {
     const input: CreateEc2ConfigInput = {
       vmType: config.vmType,
       userId: config.userId,
-      terminateTimestamp: new Date().getTime() + minutes * 60000,
+      // terminateTimestamp: new Date(new Date().getTime() + minutes * 60000).getTime(),
+      terminateTimestamp: Math.floor(Date.now() / 1000) + minutes * 60,
       // startDate: startDate2.toISOString(),
       //userId: userData.userId,
     };
@@ -85,7 +86,7 @@ export function Configs({ match }: RouteComponentProps<RouteParams>) {
                         <h4>UserId: {config.userId}</h4>
                         <h4>VmType: {config.vmType}</h4>
                         <h4>Created At: {config.createdAt}</h4>
-                        <h4>Terminating / Terminated At: {new Date(config.terminateTimestamp).toString()}</h4>
+                        <h4>Terminating / Terminated At: {new Date(config.terminateTimestamp * 1000).toString()}</h4>
                         <h4>Associated vms: {ec2List?.listEc2?.filter(e => e.userId === config.userId && e.vmType === config.vmType).map(e => <a href={"#/vms/"+e.id}>{e.id}</a>)}</h4>
                         <button onClick={async () => {
                           const deleteResult = await deleteEc2Config({id: config.id});
