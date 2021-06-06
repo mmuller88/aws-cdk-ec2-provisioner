@@ -14,6 +14,7 @@ export interface CloudWatchStackProps extends cdk.StackProps {
   readonly stage: string;
 }
 
+export const queueName = 'stackQueue';
 export class CloudWatchStack extends CustomStack {
   constructor(scope: cdk.Construct, id: string, props: CloudWatchStackProps) {
     super(scope, id, props);
