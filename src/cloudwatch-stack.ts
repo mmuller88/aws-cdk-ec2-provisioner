@@ -52,7 +52,7 @@ export class CloudWatchStack extends CustomStack {
       // https://eu-central-1.console.aws.amazon.com/cloudwatch/home?region=eu-central-1#alarmsV2:alarm/scheduler?~(alarmStateFilter~'ALARM)
       const lambdaAlertToSlack = new lambdajs.NodejsFunction(this, 'slack-lambda' + i, {
         entry: path.join(__dirname, '../src/lambda/slack.ts'),
-        timeout: cdk.Duration.seconds(60),
+        // timeout: cdk.Duration.seconds(60),
         environment: {
           SLACK_WEBHOOK: slackWebhook,
           LINK: 'https://eu-central-1.console.aws.amazon.com/cloudwatch/home?region=eu-central-1#alarmsV2:?~(alarmStateFilter~\'ALARM)',
@@ -64,7 +64,7 @@ export class CloudWatchStack extends CustomStack {
 
     const cfnAlertToSlack = new lambdajs.NodejsFunction(this, 'cfnAlertToSlack', {
       entry: path.join(__dirname, '../src/lambda/slack.ts'),
-      timeout: cdk.Duration.seconds(60),
+      // timeout: cdk.Duration.seconds(60),
       environment: {
         SLACK_WEBHOOK: slackWebhook,
         LINK: 'https://eu-central-1.console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks',
