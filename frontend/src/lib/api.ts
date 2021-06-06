@@ -404,6 +404,7 @@ export enum State {
   Terminated = "TERMINATED",
   Stopping = "STOPPING",
   Stopped = "STOPPED",
+  ShuttingDown = "SHUTTING_DOWN",
   Unkown = "UNKOWN"
 }
 

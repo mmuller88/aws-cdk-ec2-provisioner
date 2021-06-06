@@ -63,7 +63,7 @@ export async function handler(event: lambda.AppSyncResolverEvent<QueryEc2Args> |
             instances.push({
               id: instance.InstanceId || 'noId',
               name: instance.Tags?.filter(t => t.Key == 'Name')[0].Value || 'noName',
-              state: instance.State?.Name?.toUpperCase() || 'UNKOWN',
+              state: instance.State?.Name?.toUpperCase().replace(/-/g, '_') || 'UNKOWN',
               userId,
               vmType,
               publicDnsName: instance.PublicDnsName || 'noIp',
