@@ -3,9 +3,7 @@ import { readFileSync } from 'fs';
 import * as lambda from 'aws-lambda';
 
 import * as AWS from 'aws-sdk';
-import { queueName } from '../cloudwatch-stack';
 import { Ec2 } from './query-ec2';
-
 
 const cfn = new AWS.CloudFormation();
 // const cw = new AWS.CloudWatch();
@@ -64,7 +62,7 @@ export async function handler(event: lambda.DynamoDBStreamEvent | any, context: 
       StackName: `stack-${newImage.userId ?? 'noUserId'}-${newImage.vmType ?? '-1'}`,
       TemplateBody: templateBody,
       Capabilities: ['CAPABILITY_IAM', 'CAPABILITY_NAMED_IAM'],
-      NotificationARNs: [`arn:aws:sqs:${process.env.AWS_REGION}:${accountId}:${queueName}`],
+      NotificationARNs: [`arn:aws:sns:${process.env.AWS_REGION}:${accountId}:stackTopic`],
       Parameters: [{
         ParameterKey: 'userIdParam',
         ParameterValue: newImage.userId,

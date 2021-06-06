@@ -45,7 +45,7 @@ export function Configs({ match }: RouteComponentProps<RouteParams>) {
 
   const createNewEc2Config = async (configResult: QueryResult<ListEc2ConfigsQuery, any>) => {
     if (!userId || vmType < 1 || !minutes) return;
-    if (configResult.data.listEc2Configs.items.length > 5) return;
+    if (configResult.data?.listEc2Configs.items.length > 5) return;
 
     console.log(config);
 
@@ -114,7 +114,7 @@ export function Configs({ match }: RouteComponentProps<RouteParams>) {
               </div>
               <div>
                 Minutes:
-                <input onChange={onChange} name="minutes" placeholder="10" />
+                <input onChange={onChange} name="minutes" placeholder="3" />
               </div>
               {/* <div>
                 StartDate:
